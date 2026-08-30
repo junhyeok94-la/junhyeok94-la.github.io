@@ -11,7 +11,6 @@ export type Profile = {
   role: string;
   experienceLabel: string;
   email: string;
-  github: string;
   headline: string;
   summary: string[];
   focus: Focus[];
@@ -56,10 +55,14 @@ export type PopTalk = {
   overview: string;
   problem: string[];
   values: Array<{ name: string; description: string }>;
+  contributions: Array<{ area: string; title: string; description: string }>;
+  productViews: Array<{ title: string; description: string; image: string; alt: string }>;
+  demoSnapshot: Array<{ label: string; value: string }>;
   dataFlow: string[];
   agentFlow: Array<{ stage: string; detail: string }>;
   architecture: Array<{ layer: string; detail: string }>;
   stack: Record<string, string[]>;
+  roadmap: string[];
   sourcesNote: string;
 };
 

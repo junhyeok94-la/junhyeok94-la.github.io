@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
 import { ArrowLeft, ArrowUpRight, Award, Bot, Database, Network, ShieldCheck } from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
 
+import { LangGraphFlowEmbed } from '@/components/langgraph-flow-embed';
 import { badgeVariants } from '@/components/ui/badge';
 import { buttonVariants } from '@/components/ui/button';
 import { popTalk } from '@/lib/content';
@@ -62,26 +64,68 @@ export default function PopTalkPage() {
         </div>
       </section>
 
-      <section className="case-section case-agent">
-        <div className="case-section-heading light-heading">
-          <span>03 / LANGGRAPH AGENT FLOW</span>
-          <h2>실패 원인에 따라<br />이전 단계로 돌아가는 Agent</h2>
-          <p>한 번 생성하고 끝내지 않습니다. 검색 근거와 응답 품질을 검수하고, 원인에 맞는 단계부터 다시 실행합니다.</p>
+      <section className="case-section case-contribution">
+        <div className="case-section-heading">
+          <span>03 / MY FOCUS</span>
+          <h2>제가 집중한 구현 범위는<br />데이터에서 Agent 품질까지</h2>
+          <p>팀 프로젝트 중 데이터·AI Agent 구현에 참여한 범위를 발표자료의 처리 흐름에 맞춰 구체화했습니다.</p>
         </div>
-        <div className="agent-flow">
-          {popTalk.agentFlow.map((item, index) => (
-            <article key={item.stage}>
-              <span>{String(index + 1).padStart(2, '0')}</span>
-              <div><h3>{item.stage}</h3><p>{item.detail}</p></div>
+        <div className="contribution-grid">
+          {popTalk.contributions.map((item, index) => (
+            <article key={item.area}>
+              <span>{String(index + 1).padStart(2, '0')} / {item.area}</span>
+              <h3>{item.title}</h3>
+              <p>{item.description}</p>
             </article>
           ))}
         </div>
-        <div className="retry-loop">REVIEW FAILED → RE-CLASSIFY · RE-PLAN · RE-RETRIEVE · RE-GENERATE</div>
+      </section>
+
+      <section className="case-section case-product">
+        <div className="case-section-heading">
+          <span>04 / WORKING PRODUCT</span>
+          <h2>추천 화면뿐 아니라<br />운영과 검수까지 구현</h2>
+          <p>발표자료에 포함된 실제 구현 화면입니다. 사용자 경험과 데이터 운영 화면을 함께 보여주어 서비스가 어디까지 완성됐는지 확인할 수 있습니다.</p>
+        </div>
+        <div className="product-gallery">
+          {popTalk.productViews.map((item, index) => (
+            <figure key={item.title} className={index < 2 ? 'product-view product-view-user' : 'product-view'}>
+              <a href={item.image} target="_blank" rel="noreferrer" aria-label={`${item.title} 원본 크기로 보기`}>
+                <Image src={item.image} alt={item.alt} width={1900} height={930} sizes="(max-width: 900px) 100vw, 50vw" unoptimized />
+              </a>
+              <figcaption>
+                <span>{index < 2 ? 'USER EXPERIENCE' : 'ADMIN OPERATIONS'}</span>
+                <h3>{item.title}</h3>
+                <p>{item.description}</p>
+                <a href={item.image} target="_blank" rel="noreferrer">크게 보기 ↗</a>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+        <aside className="demo-snapshot">
+          <div>
+            <span>DEMO SNAPSHOT · 2026.08</span>
+            <strong>발표 시점 관리자 대시보드</strong>
+            <p>사용자 성과 지표가 아닌, 수집·검수·운영 범위를 확인하기 위한 구현 데이터 스냅샷입니다.</p>
+          </div>
+          {popTalk.demoSnapshot.map((item) => (
+            <dl key={item.label}><dt>{item.label}</dt><dd>{item.value}</dd></dl>
+          ))}
+        </aside>
+      </section>
+
+      <section className="case-section case-agent">
+        <div className="case-section-heading light-heading">
+          <span>05 / LANGGRAPH AGENT FLOW</span>
+          <h2>실패 원인에 따라<br />이전 단계로 돌아가는 Agent</h2>
+          <p>한 번 생성하고 끝내지 않습니다. 검색 근거와 응답 품질을 검수하고, 원인에 맞는 단계부터 다시 실행합니다.</p>
+        </div>
+        <LangGraphFlowEmbed />
       </section>
 
       <section className="case-section case-data">
         <div className="case-section-heading">
-          <span>04 / GROUNDED DATA</span>
+          <span>06 / GROUNDED DATA</span>
           <h2>영화 공공데이터에서<br />답변 근거까지</h2>
         </div>
         <div className="data-flow">
@@ -93,9 +137,28 @@ export default function PopTalkPage() {
 
       <section className="case-section case-architecture">
         <div className="case-section-heading">
-          <span>05 / ARCHITECTURE</span>
+          <span>07 / ARCHITECTURE</span>
           <h2>서비스부터 PrivateLink까지<br />분리한 NCP 구조</h2>
+          <p>사용자 트래픽, 외부 API, AI API의 진입 경로를 분리하고 Web·WAS·ChatBot·DB를 Private Subnet 중심으로 구성했습니다.</p>
         </div>
+        <figure className="architecture-figure">
+          <div className="architecture-image-scroll">
+            <Image
+              src="/projects/pop-talk/ncp-system-architecture.png"
+              alt="Public Load Balancer, Web Server, Private Load Balancer, WAS와 ChatBot Server, PostgreSQL, Batch Server, Object Storage, NAT Gateway와 PrivateLink로 구성한 NCP 시스템 아키텍처"
+              width={2400}
+              height={1350}
+              sizes="(max-width: 900px) 900px, 84vw"
+              unoptimized
+            />
+          </div>
+          <figcaption>
+            <span>REQUEST PATH</span>
+            <strong>Public LB → Web → Private LB → WAS / ChatBot</strong>
+            <p>외부 데이터는 NAT Gateway, HyperCLOVA X는 PrivateLink를 통해 연결하고 운영 로그와 오브젝트 스토리지를 별도 관리합니다.</p>
+            <a href="/projects/pop-talk/ncp-system-architecture.png" target="_blank" rel="noreferrer">원본 크기로 보기 ↗</a>
+          </figcaption>
+        </figure>
         <div className="architecture-grid">
           {popTalk.architecture.map((item, index) => {
             const Icon = architectureIcons[index];
@@ -106,7 +169,7 @@ export default function PopTalkPage() {
 
       <section className="case-section case-stack">
         <div className="case-section-heading">
-          <span>06 / STACK</span>
+          <span>08 / STACK</span>
           <h2>학습한 기술을<br />하나의 서비스로 통합</h2>
         </div>
         <div className="case-stack-groups">
@@ -116,6 +179,29 @@ export default function PopTalkPage() {
               <div>{items.map((item) => <span className={badgeVariants({ variant: 'outline' })} key={item}>{item}</span>)}</div>
             </article>
           ))}
+        </div>
+      </section>
+
+      <section className="case-section case-outcome">
+        <div className="case-section-heading light-heading">
+          <span>09 / RESULT &amp; NEXT</span>
+          <h2>완성한 범위와<br />다음 과제를 구분</h2>
+        </div>
+        <div className="outcome-grid">
+          <article className="outcome-result">
+            <Award />
+            <span>FINAL EVALUATION</span>
+            <h3>{popTalk.context}<br />{popTalk.award}</h3>
+            <p>자연어 추천, 데이터 수집·RAG, 자가교정 Agent, 사용자·관리자 화면과 NCP 인프라까지 하나의 서비스로 통합했습니다.</p>
+          </article>
+          <article className="outcome-roadmap">
+            <span>ROADMAP FROM PRESENTATION</span>
+            <ol>
+              {popTalk.roadmap.map((item, index) => (
+                <li key={item}><span>{String(index + 1).padStart(2, '0')}</span><strong>{item}</strong></li>
+              ))}
+            </ol>
+          </article>
         </div>
       </section>
 

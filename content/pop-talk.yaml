@@ -19,6 +19,40 @@ values:
     description: 영화 정보, 요청 조건과 리뷰 근거를 재검증
   - name: Trust
     description: 검수 결과와 안전한 폴백으로 응답 신뢰성 확보
+contributions:
+  - area: DATA PIPELINE
+    title: 공공 영화 데이터를 검색 가능한 근거로
+    description: KOBIS·KMDB 데이터를 스케줄 수집하고 정제·병합해 PostgreSQL에 적재하는 흐름을 구현했습니다.
+  - area: RAG CONTEXT
+    title: 메타데이터와 리뷰를 답변 근거로
+    description: 영화와 리뷰 임베딩을 pgvector에 저장하고, 검색 결과와 근거 ID가 응답 생성까지 이어지도록 구성했습니다.
+  - area: AGENT QUALITY
+    title: 실패를 원인별로 되돌리는 검수 루프
+    description: 의도 분류·QueryPlan·검색·생성·검수를 분리하고 실패 원인에 따라 필요한 단계부터 재실행하도록 설계했습니다.
+productViews:
+  - title: 탐색·상세·리뷰·취향 온보딩
+    description: 영화 탐색과 상세 정보, 관람객 리뷰, 가입 시 선호 키워드 선택까지 개인화의 입력과 결과를 하나의 흐름으로 연결했습니다.
+    image: /projects/pop-talk/product-user-experience.webp
+    alt: Pop Talk의 영화 추천 홈, 영화 상세, 관람객 리뷰와 취향 온보딩 사용자 화면
+  - title: 자연어 추천과 외부 리뷰 근거
+    description: 상황을 담은 자연어 요청에 영화별 추천 이유를 제공하고, 관련 리뷰 콘텐츠까지 이어지는 응답 화면을 구현했습니다.
+    image: /projects/pop-talk/product-agent-experience.webp
+    alt: 자연어 조건을 반영한 Pop Talk 영화 추천 결과와 외부 리뷰 근거 화면
+  - title: 데이터와 배치를 한눈에 보는 운영 대시보드
+    description: 영화 인증 상태, 전체 영화·감상평 현황과 매일 실행되는 데이터 수집 배치의 처리 결과를 한 화면에서 확인합니다.
+    image: /projects/pop-talk/product-admin-dashboard.webp
+    alt: 영화 데이터와 배치 실행 현황을 보여주는 Pop Talk 관리자 대시보드
+  - title: 영화 검수와 노출 상태 관리
+    description: 수집된 영화의 정보 누락, 인증 상태와 사용자 노출 여부를 검색·필터링하고 상세 화면에서 검수할 수 있습니다.
+    image: /projects/pop-talk/product-admin-operations.webp
+    alt: 수집 영화의 인증과 노출 상태를 검수하는 Pop Talk 관리자 화면
+demoSnapshot:
+  - label: 영화 메타데이터
+    value: 5,315편
+  - label: 인증 완료 영화
+    value: 5,309편
+  - label: 누적 감상평
+    value: 59,863건
 dataFlow:
   - KOBIS 영화 목록·상세 수집
   - KMDB 포스터·등급·줄거리·키워드 결합
@@ -53,4 +87,10 @@ stack:
   AI & Agent: [HyperCLOVA X, LangGraph, RAG, CLOVA Studio]
   Data: [PostgreSQL, pgvector, KOBIS API, KMDB API]
   Infra: [NAVER Cloud Platform, VPC, Load Balancer, Object Storage]
-sourcesNote: 공개 포트폴리오에는 팀원 개인정보가 포함된 원본 기획서를 게시하지 않고 비식별화한 프로젝트 설명만 제공합니다.
+roadmap:
+  - 티켓 OCR 고도화
+  - 추천 검증 고도화
+  - 동반자 취향 분석
+  - 멀티플렉스·OTT 연계
+  - 장기 취향 Profile
+sourcesNote: 팀원 개인정보가 포함된 원본 문서는 게시하지 않고, 비식별화한 구현 화면과 프로젝트 설명·시스템 아키텍처만 선별해 제공합니다.

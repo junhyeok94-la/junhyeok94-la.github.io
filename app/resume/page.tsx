@@ -69,7 +69,6 @@ export default function ResumePage() {
             </div>
             <address>
               <a href={`mailto:${profile.email}`}>{profile.email}</a>
-              <a href={profile.github}>{profile.github.replace('https://', '')}</a>
               <span>Updated {profile.updatedAt}</span>
             </address>
           </header>
