@@ -1,0 +1,56 @@
+title: Pop Talk
+subtitle: HyperCLOVA X 기반 영화 관람 기록·취향 분석 AI Agent
+context: NIPA-NAVER Cloud Sovereign AI PBL 기반 프로젝트
+period: 2026.08
+team: 4인 팀
+award: 우수상
+role: 데이터·AI Agent 구현 참여
+overview: 사용자의 취향뿐 아니라 누구와 보는지, 현재 기분과 시청 가능 시간 같은 상황까지 이해하고 추천 이유와 검증 근거를 함께 제공하는 Personal Movie AI Agent입니다.
+problem:
+  - 영화 선택에 시간이 오래 걸리지만 기존 추천은 현재 상황을 충분히 반영하지 못했습니다.
+  - 생성형 AI 추천은 근거가 부족하고 환각 가능성이 있어 결과를 신뢰하기 어려웠습니다.
+  - 영화 정보, 리뷰, 평점과 관람 기록이 여러 서비스에 분산되어 있었습니다.
+values:
+  - name: Personalization
+    description: 사용자 취향과 현재 요청 조건을 함께 반영
+  - name: Explainability
+    description: 추천한 이유와 사용한 근거를 사용자에게 설명
+  - name: Verification
+    description: 영화 정보, 요청 조건과 리뷰 근거를 재검증
+  - name: Trust
+    description: 검수 결과와 안전한 폴백으로 응답 신뢰성 확보
+dataFlow:
+  - KOBIS 영화 목록·상세 수집
+  - KMDB 포스터·등급·줄거리·키워드 결합
+  - 데이터 정제·병합 후 PostgreSQL UPSERT
+  - 영화·리뷰 임베딩을 pgvector에 저장
+  - RAG 검색 결과를 HyperCLOVA X 응답 근거로 사용
+agentFlow:
+  - stage: 입력 및 라우팅
+    detail: 입력 검증, CLOVA Router 기반 의도 분류, 구조화된 QueryPlan 생성
+  - stage: 엔티티 식별 및 검색
+    detail: 영화 고유 ID 확정 후 정보·평점·리뷰·추천·개봉 일정 등 의도별 데이터 조회
+  - stage: 초안 생성
+    detail: 검색 근거 ID를 포함한 컨텍스트로 답변을 생성하고 누락된 인용을 보완
+  - stage: 품질 및 안전성 검수
+    detail: 의도 일치, 사실 근거, 완전성, 스포일러 안전성과 명확성을 평가
+  - stage: 자가교정
+    detail: 실패 원인에 따라 의도 재분류, 쿼리 재분석, 재검색 또는 재생성을 수행
+  - stage: 최종 응답
+    detail: 검수 통과 답변을 확정하고 재시도 소진 시 근거 기반 안전 응답으로 전환
+architecture:
+  - layer: Service
+    detail: Next.js 사용자·관리자 화면, FastAPI 기반 REST API
+  - layer: AI & Agent
+    detail: HyperCLOVA X, CLOVA Studio Router, LangGraph, RAG
+  - layer: Data
+    detail: KOBIS·KMDB 수집 배치, PostgreSQL 16, pgvector
+  - layer: NCP Infrastructure
+    detail: Public·Private Subnet, 이중 Load Balancer, Bastion, NAT Gateway, PrivateLink
+stack:
+  Front-End: [Next.js, React, TypeScript, Tailwind CSS]
+  Back-End: [Python, FastAPI, SQLAlchemy]
+  AI & Agent: [HyperCLOVA X, LangGraph, RAG, CLOVA Studio]
+  Data: [PostgreSQL, pgvector, KOBIS API, KMDB API]
+  Infra: [NAVER Cloud Platform, VPC, Load Balancer, Object Storage]
+sourcesNote: 공개 포트폴리오에는 팀원 개인정보가 포함된 원본 기획서를 게시하지 않고 비식별화한 프로젝트 설명만 제공합니다.
