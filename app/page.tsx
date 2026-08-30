@@ -4,6 +4,7 @@ import {
   ArrowUpRight,
   Award,
   CheckCircle2,
+  ChevronDown,
   DatabaseZap,
   GitBranch,
   Layers3,
@@ -95,7 +96,12 @@ export default function Home() {
         </div>
 
         <div className="project-grid full-project-grid">
-          {featured.map((project, index) => (
+          {featured.map((project, index) => {
+            const initiallyVisible = index === 0 ? 3 : 2;
+            const primaryAchievements = project.achievements.slice(0, initiallyVisible);
+            const additionalAchievements = project.achievements.slice(initiallyVisible);
+
+            return (
             <article className={cn('project-card', index === 0 && 'project-card-featured')} key={project.id}>
               <div className="project-meta">
                 <span>{String(index + 1).padStart(2, '0')}</span>
@@ -113,7 +119,7 @@ export default function Home() {
                 ))}
               </div>
               <div className="achievement-list">
-                {project.achievements.slice(0, index === 0 ? 3 : 2).map((achievement) => (
+                {primaryAchievements.map((achievement) => (
                   <div className="achievement-item" key={achievement.title}>
                     <CheckCircle2 aria-hidden="true" />
                     <div>
@@ -122,6 +128,25 @@ export default function Home() {
                     </div>
                   </div>
                 ))}
+                {additionalAchievements.length > 0 && (
+                  <details className="achievement-disclosure">
+                    <summary>
+                      성과 {additionalAchievements.length}개 더 보기
+                      <ChevronDown aria-hidden="true" />
+                    </summary>
+                    <div className="achievement-expanded">
+                      {additionalAchievements.map((achievement) => (
+                        <div className="achievement-item" key={achievement.title}>
+                          <CheckCircle2 aria-hidden="true" />
+                          <div>
+                            <strong>{achievement.title}</strong>
+                            <p>{achievement.result}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </details>
+                )}
               </div>
               {project.detailPath && (
                 <Link className="project-detail-link" href={project.detailPath}>
@@ -129,7 +154,8 @@ export default function Home() {
                 </Link>
               )}
             </article>
-          ))}
+            );
+          })}
         </div>
 
         <div className="foundation-block">
@@ -203,8 +229,8 @@ export default function Home() {
             ))}
           </div>
           <div>
-            <h3>Selected Certifications</h3>
-            {credentials.certifications.slice(0, 4).map((item) => (
+            <h3>Certifications</h3>
+            {credentials.certifications.map((item) => (
               <article className={item.badgePath ? 'credential-certification credential-certification-featured' : 'credential-certification'} key={item.name}>
                 {item.badgePath && (
                   <Image
@@ -225,7 +251,7 @@ export default function Home() {
           </div>
           <div>
             <h3>Recent Learning</h3>
-            {credentials.training.slice(0, 1).map((item) => (
+            {credentials.training.map((item) => (
               <article key={item.name}>
                 <strong>{item.name}</strong>
                 {(item.team || item.award) && <span className="credential-award">{[item.team, item.award].filter(Boolean).join(' · ')}</span>}

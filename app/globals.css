@@ -190,6 +190,12 @@ a { color: inherit; text-decoration: none; }
 .achievement-item svg { width: 1rem; margin-top: 0.18rem; color: var(--blue); }
 .achievement-item strong { font-size: 0.86rem; }
 .achievement-item p { margin: 0.2rem 0 0; color: #5d6a79; font-size: 0.82rem; }
+.achievement-disclosure { margin-top: 0.15rem; }
+.achievement-disclosure summary { display: flex; justify-content: space-between; gap: 1rem; align-items: center; padding: 0.75rem 0.85rem; border: 1px solid #cbd5df; border-radius: 0.65rem; background: #f5f8fb; color: var(--blue); font-size: 0.76rem; font-weight: 850; list-style: none; cursor: pointer; }
+.achievement-disclosure summary::-webkit-details-marker { display: none; }
+.achievement-disclosure summary svg { width: 0.95rem; height: 0.95rem; transition: transform 160ms ease; }
+.achievement-disclosure[open] summary svg { transform: rotate(180deg); }
+.achievement-expanded { display: grid; gap: 0.8rem; margin-top: 0.8rem; padding: 0.9rem 0.2rem 0; border-top: 1px dashed #cbd5df; }
 .project-detail-link { display: inline-flex; gap: 0.4rem; align-items: center; width: fit-content; margin-top: 1.25rem; color: var(--blue); font-size: 0.82rem; font-weight: 850; }
 .project-detail-link svg { width: 0.95rem; }
 
