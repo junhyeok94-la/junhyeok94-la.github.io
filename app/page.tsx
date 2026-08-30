@@ -9,6 +9,7 @@ import {
   Layers3,
   ShieldCheck,
 } from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
 
 import { badgeVariants } from '@/components/ui/badge';
@@ -204,7 +205,22 @@ export default function Home() {
           <div>
             <h3>Selected Certifications</h3>
             {credentials.certifications.slice(0, 4).map((item) => (
-              <article key={item.name}><strong>{item.name}</strong><span>{item.issuer} · {item.date}</span></article>
+              <article className={item.badgePath ? 'credential-certification credential-certification-featured' : 'credential-certification'} key={item.name}>
+                {item.badgePath && (
+                  <Image
+                    className="credential-badge"
+                    src={item.badgePath}
+                    alt={`${item.name} 공식 배지`}
+                    width={72}
+                    height={72}
+                    unoptimized
+                  />
+                )}
+                <div>
+                  <strong>{item.name}</strong>
+                  <span>{item.issuer} · {item.date}</span>
+                </div>
+              </article>
             ))}
           </div>
           <div>

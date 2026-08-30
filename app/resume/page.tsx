@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { ArrowLeft, Download } from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
 
 import { credentials, profile, projects, type Achievement, type Project } from '@/lib/content';
@@ -173,7 +174,22 @@ export default function ResumePage() {
             <section>
               <h3>Certifications</h3>
               {credentials.certifications.map((item) => (
-                <div className="resume-credential-item" key={item.name}><strong>{item.name}</strong><span>{item.issuer} · {item.date}</span></div>
+                <div className={item.badgePath ? 'resume-credential-item resume-credential-featured' : 'resume-credential-item'} key={item.name}>
+                  {item.badgePath && (
+                    <Image
+                      className="resume-credential-badge"
+                      src={item.badgePath}
+                      alt=""
+                      width={48}
+                      height={48}
+                      unoptimized
+                    />
+                  )}
+                  <div>
+                    <strong>{item.name}</strong>
+                    <span>{item.issuer} · {item.date}</span>
+                  </div>
+                </div>
               ))}
             </section>
           </div>

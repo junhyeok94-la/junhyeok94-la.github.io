@@ -35,7 +35,12 @@ export type Project = {
 };
 export type Credentials = {
   education: Array<{ school: string; major: string; period: string; status: string }>;
-  certifications: Array<{ name: string; issuer: string; date: string }>;
+  certifications: Array<{
+    name: string;
+    issuer: string;
+    date: string;
+    badgePath?: string;
+  }>;
   training: Array<{ name: string; period: string; team?: string; award?: string; summary: string }>;
   languages: Array<{ language: string; level: string; date: string }>;
 };
