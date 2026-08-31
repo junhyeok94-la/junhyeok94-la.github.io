@@ -66,7 +66,7 @@ export default function Home() {
         </div>
 
         <aside className="signal-panel" id="focus" aria-label="핵심 역량">
-          <div className="panel-heading"><span>CORE SIGNALS</span><span>2026</span></div>
+          <div className="panel-heading"><span>CORE SIGNALS</span><span>{profile.experienceLabel}</span></div>
           <div className="signal-orbit" aria-hidden="true">
             <span className="orbit-core">DE</span>
             <span className="orbit-ring orbit-ring-one" />

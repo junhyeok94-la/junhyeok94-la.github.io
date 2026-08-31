@@ -9,12 +9,12 @@ summary:
   - 웹 개발로 커리어를 시작해 공공·민간 데이터 플랫폼에서 수집, 적재, 모델링, 오케스트레이션, BI까지 데이터의 전체 라이프사이클을 경험했습니다.
   - 화려한 기술 자체보다 비효율의 원인을 찾고, 운영 가능한 표준과 자동화로 바꾸는 문제 해결 과정에 강점이 있습니다.
 focus:
-  - label: Orchestration
-    value: Airflow 기반 대규모 배치 설계·최적화
-  - label: Data Platform
-    value: AWS, Redshift, dbt 기반 데이터 플랫폼
-  - label: Reliability
-    value: 품질 검증, 모니터링, 복구 체계 자동화
+  - label: Batch Optimization
+    value: 1,000+ dbt 모델의 워크로드 격리·배치 표준화
+  - label: Platform Modernization
+    value: Oracle·SAS 기반을 Airflow·dbt·Redshift로 전환
+  - label: Data Reliability
+    value: 품질 검증·모니터링·장애 복구 체계 자동화
 skills:
   Languages & Query:
     - Python
