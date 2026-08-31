@@ -18,12 +18,14 @@ export type Profile = {
   employment: Employment[];
 };
 export type Achievement = { title: string; problem: string; action: string; result: string };
+export type Contribution = { rate: string; basis: string };
 export type Project = {
   id: string;
   title: string;
   category: string;
   period: string;
   role: string;
+  contribution?: Contribution;
   company: string;
   featured: boolean;
   award?: string;
@@ -40,7 +42,7 @@ export type Credentials = {
     date: string;
     badgePath?: string;
   }>;
-  training: Array<{ name: string; period: string; team?: string; award?: string; summary: string }>;
+  training: Array<{ name: string; period: string; team?: string; award?: string; contribution?: Contribution; summary: string }>;
   languages: Array<{ language: string; level: string; date: string }>;
 };
 

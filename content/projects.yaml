@@ -3,6 +3,9 @@
   category: Private Sector
   period: 2025.06 - 2026.03
   role: 배치 최적화 매니저
+  contribution:
+    rate: 100%
+    basis: 배치 최적화 담당 영역 전반 주도
   company: 누리꿈소프트(주)
   featured: true
   summary: Oracle·SAS 기반 홈쇼핑 데이터를 Airflow, dbt, Redshift 기반 플랫폼으로 전환하고 배치 시간, 비용, 품질 거버넌스를 개선했습니다.
@@ -38,6 +41,9 @@
   category: AI PBL · Awarded Project
   period: 2026.08
   role: 4인 팀 · 데이터·AI Agent 구현 참여
+  contribution:
+    rate: 40%
+    basis: 데이터·AI Agent 구현
   company: NIPA-NAVER Cloud Sovereign AI PBL
   featured: true
   award: 우수상
@@ -68,6 +74,9 @@
   category: Public Sector
   period: 2023.09 - 2024.12
   role: 공통 지원 선임
+  contribution:
+    rate: 70%
+    basis: 공통 표준·자동 수집 핵심 담당
   company: 누리꿈소프트(주)
   featured: true
   summary: 다수 사법기관의 이기종·비정형 데이터를 안정적으로 수집하기 위한 공통 표준과 자동 수집 프로세스를 구축했습니다.
@@ -86,6 +95,9 @@
   category: Public Sector
   period: 2022.05 - 2023.08
   role: OLAP 개발 선임 · Admin
+  contribution:
+    rate: 70%
+    basis: OLAP·Admin·외부 연계 핵심 담당
   company: 누리꿈소프트(주)
   featured: true
   summary: 행정안전부와 전국 지자체가 사용하는 정책지원서비스의 통계·BI 화면과 외부 데이터 연계 파이프라인을 구축했습니다.
@@ -108,6 +120,9 @@
   category: Private Sector
   period: 2021.07 - 2022.05
   role: 데이터 분석 및 ETL 선임
+  contribution:
+    rate: 70%
+    basis: 원천 분석·적재 전략 핵심 담당
   company: 누리꿈소프트(주)
   featured: true
   summary: 전사 정형 데이터를 AWS 데이터 레이크로 이관하기 위한 원천 분석과 적재 전략 수립을 담당했습니다.
@@ -122,6 +137,9 @@
   category: Web Foundation
   period: 2021.03 - 2021.05
   role: Backend · Frontend
+  contribution:
+    rate: 70%
+    basis: Backend·Frontend 주요 구현
   company: 루나랩스주식회사
   featured: false
   summary: 임직원 건강관리와 환경 공정시설을 통합 관리하는 포털을 개발했습니다.
@@ -132,6 +150,9 @@
   category: Web Foundation
   period: 2021.02 - 2021.03
   role: Backend · Frontend
+  contribution:
+    rate: 70%
+    basis: 인사평가 메뉴 전면 재설계
   company: 루나랩스주식회사
   featured: false
   summary: 평가 히스토리 관리를 도입하고 인사평가 메뉴의 전체 로직을 재설계했습니다.

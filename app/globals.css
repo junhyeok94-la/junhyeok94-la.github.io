@@ -542,6 +542,8 @@ button.agent-graph-node:hover, button.agent-graph-node[aria-pressed='true'] { tr
 .resume-project-header > div:last-child strong, .resume-project-header > div:last-child span { display: block; }
 .resume-project-header > div:last-child strong { font-size: 7pt; }
 .resume-project-header > div:last-child span { margin-top: 0.7mm; color: #607086; font-size: 6.5pt; }
+.resume-project-header .resume-contribution { display: block; margin-top: 1mm; color: #0b60d5; font-size: 6pt; font-weight: 700; }
+.resume-project-header .resume-contribution b { font-size: 6.8pt; }
 .resume-project-summary { margin: 2mm 0 1.5mm; color: #45556a; font-size: 7.2pt; line-height: 1.45; }
 .resume-stack-line { color: var(--blue); font-size: 6.3pt; font-weight: 750; }
 .resume-achievements { display: grid; gap: 2.2mm; margin-top: 3mm; }
@@ -562,6 +564,7 @@ button.agent-graph-node:hover, button.agent-graph-node[aria-pressed='true'] { tr
 .resume-foundation-row h3 { margin: 1.5mm 0 1mm; font-size: 8.2pt; }
 .resume-foundation-row p { margin: 0; color: #56657a; font-size: 6.4pt; line-height: 1.4; }
 .resume-foundation-row small { display: block; margin-top: 1.5mm; color: #0b60d5; font-size: 5.8pt; }
+.resume-foundation-row .resume-foundation-contribution { color: #273b55; font-weight: 750; }
 .resume-background-title { margin-top: 4mm; }
 .resume-credential-grid { display: grid; grid-template-columns: 1.25fr 0.8fr 1fr; gap: 5mm; margin-top: 4mm; }
 .resume-credential-grid section { min-width: 0; }

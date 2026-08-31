@@ -38,7 +38,13 @@ function ProjectHeader({ project }: { project: Project }) {
         <span>{project.category}</span>
         <h3>{project.title}</h3>
       </div>
-      <div><strong>{project.period}</strong><span>{project.role}</span></div>
+      <div>
+        <strong>{project.period}</strong>
+        <span>{project.role}</span>
+        {project.contribution && (
+          <small className="resume-contribution">기여도 <b>{project.contribution.rate}</b> · {project.contribution.basis}</small>
+        )}
+      </div>
     </div>
   );
 }
@@ -148,7 +154,13 @@ export default function ResumePage() {
 
           <div className="resume-foundation-row">
             {[hanwha, ubase].map((project) => (
-              <article key={project.id}><span>{project.period}</span><h3>{project.title}</h3><p>{project.summary}</p><small>{project.stack.join(' · ')}</small></article>
+              <article key={project.id}>
+                <span>{project.period}</span>
+                <h3>{project.title}</h3>
+                <p>{project.summary}</p>
+                {project.contribution && <small className="resume-foundation-contribution">기여도 {project.contribution.rate} · {project.contribution.basis}</small>}
+                <small>{project.stack.join(' · ')}</small>
+              </article>
             ))}
           </div>
 
@@ -197,7 +209,7 @@ export default function ResumePage() {
             {credentials.training.map((item) => (
               <div key={item.name}>
                 <strong>{item.name}</strong>
-                <span>{[item.period, item.team, item.award].filter(Boolean).join(' · ')}</span>
+                <span>{[item.period, item.team, item.award, item.contribution && `기여도 ${item.contribution.rate}`].filter(Boolean).join(' · ')}</span>
                 <p>{item.summary}</p>
               </div>
             ))}
