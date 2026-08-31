@@ -5,6 +5,29 @@ import Link from 'next/link';
 
 import { credentials, profile, projects, type Achievement, type Project } from '@/lib/content';
 
+const projectCategoryLabelsKo: Record<string, string> = {
+  'Private Sector': '민간 프로젝트',
+  'Public Sector': '공공 프로젝트',
+  'Web Foundation': '웹 개발 프로젝트',
+  'AI PBL · Awarded Project': 'AI PBL · 수상 프로젝트',
+};
+
+const focusLabelsKo: Record<string, string> = {
+  'Batch Optimization': '배치 최적화',
+  'Platform Modernization': '플랫폼 전환',
+  'Data Reliability': '데이터 신뢰성',
+};
+
+const skillGroupLabelsKo: Record<string, string> = {
+  'Languages & Query': '프로그래밍·쿼리 언어',
+  'Orchestration & Transformation': '오케스트레이션·변환',
+  'Data Warehouse & Database': '데이터 웨어하우스·DB',
+  'Cloud & Big Data': '클라우드·빅데이터',
+  'DevOps & CI/CD': '개발 운영·CI/CD',
+  'Documentation & Collaboration': '문서화·협업',
+  'AI & Agent': 'AI·에이전트',
+};
+
 export const metadata: Metadata = {
   title: '나준혁 | 데이터 엔지니어 이력서',
   description: '데이터 엔지니어 나준혁의 경력, 프로젝트, 기술 및 자격 사항을 정리한 이력서입니다.',
@@ -35,7 +58,7 @@ function ProjectHeader({ project }: { project: Project }) {
   return (
     <div className="resume-project-header">
       <div>
-        <span>{project.category}</span>
+        <span>{projectCategoryLabelsKo[project.category] ?? project.category}</span>
         <h3>{project.title}</h3>
       </div>
       <div>
@@ -69,31 +92,31 @@ export default function ResumePage() {
         <section className="resume-page">
           <header className="resume-header">
             <div>
-              <span className="resume-label">DATA ENGINEER</span>
+              <span className="resume-label">데이터 엔지니어</span>
               <h1>{profile.name}</h1>
               <p>{profile.headline}</p>
             </div>
             <address>
               <a href={`mailto:${profile.email}`}>{profile.email}</a>
-              <span>Updated {profile.updatedAt}</span>
+              <span>최종 수정 {profile.updatedAt}</span>
             </address>
           </header>
 
           <section className="resume-summary">
-            <span>PROFILE</span>
+            <span>프로필</span>
             <div>{profile.summary.map((text) => <p key={text}>{text}</p>)}</div>
           </section>
 
           <div className="resume-two-column">
             <aside>
               <section className="resume-side-section">
-                <h2>Core Focus</h2>
+                <h2>핵심 역량</h2>
                 {profile.focus.map((item) => (
-                  <div className="resume-focus" key={item.label}><strong>{item.label}</strong><span>{item.value}</span></div>
+                  <div className="resume-focus" key={item.label}><strong>{focusLabelsKo[item.label] ?? item.label}</strong><span>{item.value}</span></div>
                 ))}
               </section>
               <section className="resume-side-section">
-                <h2>Career</h2>
+                <h2>경력</h2>
                 {profile.employment.map((item) => (
                   <div className="resume-career" key={item.company}>
                     <strong>{item.company}</strong><span>{item.position}</span><small>{item.period} · {item.duration}</small>
@@ -101,7 +124,7 @@ export default function ResumePage() {
                 ))}
               </section>
               <section className="resume-side-section">
-                <h2>Core Stack</h2>
+                <h2>핵심 기술</h2>
                 <div className="resume-tags">
                   {[
                     ...profile.skills['Languages & Query'].slice(0, 2),
@@ -114,19 +137,19 @@ export default function ResumePage() {
             </aside>
 
             <div className="resume-main-column">
-              <div className="resume-section-title"><span>01</span><h2>Selected Experience</h2></div>
+              <div className="resume-section-title"><span>01</span><h2>주요 프로젝트 경험</h2></div>
               <ProjectHeader project={gsRetail} />
               <p className="resume-project-summary">{gsRetail.summary}</p>
               <div className="resume-stack-line">{gsRetail.stack.join(' · ')}</div>
               <AchievementList items={gsRetail.achievements.slice(0, 3)} />
             </div>
           </div>
-          <footer className="resume-page-footer"><span>{profile.nameEn} · Resume</span><span>01 / 03</span></footer>
+          <footer className="resume-page-footer"><span>{profile.nameEn} · 이력서</span><span>01 / 03</span></footer>
         </section>
 
         <section className="resume-page">
-          <header className="resume-continuation"><span>{profile.nameEn}</span><strong>PROJECT EXPERIENCE</strong></header>
-          <div className="resume-section-title"><span>01</span><h2>Selected Experience · Continued</h2></div>
+          <header className="resume-continuation"><span>{profile.nameEn}</span><strong>프로젝트 경험</strong></header>
+          <div className="resume-section-title"><span>01</span><h2>주요 프로젝트 경험 · 계속</h2></div>
 
           <section className="resume-project-section">
             <ProjectHeader project={gsRetail} />
@@ -144,12 +167,12 @@ export default function ResumePage() {
             <div className="resume-stack-line">{localFinance.stack.join(' · ')}</div>
             <AchievementList items={localFinance.achievements.slice(0, 2)} />
           </section>
-          <footer className="resume-page-footer"><span>{profile.nameEn} · Resume</span><span>02 / 03</span></footer>
+          <footer className="resume-page-footer"><span>{profile.nameEn} · 이력서</span><span>02 / 03</span></footer>
         </section>
 
         <section className="resume-page">
-          <header className="resume-continuation"><span>{profile.nameEn}</span><strong>BACKGROUND & CREDENTIALS</strong></header>
-          <div className="resume-section-title"><span>02</span><h2>Additional Experience</h2></div>
+          <header className="resume-continuation"><span>{profile.nameEn}</span><strong>경력 및 자격</strong></header>
+          <div className="resume-section-title"><span>02</span><h2>추가 프로젝트 경험</h2></div>
 
           <section className="resume-project-section compact-project">
             <ProjectHeader project={lgChem} />
@@ -169,26 +192,26 @@ export default function ResumePage() {
             ))}
           </div>
 
-          <div className="resume-section-title resume-background-title"><span>03</span><h2>Skills & Credentials</h2></div>
+          <div className="resume-section-title resume-background-title"><span>03</span><h2>기술 및 자격</h2></div>
           <div className="resume-credential-grid">
             <section>
-              <h3>Technical Skills</h3>
+              <h3>기술 역량</h3>
               {Object.entries(profile.skills).map(([group, skills]) => (
-                <div className="resume-skill-row" key={group}><strong>{group}</strong><span>{skills.join(' · ')}</span></div>
+                <div className="resume-skill-row" key={group}><strong>{skillGroupLabelsKo[group] ?? group}</strong><span>{skills.join(' · ')}</span></div>
               ))}
             </section>
             <section>
-              <h3>Education</h3>
+              <h3>학력</h3>
               {credentials.education.map((item) => (
                 <div className="resume-credential-item" key={item.school}><strong>{item.school}</strong><span>{item.major} · {item.period}</span></div>
               ))}
-              <h3 className="resume-subheading">Language</h3>
+              <h3 className="resume-subheading">어학</h3>
               {credentials.languages.map((item) => (
                 <div className="resume-credential-item" key={item.language}><strong>{item.language} · {item.level}</strong><span>{item.date}</span></div>
               ))}
             </section>
             <section>
-              <h3>Certifications</h3>
+              <h3>자격증</h3>
               {credentials.certifications.map((item) => (
                 <div className={item.badgePath ? 'resume-credential-item resume-credential-featured' : 'resume-credential-item'} key={item.name}>
                   {item.badgePath && (
@@ -210,7 +233,7 @@ export default function ResumePage() {
             </section>
           </div>
           <section className="resume-training">
-            <h3>Recent Learning</h3>
+            <h3>직무 교육 및 프로젝트</h3>
             {credentials.training.map((item) => (
               <div key={item.name}>
                 <strong>{item.name}</strong>
@@ -219,7 +242,7 @@ export default function ResumePage() {
               </div>
             ))}
           </section>
-          <footer className="resume-page-footer"><span>{profile.nameEn} · Resume</span><span>03 / 03</span></footer>
+          <footer className="resume-page-footer"><span>{profile.nameEn} · 이력서</span><span>03 / 03</span></footer>
         </section>
       </main>
     </div>

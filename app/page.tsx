@@ -223,13 +223,13 @@ export default function Home() {
         </div>
         <div className="credential-columns">
           <div>
-            <h3>Education</h3>
+            <h3>학력</h3>
             {credentials.education.map((item) => (
               <article key={item.school}><strong>{item.school}</strong><span>{item.major} · {item.period}</span></article>
             ))}
           </div>
           <div>
-            <h3>Certifications</h3>
+            <h3>자격증</h3>
             {credentials.certifications.map((item) => (
               <article className={item.badgePath ? 'credential-certification credential-certification-featured' : 'credential-certification'} key={item.name}>
                 {item.badgePath && (
@@ -250,7 +250,7 @@ export default function Home() {
             ))}
           </div>
           <div>
-            <h3>Recent Learning</h3>
+            <h3>직무 교육 및 프로젝트</h3>
             {credentials.training.map((item) => (
               <article key={item.name}>
                 <strong>{item.name}</strong>
