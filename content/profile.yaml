@@ -1,4 +1,4 @@
-updatedAt: 2026-08-30
+updatedAt: 2026-08-31
 name: 나준혁
 nameEn: Na Junhyeok
 role: Data Engineer
@@ -16,33 +16,39 @@ focus:
   - label: Reliability
     value: 품질 검증, 모니터링, 복구 체계 자동화
 skills:
-  Data Pipeline:
-    - Apache Airflow
+  Languages & Query:
     - Python
-    - dbt
     - SQL
-  Data Platform:
+    - Java
+  Orchestration & Transformation:
+    - Apache Airflow
+    - dbt
+  Data Warehouse & Database:
     - Amazon Redshift
-    - AWS S3
-    - AWS Glue
-    - Athena
-    - Hadoop
-    - Hive
-  Database:
     - Oracle
+    - PostgreSQL/pgvector
     - MySQL
     - MSSQL
     - SAP HANA
-  Engineering:
+  Cloud & Big Data:
+    - AWS S3
+    - AWS Glue
+    - Amazon Athena
+    - Hadoop
+    - Hive
+  DevOps & CI/CD:
     - Git
+    - Bitbucket
+    - Bamboo
     - Docker
-    - Java
     - GitHub Actions
+  Documentation & Collaboration:
+    - Confluence
+    - Jira (진척도 확인)
   AI & Agent:
     - HyperCLOVA X
     - LangGraph
     - RAG
-    - PostgreSQL/pgvector
 employment:
   - company: 누리꿈소프트(주)
     period: 2021.07 - 2026.05

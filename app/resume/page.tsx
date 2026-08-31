@@ -103,7 +103,12 @@ export default function ResumePage() {
               <section className="resume-side-section">
                 <h2>Core Stack</h2>
                 <div className="resume-tags">
-                  {[...profile.skills['Data Pipeline'], ...profile.skills['Data Platform'].slice(0, 4)].map((skill) => <span key={skill}>{skill}</span>)}
+                  {[
+                    ...profile.skills['Languages & Query'].slice(0, 2),
+                    ...profile.skills['Orchestration & Transformation'],
+                    ...profile.skills['Data Warehouse & Database'].slice(0, 1),
+                    ...profile.skills['Cloud & Big Data'].slice(0, 3),
+                  ].map((skill) => <span key={skill}>{skill}</span>)}
                 </div>
               </section>
             </aside>
