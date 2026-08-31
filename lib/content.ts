@@ -64,7 +64,7 @@ export type PopTalk = {
   agentFlow: Array<{ stage: string; detail: string }>;
   architecture: Array<{ layer: string; detail: string }>;
   stack: Record<string, string[]>;
-  roadmap: string[];
+  roadmap: Array<{ title: string; description: string }>;
   sourcesNote: string;
 };
 

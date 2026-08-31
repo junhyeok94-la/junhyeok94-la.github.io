@@ -88,9 +88,10 @@ stack:
   Data: [PostgreSQL, pgvector, KOBIS API, KMDB API]
   Infra: [NAVER Cloud Platform, VPC, Load Balancer, Object Storage]
 roadmap:
-  - 티켓 OCR 고도화
-  - 추천 검증 고도화
-  - 동반자 취향 분석
-  - 멀티플렉스·OTT 연계
-  - 장기 취향 Profile
+  - title: 추천 검증 고도화
+    description: 벡터 저장과 RAG 조회 과정에서 아쉬웠던 검색 정확도와 추천 근거의 적합도를 개선합니다.
+  - title: 멀티플렉스·OTT 연계
+    description: 추천 영화가 현재 어느 멀티플렉스와 OTT에서 제공되는지 함께 안내합니다.
+  - title: 장기 취향 Profile
+    description: 최초 선호 장르 선택에 그치지 않고, 시청 영화의 평점과 리뷰를 누적해 사용자 취향 선호도를 지속적으로 고도화합니다.
 sourcesNote: 팀원 개인정보가 포함된 원본 문서는 게시하지 않고, 비식별화한 구현 화면과 프로젝트 설명·시스템 아키텍처만 선별해 제공합니다.

@@ -195,10 +195,13 @@ export default function PopTalkPage() {
             <p>자연어 추천, 데이터 수집·RAG, 자가교정 Agent, 사용자·관리자 화면과 NCP 인프라까지 하나의 서비스로 통합했습니다.</p>
           </article>
           <article className="outcome-roadmap">
-            <span>ROADMAP FROM PRESENTATION</span>
+            <span>NEXT ITERATION</span>
             <ol>
               {popTalk.roadmap.map((item, index) => (
-                <li key={item}><span>{String(index + 1).padStart(2, '0')}</span><strong>{item}</strong></li>
+                <li key={item.title}>
+                  <span>{String(index + 1).padStart(2, '0')}</span>
+                  <div><strong>{item.title}</strong><p>{item.description}</p></div>
+                </li>
               ))}
             </ol>
           </article>
