@@ -36,6 +36,8 @@ yarn-error.log*
 /outputs/
 /work/
 
-# generated resume artifacts
+# generated PDF artifacts
 /output/
 /public/resume.pdf
+/public/portfolio.pdf
+/public/projects/pop-talk/langgraph-flow-print.png

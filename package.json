@@ -9,7 +9,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "resume:pdf": "node scripts/generate-pdf.mjs",
+    "resume:pdf": "node scripts/generate-pdf.mjs resume",
+    "portfolio:pdf": "node scripts/generate-pdf.mjs portfolio",
+    "pdfs:generate": "node scripts/generate-pdf.mjs all",
     "lint": "oxlint",
     "format": "oxfmt"
   },

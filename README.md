@@ -41,7 +41,7 @@ npm run dev
 `main` 브랜치가 포트폴리오의 단일 원본입니다.
 
 1. `content/`의 YAML을 수정합니다.
-2. 로컬에서 `npm run lint`, `npm run build`, `npm run resume:pdf -- --start`로 확인합니다.
+2. 로컬에서 `npm run lint`, `npm run build`, `npm run pdfs:generate -- --start`로 확인합니다.
 3. 변경사항을 `main`에 푸시합니다.
 4. GitHub Actions가 PDF와 정적 사이트를 다시 만들고 GitHub Pages에 배포합니다.
 
@@ -77,6 +77,14 @@ npm run resume:pdf -- --start
 ```
 
 결과는 `output/pdf/na-junhyeok-data-engineer-resume-ko.pdf`에 생성되며 웹 다운로드용 `public/resume.pdf`에도 복사됩니다. Chrome 또는 Chromium이 필요하며, 자동 탐지가 안 되면 `CHROME_PATH`를 지정합니다.
+
+제출용 포트폴리오 PDF는 개발 서버 실행 중 `npm run portfolio:pdf`로 생성할 수 있습니다. 서버까지 함께 시작하려면 아래 명령을 사용합니다.
+
+```bash
+npm run portfolio:pdf -- --start
+```
+
+이력서와 포트폴리오를 한 번에 생성하려면 `npm run pdfs:generate -- --start`를 사용합니다. 포트폴리오 결과는 `output/pdf/na-junhyeok-data-engineer-portfolio-ko.pdf`와 웹 다운로드용 `public/portfolio.pdf`에 생성됩니다.
 
 ## 자동 배포
 

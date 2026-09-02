@@ -62,6 +62,9 @@ export default function Home() {
             <Link className={cn(buttonVariants({ variant: 'outline', size: 'lg' }))} href="/resume">
               이력서 보기
             </Link>
+            <a className={cn(buttonVariants({ variant: 'outline', size: 'lg' }))} href="/portfolio.pdf" download>
+              제출용 포트폴리오 PDF
+            </a>
           </div>
         </div>
 

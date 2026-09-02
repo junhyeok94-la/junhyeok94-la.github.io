@@ -122,9 +122,22 @@
     .wrap::-webkit-scrollbar{height:5px}
     .wrap::-webkit-scrollbar-track{background:var(--surface)}
     .wrap::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+
+    /* Static export used in the submission portfolio PDF. */
+    html.print-mode header, html.print-mode .hint { display:none; }
+    html.print-mode .wrap { overflow:hidden; }
+    html.print-mode .graph { padding:18px 56px 28px; }
+    html.print-mode .sp { height:22px; }
+    html.print-mode .nh { padding:8px 13px 6px; }
+    html.print-mode .node:hover, html.print-mode .node.active { transform:none; }
   </style>
 </head>
 <body>
+<script>
+  if (new URLSearchParams(window.location.search).has('print')) {
+    document.documentElement.classList.add('print-mode');
+  }
+</script>
 <header>
   <div class="logo">🎬</div>
   <div>

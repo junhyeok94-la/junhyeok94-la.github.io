@@ -24,16 +24,16 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run lint
-      - name: Generate resume PDF
-        run: npm run resume:pdf -- --start
+      - name: Generate resume and portfolio PDFs
+        run: npm run pdfs:generate -- --start
       - name: Build static site
         run: npm run build
       - name: Disable Jekyll processing
         run: touch out/.nojekyll
-      - name: Upload resume PDF
+      - name: Upload submission PDFs
         uses: actions/upload-artifact@v7
         with:
-          name: resume-pdf
+          name: submission-pdfs
           path: output/pdf/*.pdf
       - name: Upload GitHub Pages artifact
         if: github.event_name != 'pull_request'
