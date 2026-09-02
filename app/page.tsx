@@ -239,6 +239,7 @@ export default function Home() {
                     alt={`${item.name} 공식 배지`}
                     width={72}
                     height={72}
+                    loading="eager"
                     unoptimized
                   />
                 )}

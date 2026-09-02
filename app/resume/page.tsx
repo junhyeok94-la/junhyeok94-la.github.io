@@ -221,6 +221,7 @@ export default function ResumePage() {
                       alt=""
                       width={48}
                       height={48}
+                      loading="eager"
                       unoptimized
                     />
                   )}
