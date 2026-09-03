@@ -585,6 +585,18 @@ button.agent-graph-node:hover, button.agent-graph-node[aria-pressed='true'] { tr
 .resume-training span { color: var(--blue); font-size: 6pt; font-weight: 800; }
 .resume-training p { grid-column: 1 / -1; margin: 0; color: #56657a; font-size: 6pt; line-height: 1.35; }
 
+/* Keep Korean PDF labels embedded on Linux/CI instead of falling back to a missing monospace CJK font. */
+.resume-label,
+.resume-summary > span,
+.resume-side-section h2,
+.resume-project-header > div:first-child > span,
+.resume-continuation,
+.resume-credential-grid h3,
+.resume-training h3,
+.resume-page-footer {
+  font-family: ui-monospace, SFMono-Regular, Menlo, 'Noto Sans KR Variable', 'Noto Sans KR', monospace;
+}
+
 @media (max-width: 860px) {
   .resume-view { padding: 4rem 0; overflow-x: auto; }
   .resume-pages { justify-content: start; width: max-content; padding: 0 1rem; }
