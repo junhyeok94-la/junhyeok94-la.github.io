@@ -213,6 +213,7 @@ export default function PopTalkPage() {
         <p>{popTalk.sourcesNote}</p>
         <div className="case-footer-actions">
           <Link className={cn(buttonVariants({ size: 'lg' }), 'primary-action')} href="/">포트폴리오로 돌아가기</Link>
+          <a className={cn(buttonVariants({ variant: 'outline', size: 'lg' }))} href="https://github.com/junhyeok94-la/pop-talk" target="_blank" rel="noreferrer">GitHub 저장소 <ArrowUpRight /></a>
           <Link className={cn(buttonVariants({ variant: 'outline', size: 'lg' }))} href="/resume">이력서 보기</Link>
         </div>
       </footer>
