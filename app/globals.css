@@ -253,7 +253,7 @@ a { color: inherit; text-decoration: none; }
 .credential-columns article strong { font-size: 0.9rem; }
 .credential-columns article span { margin-top: 0.25rem; color: #677588; font-size: 0.77rem; }
 .credential-certification-featured { display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 1rem; align-items: center; }
-.credential-badge { width: 72px; height: 72px; border-radius: 0.45rem; }
+.credential-badge { width: 72px; height: auto; max-height: 72px; border-radius: 0.45rem; object-fit: contain; }
 .credential-columns article .credential-award { width: fit-content; margin-top: 0.45rem; padding: 0.22rem 0.5rem; border-radius: 999px; background: #fff3c4; color: #775600; font-weight: 800; }
 .credential-columns a { display: inline-flex; gap: 0.4rem; align-items: center; color: var(--blue); font-size: 0.82rem; font-weight: 800; }
 .credential-columns > div > a { margin-top: 1.3rem; }
@@ -577,7 +577,7 @@ button.agent-graph-node:hover, button.agent-graph-node[aria-pressed='true'] { tr
 .resume-credential-item strong { font-size: 6.6pt; line-height: 1.3; }
 .resume-credential-item span { margin-top: 0.4mm; color: #6a7687; font-size: 5.7pt; }
 .resume-credential-featured { display: grid; grid-template-columns: 12.7mm minmax(0, 1fr); gap: 2mm; align-items: center; }
-.resume-credential-badge { width: 12.7mm; height: 12.7mm; border-radius: 1mm; }
+.resume-credential-badge { width: 12.7mm; height: auto; max-height: 12.7mm; border-radius: 1mm; object-fit: contain; }
 .resume-subheading { margin-top: 4mm !important; }
 .resume-training { display: block; margin-top: 4mm; padding-top: 3mm; border-top: 1px solid #cbd4de; }
 .resume-training > div { display: grid; grid-template-columns: 1fr auto; gap: 1mm 3mm; margin-top: 2mm; }
