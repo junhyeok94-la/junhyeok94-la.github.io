@@ -98,6 +98,7 @@ export default function ResumePage() {
             </div>
             <address>
               <a href={`mailto:${profile.email}`}>{profile.email}</a>
+              <a href={profile.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
               <span>최종 수정 {profile.updatedAt}</span>
             </address>
           </header>

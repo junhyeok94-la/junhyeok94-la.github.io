@@ -11,6 +11,7 @@ export type Profile = {
   role: string;
   experienceLabel: string;
   email: string;
+  linkedin: string;
   headline: string;
   summary: string[];
   focus: Focus[];
