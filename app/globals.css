@@ -97,7 +97,7 @@ a { color: inherit; text-decoration: none; }
   align-items: center;
   gap: 0.65rem;
   margin-bottom: 2rem;
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: ui-monospace, SFMono-Regular, Menlo, 'Noto Sans KR Variable', monospace;
   font-size: 0.78rem;
   font-weight: 800;
   letter-spacing: 0.12em;
@@ -129,7 +129,7 @@ a { color: inherit; text-decoration: none; }
   color: white;
   box-shadow: 0 32px 80px rgb(7 17 31 / 0.22);
 }
-.panel-heading { display: flex; justify-content: space-between; color: #91a0b4; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; }
+.panel-heading { display: flex; justify-content: space-between; color: #91a0b4; font-family: ui-monospace, SFMono-Regular, Menlo, 'Noto Sans KR Variable', monospace; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; }
 .signal-orbit { position: relative; display: grid; place-items: center; height: 300px; }
 .orbit-core { z-index: 2; display: grid; place-items: center; width: 78px; height: 78px; border-radius: 50%; background: var(--lime); color: var(--ink); font-size: 1.4rem; font-weight: 950; box-shadow: 0 0 60px rgb(217 255 87 / 0.25); }
 .orbit-ring { position: absolute; border: 1px solid rgb(217 255 87 / 0.3); border-radius: 50%; }
@@ -646,7 +646,7 @@ button.agent-graph-node:hover, button.agent-graph-node[aria-pressed='true'] { tr
 .portfolio-pdf-cover-top > span { color: var(--lime); font-size: 12pt; font-weight: 950; letter-spacing: -0.06em; }
 .portfolio-pdf-cover-top small { color: #91a0b4; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 6pt; letter-spacing: 0.12em; }
 .portfolio-pdf-cover-main { position: relative; z-index: 1; margin-top: 29mm; }
-.portfolio-pdf-cover-kicker { color: var(--lime); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 7pt; font-weight: 850; letter-spacing: 0.13em; }
+.portfolio-pdf-cover-kicker { color: var(--lime); font-family: ui-monospace, SFMono-Regular, Menlo, 'Noto Sans KR Variable', monospace; font-size: 7pt; font-weight: 850; letter-spacing: 0.13em; }
 .portfolio-pdf-cover h1 { margin: 5mm 0 0; font-size: 38pt; letter-spacing: -0.065em; line-height: 0.98; }
 .portfolio-pdf-cover h1 em { color: #7caeff; font-style: normal; font-weight: 500; }
 .portfolio-pdf-cover-main > p { max-width: 130mm; margin: 7mm 0 0; color: #d8e1ed; font-size: 12pt; font-weight: 700; letter-spacing: -0.03em; }
