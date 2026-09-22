@@ -184,12 +184,17 @@ a { color: inherit; text-decoration: none; }
   column-gap: clamp(2rem, 5vw, 6rem);
 }
 .project-card-featured .project-meta { grid-column: 1 / -1; }
-.project-card-featured .achievement-list { grid-column: 2; grid-row: 2 / span 3; align-self: end; }
+.project-card-featured .achievement-list { grid-column: 2; grid-row: 2 / span 3; align-self: start; }
 .achievement-list { display: grid; gap: 0.7rem; margin-top: 1.6rem; padding-top: 1.2rem; border-top: 1px solid #d9e0e7; }
 .achievement-item { display: grid; grid-template-columns: auto 1fr; gap: 0.65rem; align-items: start; }
 .achievement-item svg { width: 1rem; margin-top: 0.18rem; color: var(--blue); }
-.achievement-item strong { font-size: 0.86rem; }
-.achievement-item p { margin: 0.2rem 0 0; color: #5d6a79; font-size: 0.82rem; }
+.achievement-item h4 { margin: 0; font-size: 0.9rem; font-weight: 750; }
+.project-contribution { margin: 0.7rem 0 0; color: var(--blue); font-size: 0.78rem; font-weight: 700; }
+.achievement-narrative { display: grid; gap: 0.45rem; margin: 0.65rem 0 0.9rem; font-size: 0.82rem; line-height: 1.65; }
+.achievement-narrative > div { display: grid; grid-template-columns: 2rem minmax(0, 1fr); gap: 0.5rem; }
+.achievement-narrative dt { color: #34465c; font-size: 0.73rem; font-weight: 750; }
+.achievement-narrative dd { margin: 0; color: #536176; overflow-wrap: anywhere; }
+.achievement-narrative .achievement-result dd { color: #0c55b8; font-weight: 650; }
 .achievement-disclosure { margin-top: 0.15rem; }
 .achievement-disclosure summary { display: flex; justify-content: space-between; gap: 1rem; align-items: center; padding: 0.75rem 0.85rem; border: 1px solid #cbd5df; border-radius: 0.65rem; background: #f5f8fb; color: var(--blue); font-size: 0.76rem; font-weight: 850; list-style: none; cursor: pointer; }
 .achievement-disclosure summary::-webkit-details-marker { display: none; }
@@ -431,7 +436,9 @@ button.agent-graph-node:hover, button.agent-graph-node[aria-pressed='true'] { tr
 .architecture-figure { overflow: hidden; max-width: 1450px; margin: 0 auto; border: 1px solid rgb(255 255 255 / 0.28); border-radius: 1.1rem; background: white; box-shadow: 0 28px 70px rgb(0 40 120 / 0.25); }
 .architecture-image-scroll { overflow-x: auto; scrollbar-color: #70829c #dfe5eb; scrollbar-width: thin; }
 .architecture-image-scroll img { display: block; width: 100%; height: auto; }
-.architecture-figure figcaption { display: grid; grid-template-columns: 130px minmax(260px, 0.8fr) minmax(300px, 1.2fr) auto; gap: 1rem; align-items: center; padding: 1.2rem 1.4rem; background: #081a35; }
+.architecture-figure figcaption { display: grid; grid-template-columns: 130px minmax(260px, 0.8fr) minmax(300px, 1.2fr); gap: 1rem; align-items: center; padding: 1.2rem 1.4rem; background: #081a35; }
+.ncp-architecture { display: block; width: 100%; height: auto; font-family: inherit; }
+.architecture-image-scroll .ncp-architecture { min-width: 1000px; }
 .architecture-figure figcaption span { color: var(--lime); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.64rem; font-weight: 850; letter-spacing: 0.08em; }
 .architecture-figure figcaption strong { font-size: 0.82rem; }
 .architecture-figure figcaption p { margin: 0; color: #9eb1cd; font-size: 0.76rem; }
@@ -700,7 +707,7 @@ button.agent-graph-node:hover, button.agent-graph-node[aria-pressed='true'] { tr
 
 .portfolio-pdf-project-history { display: grid; gap: 3mm; }
 .portfolio-pdf-compact-project { padding: 3.5mm 4mm; border: 1px solid #cbd5df; background: #f8fafc; }
-.portfolio-pdf-compact-project > header { display: grid; grid-template-columns: 1fr 50mm; gap: 4mm; }
+.portfolio-pdf-compact-project > header { display: grid; grid-template-columns: 1fr 50mm; gap: 3mm; }
 .portfolio-pdf-compact-project > header > div:first-child > span { color: var(--blue); font-size: 5.4pt; font-weight: 800; text-transform: uppercase; }
 .portfolio-pdf-compact-project h3 { margin: 0.8mm 0 0; font-size: 9pt; }
 .portfolio-pdf-compact-project > header > div:last-child { text-align: right; }
@@ -708,7 +715,7 @@ button.agent-graph-node:hover, button.agent-graph-node[aria-pressed='true'] { tr
 .portfolio-pdf-compact-project > header > div:last-child strong { font-size: 6pt; }
 .portfolio-pdf-compact-project > header > div:last-child small { margin-top: 0.6mm; color: #647389; font-size: 5.4pt; }
 .portfolio-pdf-compact-project > p { margin: 2mm 0; color: #516075; font-size: 6pt; line-height: 1.4; }
-.portfolio-pdf-mini-results { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5mm; }
+.portfolio-pdf-mini-results { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5mm; margin-top: 2mm; }
 .portfolio-pdf-mini-results > div { padding: 2mm; border-top: 0.7mm solid var(--blue); background: white; }
 .portfolio-pdf-mini-results strong, .portfolio-pdf-mini-results span { display: block; }
 .portfolio-pdf-mini-results strong { font-size: 5.8pt; }
@@ -783,6 +790,7 @@ button.agent-graph-node:hover, button.agent-graph-node[aria-pressed='true'] { tr
 .portfolio-pdf-architecture-page .portfolio-pdf-section-title { margin-bottom: 3mm; }
 .portfolio-pdf-architecture-figure { height: 88mm; margin: 0; padding: 2mm; border: 1px solid #bec9d4; background: #f8fafc; }
 .portfolio-pdf-architecture-figure img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.portfolio-pdf-architecture-figure .ncp-architecture { width: 100%; height: 100%; }
 .portfolio-pdf-architecture-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5mm; margin-top: 2.5mm; }
 .portfolio-pdf-architecture-grid article { min-height: 21mm; padding: 2.5mm; border-top: 0.8mm solid var(--blue); background: #f1f5f9; }
 .portfolio-pdf-architecture-grid strong { font-size: 5.9pt; }
@@ -912,6 +920,11 @@ button.agent-graph-node:hover, button.agent-graph-node[aria-pressed='true'] { tr
 .portfolio-pdf-mini-results > div { padding: 1.7mm; }
 .portfolio-pdf-mini-results strong { font-size: 7.2pt; }
 .portfolio-pdf-mini-results span { font-size: 6.8pt; line-height: 1.45; }
+.portfolio-pdf-mini-narrative { display: grid; gap: 1.2mm; margin: 1.5mm 0 0; font-size: 6.8pt; line-height: 1.45; }
+.portfolio-pdf-mini-narrative > div { display: grid; grid-template-columns: 8mm minmax(0, 1fr); gap: 1mm; }
+.portfolio-pdf-mini-narrative dt { color: #34465c; font-weight: 700; }
+.portfolio-pdf-mini-narrative dd { margin: 0; color: #536176; }
+.portfolio-pdf-mini-narrative > div:last-child dd { color: #0c55b8; }
 .portfolio-pdf-stack { margin-top: 2mm; font-size: 6.8pt; }
 .portfolio-pdf-foundation-row { margin-top: 2.5mm; }
 .portfolio-pdf-foundation-row article { padding: 2.5mm 3mm; }

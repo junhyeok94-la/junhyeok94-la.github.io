@@ -1,7 +1,7 @@
 title: Pop Talk
 subtitle: HyperCLOVA X 기반 영화 관람 기록·취향 분석 AI Agent
 context: NIPA-NAVER Cloud Sovereign AI PBL 기반 프로젝트
-period: 2026.08
+period: "2026.08"
 team: 4인 팀
 award: 우수상
 role: 데이터·AI Agent 구현 참여
@@ -80,7 +80,7 @@ architecture:
   - layer: Data
     detail: KOBIS·KMDB 수집 배치, PostgreSQL 16, pgvector
   - layer: NCP Infrastructure
-    detail: Public·Private Subnet, 이중 Load Balancer, Bastion, NAT Gateway, PrivateLink
+    detail: Public·Private Subnet, Public·Private Load Balancer, Bastion, NAT Gateway
 stack:
   Front-End: [Next.js, React, TypeScript, Tailwind CSS]
   Back-End: [Python, FastAPI, SQLAlchemy]

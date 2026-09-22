@@ -142,7 +142,7 @@ export default function ResumePage() {
               <ProjectHeader project={gsRetail} />
               <p className="resume-project-summary">{gsRetail.summary}</p>
               <div className="resume-stack-line">{gsRetail.stack.join(' · ')}</div>
-              <AchievementList items={gsRetail.achievements.slice(0, 3)} />
+              <AchievementList items={gsRetail.achievements.slice(0, 4)} />
             </div>
           </div>
           <footer className="resume-page-footer"><span>{profile.nameEn} · 이력서</span><span>01 / 03</span></footer>
@@ -154,7 +154,7 @@ export default function ResumePage() {
 
           <section className="resume-project-section">
             <ProjectHeader project={gsRetail} />
-            <AchievementList items={gsRetail.achievements.slice(3)} />
+            <AchievementList items={gsRetail.achievements.slice(4)} />
           </section>
           <section className="resume-project-section">
             <ProjectHeader project={kics} />

@@ -18,7 +18,7 @@ export type Profile = {
   skills: Record<string, string[]>;
   employment: Employment[];
 };
-export type Achievement = { title: string; problem: string; action: string; result: string };
+export type Achievement = { title: string; problem: string; action: string; result: string; summary?: string };
 export type Contribution = { rate: string; basis: string };
 export type Project = {
   id: string;

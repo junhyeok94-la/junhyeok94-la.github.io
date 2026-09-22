@@ -2,13 +2,13 @@
   title: GS리테일 HBU 데이터 플랫폼 전환
   category: Private Sector
   period: 2025.06 - 2026.04
-  role: 배치 최적화 매니저
+  role: 배치 최적화 · 오케스트레이션 표준화
   contribution:
     rate: 100%
     basis: 배치 최적화 담당 영역 전반 주도
   company: 누리꿈소프트(주)
   featured: true
-  summary: Oracle·SAS 기반 홈쇼핑 데이터를 Airflow, dbt, Redshift 기반 플랫폼으로 전환하고 배치 시간, 비용, 품질 거버넌스를 개선했습니다.
+  summary: Oracle·SAS 기반 홈쇼핑 데이터의 Airflow·dbt·Redshift 전환에서 1,000개 이상 dbt 모델의 배치 최적화와 복구·검증·모니터링을 담당했습니다.
   stack:
     - Apache Airflow 2.10
     - dbt
@@ -20,29 +20,29 @@
     - Confluence
   achievements:
     - title: 워크로드 격리와 비용 최적화
-      problem: 1,000개 이상의 dbt 모델이 특정 시간대에 Provisioned 클러스터의 쿼리 큐잉과 리소스 경합을 유발했습니다.
-      action: manifest.json 의존성을 파싱하고 헤비 모델을 Redshift Serverless로 분리 실행하는 태그 기반 파이프라인을 설계했습니다.
-      result: 상시 클러스터 증설 없이 피크 타임 병목을 제거하고 불필요한 비용을 방어했습니다.
+      problem: 특정 시간대에 Provisioned 클러스터의 쿼리 큐잉과 자원 경합이 발생했지만, 전체 Serverless 전환은 비용 부담이 있었습니다.
+      action: manifest.json의 의존성과 태그를 파싱해 고부하 모델만 Serverless로 분리했습니다. CTE 중간 결과는 CTAS로 물리화하고 Sort Key를 적용하도록 개선했습니다.
+      result: 상시 클러스터 증설 없이 피크 시간대 자원 경합을 완화했습니다.
     - title: Stateful Backfill 체계
       problem: Hourly 배치의 소급 범위가 4시간으로 하드코딩되어 장시간 장애 시 복구에 제약이 있었습니다.
-      action: Airflow Variable로 마지막 성공 data_interval_end를 추적하는 상태 관리 로직을 도입했습니다.
+      action: Airflow Variable에 마지막 성공 data_interval_end를 저장하고, 업무일 경계와 대기 시간을 확인해 누락 구간을 다음 배치에서 복구하도록 구성했습니다.
       result: 자동 소급 범위를 최대 24시간으로 확장해, 일별 배치에 필요한 해당 일자 00시 시간별 배치를 복구할 수 있도록 했습니다.
     - title: 대규모 오케스트레이션 표준화
       problem: 단일 DAG에서 대규모 모델을 파싱할 때 렌더링 지연과 워커 슬롯 낭비가 발생했습니다.
-      action: 도메인별 Sub DAG와 Control DAG 구조로 분리하고 deferrable 실행을 템플릿화했습니다.
-      result: 파싱 부하와 워커 점유를 줄이고 다수 수행사가 함께 사용할 수 있는 운영 표준을 만들었습니다.
+      action: 도메인별 실행 DAG와 이를 제어하는 Control DAG로 분리하고, 공통 모듈·태그·품질 규칙과 deferrable 실행 방식을 표준화했습니다.
+      result: DAG 파싱 부하와 워커 점유를 완화하고 여러 수행사가 같은 기준으로 개발·운영할 수 있게 했습니다.
     - title: 데이터 품질 가드레일
-      problem: Redshift가 PK 유일성을 강제하지 않아 멀티 수행사 환경에서 중복 데이터 인입 위험이 있었습니다.
-      action: 핵심 모델의 dbt test 의무화와 배치 후행 전수 중복 검증 DAG를 구축했습니다.
-      result: 사람의 주의력에 의존하지 않는 이중 데이터 품질 검증 체계를 확립했습니다.
+      problem: 중복 키 검증 외에도 AS-IS·TO-BE의 건수와 주요 컬럼 값을 함께 확인할 공통 기준이 필요했습니다.
+      action: dbt test·후행 중복 검증에 더해, 주요 컬럼을 Group By한 건수·값을 비교하는 Diff Check DAG를 개발하고 결과를 Redshift에 매일 적재했습니다.
+      result: 수행사와 고객사가 같은 검증 결과를 확인하도록 해 수작업 검증과 반복 협의를 줄였습니다.
     - title: 메타 DB 부하 개선
       problem: Grafana의 비효율적인 메타 DB 쿼리가 Airflow 스케줄러 지연을 유발했습니다.
-      action: 인덱스를 고려한 경량 쿼리로 대시보드를 재설계했습니다.
+      action: 인덱스를 고려한 경량 쿼리로 대시보드를 재설계하고, 도메인별 실행 추이·실패 태스크·Pool Slot·배치 지연율을 확인하도록 구성했습니다.
       result: 스케줄러 응답을 정상화하고 태스크·Pool Slot·지연율 모니터링을 안정화했습니다.
 - id: pop-talk-ai-agent
   title: Pop Talk · Personal Movie AI Agent
   category: AI PBL · Awarded Project
-  period: 2026.08
+  period: "2026.08"
   role: 4인 팀 · 데이터·AI Agent 구현 참여
   contribution:
     rate: 40%
@@ -92,7 +92,7 @@
     - title: 법령 수집 무인화
       problem: 법령 정보 수집이 수작업에 의존하고 있었습니다.
       action: 메타데이터의 수집 여부를 판단하는 Python 전처리·수집 프로그램을 개발했습니다.
-      result: 반복 작업을 자동화하고 법령 데이터의 최신성을 보장했습니다.
+      result: 법령 정보의 반복 수집·갱신 작업을 자동화했습니다.
 - id: local-finance
   title: 차세대 지방재정관리시스템 데이터 플랫폼
   category: Public Sector
@@ -109,11 +109,12 @@
     - title: One-Table 모델 도입
       problem: 화면별 물리 테이블 방식으로는 200여 개 통계 화면의 유지보수 비용이 급증할 가능성이 컸습니다.
       action: 화면 ID를 파티션 키로 사용하는 통합 테이블 모델과 공통 규칙을 설계했습니다.
-      result: 200여 개 화면을 기한 내 완수하고 신규 화면 개발 생산성을 높였습니다.
+      result: 공통 모델과 개발 규칙을 200여 개 통계·BI 화면 구축에 적용했습니다.
     - title: 행정 비즈니스 로직 전산화
+      summary: 담당 공무원과 요구사항을 조율하고 내부·Open API 데이터를 결합해 유형분류·위기관리 심화 화면 30여 본을 구축했습니다.
       problem: 자치단체 유형분류와 재정위기관리 산출이 외부 용역과 수작업에 의존했습니다.
       action: 담당 공무원과 요구사항을 조율하고 내부 데이터와 Open API를 결합한 지표 산출 파이프라인을 구현했습니다.
-      result: 유형분류·위기관리 심화 화면 30여 본을 성공적으로 오픈했습니다.
+      result: 유형분류·재정위기관리 로직을 시스템화해 심화 화면 30여 본을 구축했습니다.
     - title: 외부 API 수집 기반 마련
       problem: 통계청과 한국은행 데이터를 일관되게 연계할 기반이 필요했습니다.
       action: Python 초기 수집·적재 스크립트와 ETL 연계 POC를 수행했습니다.
@@ -134,7 +135,7 @@
     - title: 테이블별 적재 전략 최적화
       problem: 모든 원천 테이블을 Full Load하면 처리 시간과 클라우드 비용이 불필요하게 증가할 수 있었습니다.
       action: 볼륨, 휘발성, 예상 증가량, 갱신 주기를 프로파일링해 Full·Incremental 전략을 세분화했습니다.
-      result: 초기 데이터 레이크 파이프라인의 경제성과 처리 효율을 확보했습니다.
+      result: 테이블 특성에 따라 적재 대상·우선순위와 Full·Incremental 적재 기준을 마련했습니다.
 - id: hanwha-esh
   title: 한화솔루션 ESH Portal
   category: Web Foundation

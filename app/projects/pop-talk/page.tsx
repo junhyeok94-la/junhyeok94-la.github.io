@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { LangGraphFlowEmbed } from '@/components/langgraph-flow-embed';
+import { NcpArchitecture } from '@/components/ncp-architecture';
 import { badgeVariants } from '@/components/ui/badge';
 import { buttonVariants } from '@/components/ui/button';
 import { popTalk } from '@/lib/content';
@@ -138,25 +139,17 @@ export default function PopTalkPage() {
       <section className="case-section case-architecture">
         <div className="case-section-heading">
           <span>07 / ARCHITECTURE</span>
-          <h2>서비스부터 PrivateLink까지<br />분리한 NCP 구조</h2>
-          <p>사용자 트래픽, 외부 API, AI API의 진입 경로를 분리하고 Web·WAS·ChatBot·DB를 Private Subnet 중심으로 구성했습니다.</p>
+          <h2>서비스와 데이터 흐름을<br />구분한 NCP 구조</h2>
+          <p>사용자 요청은 Public LB와 Web을 거쳐 내부 서비스로 전달됩니다. 영화 데이터 수집·적재와 AI API 연계를 함께 표시했습니다.</p>
         </div>
         <figure className="architecture-figure">
           <div className="architecture-image-scroll">
-            <Image
-              src="/projects/pop-talk/ncp-system-architecture.png"
-              alt="Public Load Balancer, Web Server, Private Load Balancer, WAS와 ChatBot Server, PostgreSQL, Batch Server, Object Storage, NAT Gateway와 PrivateLink로 구성한 NCP 시스템 아키텍처"
-              width={2400}
-              height={1350}
-              sizes="(max-width: 900px) 900px, 84vw"
-              unoptimized
-            />
+            <NcpArchitecture />
           </div>
           <figcaption>
             <span>REQUEST PATH</span>
             <strong>Public LB → Web → Private LB → WAS / ChatBot</strong>
-            <p>외부 데이터는 NAT Gateway, HyperCLOVA X는 PrivateLink를 통해 연결하고 운영 로그와 오브젝트 스토리지를 별도 관리합니다.</p>
-            <a href="/projects/pop-talk/ncp-system-architecture.png" target="_blank" rel="noreferrer">원본 크기로 보기 ↗</a>
+            <p>발표자료를 역할과 주요 호출 방향 중심으로 재구성했습니다. IP와 서브넷 크기를 생략한 논리 구성도입니다.</p>
           </figcaption>
         </figure>
         <div className="architecture-grid">

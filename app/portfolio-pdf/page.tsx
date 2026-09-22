@@ -3,6 +3,7 @@ import { ArrowLeft, Download } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { NcpArchitecture } from '@/components/ncp-architecture';
 import { popTalk, profile, projects, type Achievement, type Project } from '@/lib/content';
 
 const TOTAL_PAGES = 7;
@@ -31,7 +32,7 @@ function PageHeader({ section }: { section: string }) {
 function PageFooter({ page }: { page: number }) {
   return (
     <footer className="portfolio-pdf-page-footer">
-      <span><a href={`mailto:${profile.email}`}>{profile.email}</a> · <a href="https://junhyeok94-la.github.io/">junhyeok94-la.github.io</a></span>
+      <span><a href={`mailto:${profile.email}`}>{profile.email}</a> · <a href="https://junhyeok94-la.github.io/">junhyeok94-la.github.io</a> · <a href={profile.linkedin}>LinkedIn</a></span>
       <span>{String(page).padStart(2, '0')} / {String(TOTAL_PAGES).padStart(2, '0')}</span>
     </footer>
   );
@@ -83,10 +84,18 @@ function CompactProject({ project }: { project: Project }) {
           <Contribution project={project} />
         </div>
       </header>
-      <p>{project.summary}</p>
       <div className="portfolio-pdf-mini-results">
-        {project.achievements.map((achievement) => (
-          <div key={achievement.title}><strong>{achievement.title}</strong><span>{achievement.result}</span></div>
+        {project.achievements.map((achievement, index) => (
+          <div key={achievement.title}>
+            <strong>{achievement.title}</strong>
+            {index === 0 ? (
+              <dl className="portfolio-pdf-mini-narrative">
+                <div><dt>문제</dt><dd>{achievement.problem}</dd></div>
+                <div><dt>실행</dt><dd>{achievement.action}</dd></div>
+                <div><dt>성과</dt><dd>{achievement.result}</dd></div>
+              </dl>
+            ) : <span>{achievement.summary ?? achievement.action}</span>}
+          </div>
         ))}
       </div>
       <small className="portfolio-pdf-stack">{project.stack.join(' · ')}</small>
@@ -144,6 +153,7 @@ export default function PortfolioPdfPage() {
           <div className="portfolio-pdf-cover-footer">
             <a href={`mailto:${profile.email}`}>{profile.email}</a>
             <a href="https://junhyeok94-la.github.io/">junhyeok94-la.github.io</a>
+            <a href={profile.linkedin}>LinkedIn</a>
             <span>UPDATED {profile.updatedAt}</span>
           </div>
         </section>
@@ -182,8 +192,7 @@ export default function PortfolioPdfPage() {
               <h3>현업에서 쌓은 데이터 신뢰성 경험을<br />AI Agent 설계로 확장</h3>
             </div>
             <div className="portfolio-pdf-transition-copy">
-              <p>수집·적재·모델링·배치 운영과 품질 검증 경험을 생성형 AI 서비스에 적용하기 위해 NIPA–NAVER Cloud Sovereign AI PBL에 참여했습니다.</p>
-              <p><strong>이후 Pop-Talk만 설계 자료가 자세한 이유</strong>현업 프로젝트는 고객사 보안상 공개 가능한 문제·실행·성과를 중심으로 요약했습니다. 교육 팀 프로젝트인 Pop-Talk는 직접 만든 발표자료와 비식별 구현 화면을 활용할 수 있어 기획·Agent Flow·클라우드 아키텍처까지 상세히 보여드립니다.</p>
+              <p>수집·적재·모델링·품질 검증 경험을 영화 추천 서비스의 데이터 파이프라인과 RAG·Agent 검수 흐름으로 확장했습니다. 다음 페이지에서 교육 팀 프로젝트의 실제 구현과 담당 범위를 보여드립니다.</p>
             </div>
             <dl><dt>프로젝트 성격</dt><dd>직무 교육 기반 4인 팀 프로젝트</dd><dt>검증 범위</dt><dd>RAG · LangGraph · NCP 서비스 구현</dd></dl>
           </section>
@@ -242,9 +251,9 @@ export default function PortfolioPdfPage() {
 
         <section className="portfolio-pdf-page portfolio-pdf-architecture-page">
           <PageHeader section="ARCHITECTURE & NEXT" />
-          <SectionTitle number="06" eyebrow="Pop Talk · 시스템 설계" title="서비스부터 PrivateLink까지 분리한 NCP 구조" description="사용자 트래픽과 외부 API·AI API의 진입 경로를 분리하고 Web·WAS·ChatBot·DB를 Private Subnet 중심으로 구성했습니다." />
+          <SectionTitle number="06" eyebrow="Pop Talk · 시스템 설계" title="서비스와 데이터 흐름을 구분한 NCP 구조" description="사용자 요청 경로와 영화 데이터의 수집·적재, AI API 연계를 역할 중심으로 재구성했습니다." />
           <figure className="portfolio-pdf-architecture-figure">
-            <Image src="/projects/pop-talk/ncp-system-architecture.png" alt="Pop Talk NCP 시스템 아키텍처" width={2400} height={1350} loading="eager" unoptimized />
+            <NcpArchitecture />
           </figure>
           <div className="portfolio-pdf-architecture-grid">
             {popTalk.architecture.map((item) => <article key={item.layer}><strong>{item.layer}</strong><p>{item.detail}</p></article>)}

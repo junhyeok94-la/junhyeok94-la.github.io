@@ -15,10 +15,26 @@ import Link from 'next/link';
 
 import { badgeVariants } from '@/components/ui/badge';
 import { buttonVariants } from '@/components/ui/button';
-import { credentials, profile, projects } from '@/lib/content';
+import { credentials, profile, projects, type Achievement } from '@/lib/content';
 import { cn } from '@/lib/utils';
 
 const focusIcons = [GitBranch, DatabaseZap, ShieldCheck];
+
+function ProjectAchievement({ achievement }: { achievement: Achievement }) {
+  return (
+    <div className="achievement-item">
+      <CheckCircle2 aria-hidden="true" />
+      <div>
+        <h4>{achievement.title}</h4>
+        <dl className="achievement-narrative">
+          <div><dt>문제</dt><dd>{achievement.problem}</dd></div>
+          <div><dt>실행</dt><dd>{achievement.action}</dd></div>
+          <div className="achievement-result"><dt>성과</dt><dd>{achievement.result}</dd></div>
+        </dl>
+      </div>
+    </div>
+  );
+}
 
 export default function Home() {
   const featured = projects.filter((project) => project.featured);
@@ -114,6 +130,7 @@ export default function Home() {
                 <p className="project-period">{project.period} · {project.role}</p>
                 <h3>{project.title}</h3>
                 <p className="project-summary">{project.summary}</p>
+                {project.contribution && <p className="project-contribution">기여도 {project.contribution.rate} · {project.contribution.basis}</p>}
                 {project.award && <span className="award-chip"><Award /> {project.award}</span>}
               </div>
               <div className="stack-list">
@@ -123,29 +140,17 @@ export default function Home() {
               </div>
               <div className="achievement-list">
                 {primaryAchievements.map((achievement) => (
-                  <div className="achievement-item" key={achievement.title}>
-                    <CheckCircle2 aria-hidden="true" />
-                    <div>
-                      <strong>{achievement.title}</strong>
-                      <p>{achievement.result}</p>
-                    </div>
-                  </div>
+                  <ProjectAchievement achievement={achievement} key={achievement.title} />
                 ))}
                 {additionalAchievements.length > 0 && (
                   <details className="achievement-disclosure">
                     <summary>
-                      성과 {additionalAchievements.length}개 더 보기
+                      문제 해결 사례 {additionalAchievements.length}개 더 보기
                       <ChevronDown aria-hidden="true" />
                     </summary>
                     <div className="achievement-expanded">
                       {additionalAchievements.map((achievement) => (
-                        <div className="achievement-item" key={achievement.title}>
-                          <CheckCircle2 aria-hidden="true" />
-                          <div>
-                            <strong>{achievement.title}</strong>
-                            <p>{achievement.result}</p>
-                          </div>
-                        </div>
+                        <ProjectAchievement achievement={achievement} key={achievement.title} />
                       ))}
                     </div>
                   </details>
