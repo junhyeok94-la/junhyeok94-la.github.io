@@ -274,6 +274,7 @@ export default function Home() {
         </div>
         <div className="footer-links">
           <a href={`mailto:${profile.email}`}>{profile.email} <ArrowUpRight /></a>
+          <a href={profile.linkedin} target="_blank" rel="noreferrer">LinkedIn <ArrowUpRight /></a>
         </div>
         <p>© 2026 {profile.nameEn}. Last updated {profile.updatedAt}.</p>
       </footer>
