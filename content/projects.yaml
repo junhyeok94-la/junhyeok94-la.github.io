@@ -1,7 +1,7 @@
 - id: gs-retail-hbu
   title: GS리테일 HBU 데이터 플랫폼 전환
   category: Private Sector
-  period: 2025.06 - 2026.03
+  period: 2025.06 - 2026.04
   role: 배치 최적화 매니저
   contribution:
     rate: 100%
@@ -26,7 +26,7 @@
     - title: Stateful Backfill 체계
       problem: Hourly 배치의 소급 범위가 4시간으로 하드코딩되어 장시간 장애 시 복구에 제약이 있었습니다.
       action: Airflow Variable로 마지막 성공 data_interval_end를 추적하는 상태 관리 로직을 도입했습니다.
-      result: 안전 소급 범위를 24시간 이상으로 확장해 데이터 유실 위험을 낮췄습니다.
+      result: 자동 소급 범위를 최대 24시간으로 확장해, 일별 배치에 필요한 해당 일자 00시 시간별 배치를 복구할 수 있도록 했습니다.
     - title: 대규모 오케스트레이션 표준화
       problem: 단일 DAG에서 대규모 모델을 파싱할 때 렌더링 지연과 워커 슬롯 낭비가 발생했습니다.
       action: 도메인별 Sub DAG와 Control DAG 구조로 분리하고 deferrable 실행을 템플릿화했습니다.
