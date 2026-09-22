@@ -866,19 +866,19 @@ button.agent-graph-node:hover, button.agent-graph-node[aria-pressed='true'] { tr
 .portfolio-pdf-cover h1 { margin-top: 3mm; font-size: 34pt; }
 .portfolio-pdf-cover-main > p { max-width: 195mm; margin-top: 4mm; font-size: 11pt; }
 .portfolio-pdf-cover-summary { grid-template-columns: 1.05fr 0.95fr; gap: 6mm; margin-top: auto; padding: 4mm 0; }
-.portfolio-pdf-cover-profile > small, .portfolio-pdf-cover-summary aside > small { display: block; margin-bottom: 2mm; color: var(--lime); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 6.3pt; font-weight: 800; letter-spacing: 0.08em; }
-.portfolio-pdf-cover-summary > div > p { margin-bottom: 1.4mm; font-size: 6.8pt; line-height: 1.45; }
-.portfolio-pdf-cover-career { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2mm; margin-top: 3mm; }
-.portfolio-pdf-cover-career article { display: grid; grid-template-columns: 7mm 1fr; gap: 1.5mm; padding: 2.5mm; border: 1px solid rgb(255 255 255 / 0.13); background: rgb(255 255 255 / 0.04); }
-.portfolio-pdf-cover-career article > span { color: #7caeff; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 6pt; }
-.portfolio-pdf-cover-career strong { font-size: 7pt; }
-.portfolio-pdf-cover-career p { margin: 0.6mm 0; color: #b8c4d3; font-size: 6pt; }
-.portfolio-pdf-cover-career small { color: #7f8ea2; font-size: 5.5pt; }
+.portfolio-pdf-cover-profile > small, .portfolio-pdf-cover-summary aside > small { display: block; margin-bottom: 2.5mm; color: var(--lime); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 7.2pt; font-weight: 800; letter-spacing: 0.08em; }
+.portfolio-pdf-cover-summary > div > p { margin-bottom: 2mm; font-size: 8pt; line-height: 1.55; }
+.portfolio-pdf-cover-career { display: grid; grid-template-columns: repeat(2, 1fr); gap: 3mm; margin-top: 4mm; }
+.portfolio-pdf-cover-career article { display: grid; grid-template-columns: 8mm 1fr; gap: 2mm; padding: 3.5mm; border: 1px solid rgb(255 255 255 / 0.13); background: rgb(255 255 255 / 0.04); }
+.portfolio-pdf-cover-career article > span { color: #7caeff; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 7pt; }
+.portfolio-pdf-cover-career strong { font-size: 8.5pt; }
+.portfolio-pdf-cover-career p { margin: 0.8mm 0; color: #b8c4d3; font-size: 7.2pt; }
+.portfolio-pdf-cover-career small { color: #7f8ea2; font-size: 6.5pt; }
 .portfolio-pdf-cover-summary aside { grid-template-columns: repeat(3, 1fr); gap: 2mm; }
 .portfolio-pdf-cover-summary aside > small { grid-column: 1 / -1; }
-.portfolio-pdf-cover-summary aside > div { grid-template-columns: 6mm 1fr; padding: 2.7mm; }
-.portfolio-pdf-cover-summary aside strong { font-size: 7.3pt; }
-.portfolio-pdf-cover-summary aside p { font-size: 6pt; line-height: 1.4; }
+.portfolio-pdf-cover-summary aside > div { grid-template-columns: 7mm 1fr; padding: 3.5mm; }
+.portfolio-pdf-cover-summary aside strong { font-size: 8.5pt; }
+.portfolio-pdf-cover-summary aside p { font-size: 7.2pt; line-height: 1.45; }
 .portfolio-pdf-cover-credentials { display: grid; gap: 2mm; padding: 3mm 0; border-bottom: 1px solid rgb(255 255 255 / 0.16); }
 .portfolio-pdf-cover-credentials > div { display: grid; grid-template-columns: 17mm 1fr; gap: 2mm; }
 .portfolio-pdf-cover-credentials p { display: grid; grid-template-columns: 17mm 1fr; gap: 2mm; margin: 0; color: #aebccd; font-size: 6pt; line-height: 1.45; }
@@ -897,20 +897,20 @@ button.agent-graph-node:hover, button.agent-graph-node[aria-pressed='true'] { tr
 .portfolio-pdf-achievement-wide { min-height: 32mm; }
 .portfolio-pdf-achievement > span { font-size: 7pt; }
 .portfolio-pdf-achievement h3 { font-size: 9pt; }
-.portfolio-pdf-achievement p { grid-template-columns: 11mm 1fr; font-size: 6.8pt; line-height: 1.4; }
+.portfolio-pdf-achievement p { grid-template-columns: 11mm 1fr; font-size: 7.4pt; line-height: 1.45; }
 .portfolio-pdf-stack-bar { font-size: 6.5pt; }
 
 .portfolio-pdf-project-history { gap: 2.5mm; }
 .portfolio-pdf-compact-project { min-height: 95mm; padding: 3.5mm; }
-.portfolio-pdf-compact-project h3 { font-size: 9.5pt; }
+.portfolio-pdf-compact-project h3 { font-size: 10.5pt; }
 .portfolio-pdf-compact-project > header > div:first-child > span { font-size: 5.9pt; }
 .portfolio-pdf-compact-project > header > div:last-child strong { font-size: 6.5pt; }
 .portfolio-pdf-compact-project > header > div:last-child small { font-size: 5.9pt; }
-.portfolio-pdf-compact-project > p { margin: 1.8mm 0; font-size: 7pt; line-height: 1.45; }
+.portfolio-pdf-compact-project > p { margin: 2mm 0; font-size: 7.6pt; line-height: 1.5; }
 .portfolio-pdf-mini-results > div { padding: 1.7mm; }
-.portfolio-pdf-mini-results strong { font-size: 6.7pt; }
-.portfolio-pdf-mini-results span { font-size: 6.2pt; line-height: 1.4; }
-.portfolio-pdf-stack { margin-top: 1.7mm; font-size: 6.2pt; }
+.portfolio-pdf-mini-results strong { font-size: 7.2pt; }
+.portfolio-pdf-mini-results span { font-size: 6.8pt; line-height: 1.45; }
+.portfolio-pdf-stack { margin-top: 2mm; font-size: 6.8pt; }
 .portfolio-pdf-foundation-row { margin-top: 2.5mm; }
 .portfolio-pdf-foundation-row article { padding: 2.5mm 3mm; }
 .portfolio-pdf-foundation-row h3 { font-size: 8pt; }
@@ -951,8 +951,9 @@ button.agent-graph-node:hover, button.agent-graph-node[aria-pressed='true'] { tr
 .portfolio-pdf-product-grid figcaption strong { font-size: 7.5pt; }
 .portfolio-pdf-product-grid figcaption p { font-size: 6.1pt; }
 
-.portfolio-pdf-agent-figure img { height: 119mm; }
-.portfolio-pdf-agent-figure figcaption { font-size: 5.9pt; }
+.portfolio-pdf-agent-figure img { height: 147mm; }
+.portfolio-pdf-agent-figure figcaption { padding: 2.4mm 3.2mm; color: #b8c7da; font-size: 7pt; line-height: 1.45; }
+.portfolio-pdf-agent-figure figcaption strong { color: var(--lime); }
 .portfolio-pdf-data-flow > div { min-height: 22mm; }
 .portfolio-pdf-data-flow p { margin-top: 3.5mm; font-size: 5.7pt; }
 .portfolio-pdf-online-note { font-size: 5.7pt; }

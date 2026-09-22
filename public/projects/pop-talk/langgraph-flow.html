@@ -4,8 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pop Talk Chatbot – LangGraph 노드 흐름도</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./noto-sans-kr.css" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -16,7 +15,7 @@
       --pink: #ff5fa0; --red: #ff4f6b;
       --node-w: 190px;
     }
-    body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; overflow-x:hidden; }
+    body { font-family:'Noto Sans KR Variable','Noto Sans KR',Arial,sans-serif; background:var(--bg); color:var(--text); min-height:100vh; overflow-x:hidden; }
     header {
       padding:24px 36px 18px; border-bottom:1px solid var(--border);
       display:flex; align-items:center; gap:14px;
@@ -129,6 +128,10 @@
     html.print-mode .graph { padding:18px 56px 28px; }
     html.print-mode .sp { height:22px; }
     html.print-mode .nh { padding:8px 13px 6px; }
+    html.print-mode .ns { font-size:9.5px; }
+    html.print-mode .nt { font-size:15px; }
+    html.print-mode .nf { font-size:10.5px; }
+    html.print-mode .edge-label { font-size:10px; }
     html.print-mode .node:hover, html.print-mode .node.active { transform:none; }
   </style>
 </head>

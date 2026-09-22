@@ -3,19 +3,9 @@ import { ArrowLeft, Download } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { credentials, popTalk, profile, projects, type Achievement, type Project } from '@/lib/content';
+import { popTalk, profile, projects, type Achievement, type Project } from '@/lib/content';
 
 const TOTAL_PAGES = 7;
-
-const skillGroupLabelsKo: Record<string, string> = {
-  'Languages & Query': '언어·쿼리',
-  'Orchestration & Transformation': '오케스트레이션·변환',
-  'Data Warehouse & Database': 'DW·데이터베이스',
-  'Cloud & Big Data': '클라우드·빅데이터',
-  'DevOps & CI/CD': '개발 운영·CI/CD',
-  'Documentation & Collaboration': '문서화·협업',
-  'AI & Agent': 'AI·에이전트',
-};
 
 const focusLabelsKo: Record<string, string> = {
   'Batch Optimization': '배치 최적화',
@@ -151,17 +141,6 @@ export default function PortfolioPdfPage() {
               ))}
             </aside>
           </div>
-          <div className="portfolio-pdf-cover-credentials">
-            <div>
-              <strong>기술 역량</strong>
-              <div className="portfolio-pdf-cover-skill-grid">
-                {Object.entries(profile.skills).map(([group, skills]) => (
-                  <article key={group}><span>{skillGroupLabelsKo[group] ?? group}</span><p>{skills.join(' · ')}</p></article>
-                ))}
-              </div>
-            </div>
-            <p><strong>보유 자격</strong>{credentials.certifications.map((item) => `${item.name} (${item.date})`).join(' · ')}</p>
-          </div>
           <div className="portfolio-pdf-cover-footer">
             <a href={`mailto:${profile.email}`}>{profile.email}</a>
             <a href="https://junhyeok94-la.github.io/">junhyeok94-la.github.io</a>
@@ -256,12 +235,8 @@ export default function PortfolioPdfPage() {
           <SectionTitle number="05" eyebrow="Pop Talk · Agent 설계" title="실패 원인에 따라 필요한 단계부터 다시 실행" description="입력 검증부터 의도 분류, 검색, 생성, 품질 검수와 자가교정까지 실제 소스의 노드 및 점선 재시도 흐름을 그대로 반영했습니다." />
           <figure className="portfolio-pdf-agent-figure">
             <Image src="/projects/pop-talk/langgraph-flow-print.png" alt="Pop Talk LangGraph 노드 및 재시도 흐름" width={1600} height={900} loading="eager" unoptimized />
-            <figcaption>실선은 기본 처리 경로, 점선은 검수 결과에 따른 재분류·재검색·재생성 및 Fallback 경로입니다.</figcaption>
+            <figcaption><strong>실선</strong> 기본 처리 경로 · <strong>점선</strong> 검수 결과에 따른 재분류·재검색·재생성 및 Fallback 재시도 경로</figcaption>
           </figure>
-          <div className="portfolio-pdf-data-flow">
-            {popTalk.dataFlow.map((item, index) => <div key={item}><span>0{index + 1}</span><p>{item}</p></div>)}
-          </div>
-          <p className="portfolio-pdf-online-note">노드별 상세 처리 로직과 설계 의도는 웹 포트폴리오의 인터랙티브 그래프에서 확인할 수 있습니다.</p>
           <PageFooter page={6} />
         </section>
 
