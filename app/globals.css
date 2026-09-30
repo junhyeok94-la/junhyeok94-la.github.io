@@ -987,3 +987,29 @@ button.agent-graph-node:hover, button.agent-graph-node[aria-pressed='true'] { tr
 @media print {
   .portfolio-pdf-page { width: 297mm; height: 210mm; zoom: 1; }
 }
+
+/* Hands-on course badges remain distinct from exam-based certifications. */
+.learning-badges h3 { margin: 0 0 0.75rem; color: var(--blue); font-size: 0.78rem; }
+.learning-badge-list { display: grid; gap: 1rem; }
+.learning-badge-list article { min-width: 0; }
+.learning-badge-meta { display: block; color: #677588; font-size: 0.7rem; line-height: 1.45; }
+.learning-badges h4 { margin: 0.35rem 0; font-size: 0.88rem; line-height: 1.4; overflow-wrap: anywhere; }
+.learning-badges p { margin: 0; color: #56657a; font-size: 0.77rem; line-height: 1.5; }
+.learning-badges a { display: inline-block; margin-top: 0.4rem; color: var(--blue); font-size: 0.72rem; font-weight: 700; }
+.learning-badges a:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+.learning-badges-web { margin-top: 2rem; }
+.credential-columns .learning-badges h3 { margin-bottom: 0; }
+.credential-columns .learning-badges a { font-size: 0.72rem; }
+.learning-badges-resume, .learning-badges-portfolio { margin-top: 3mm; padding-top: 2.5mm; border-top: 1px solid #cbd4de; }
+.learning-badges-resume .learning-badge-list, .learning-badges-portfolio .learning-badge-list { grid-template-columns: 1fr 1fr; gap: 5mm; }
+.learning-badges-resume h3 { margin-bottom: 1.5mm; font-size: 7pt; }
+.learning-badges-resume .learning-badge-meta { font-size: 5.7pt; }
+.learning-badges-resume h4 { margin: 0.6mm 0; font-size: 6.6pt; line-height: 1.3; }
+.learning-badges-resume p { font-size: 5.8pt; line-height: 1.35; }
+.learning-badges-resume a { margin-top: 0.7mm; font-size: 5.7pt; }
+.learning-badges-portfolio { margin-top: 0; border-color: rgb(255 255 255 / 0.16); }
+.learning-badges-portfolio h3 { margin-bottom: 2mm; color: var(--lime); font-size: 7.2pt; }
+.learning-badges-portfolio .learning-badge-meta { color: #aebccd; font-size: 6pt; }
+.learning-badges-portfolio h4 { margin: 1mm 0; color: white; font-size: 7.6pt; line-height: 1.35; }
+.learning-badges-portfolio p { color: #b8c4d3; font-size: 6.5pt; }
+.learning-badges-portfolio a { margin-top: 1mm; color: #7caeff; font-size: 6pt; }

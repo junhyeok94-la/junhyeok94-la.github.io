@@ -1,6 +1,6 @@
 # 포트폴리오 내용 검증 기준
 
-최종 정리: 2026-09-28
+최종 정리: 2026-09-30
 
 ## 사실관계의 우선순위
 
@@ -34,6 +34,15 @@
 - 기존 발표 그림의 CIDR 표기와 초기 인프라 문서는 서로 다르다. 최종 서브넷을 확정할 자료가 없으므로 공개 구성도는 IP·서브넷 크기·서버 수를 생략한 논리 구성도로 제공한다.
 - 발표 그림은 PrivateLink, 초기 문서는 NAT 경유 CLOVA 호출로 적혀 있다. 본인 확인 전에는 최종 AI 연결 방식을 단정하지 않고 HyperCLOVA X API 연계로 표시한다.
 - 웹과 PDF는 `components/ncp-architecture.tsx`의 동일한 벡터 구성도를 사용한다. 과거 발표 이미지의 잘못된 주소를 다시 인용하지 않는다.
+
+## Snowflake 실습 수료 배지
+
+- LinkedIn 등록 내용과 Snowflake 공식 발급 페이지에서 본인 이름, 과정명, 발급일을 확인했다(2026-09-30).
+- Hands-On Essentials: Data Warehousing Workshop (Badge 1), 2026.09.21 발급.
+- Hands-On Essentials: Collaboration, Marketplace & Cost Estimation Workshop (Badge 2), 2026.09.30 발급.
+- `content/credentials.yaml`의 `learningBadges`에서 관리하고 웹·이력서·포트폴리오에 같은 수료 사실과 공개 검증 링크를 표시한다.
+- DORA의 실습 평가로 발급된 배지다. 자격증과 구분해 `실습 수료 배지`로 표시하며 SnowPro 시험 합격이나 상용 Snowflake 운영 경력으로 표현하지 않는다.
+- 자격증 번호, 학습자 ID, Snowflake 계정 식별자는 복사하지 않는다.
 
 ## 설명과 검증 방식
 

@@ -3,6 +3,8 @@ import { ArrowLeft, Download } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { LearningBadges } from '@/components/learning-badges';
+
 import { NcpArchitecture } from '@/components/ncp-architecture';
 import { popTalk, profile, projects, type Achievement, type Project } from '@/lib/content';
 
@@ -150,6 +152,7 @@ export default function PortfolioPdfPage() {
               ))}
             </aside>
           </div>
+          <LearningBadges variant="portfolio" />
           <div className="portfolio-pdf-cover-footer">
             <a href={`mailto:${profile.email}`}>{profile.email}</a>
             <a href="https://junhyeok94-la.github.io/">junhyeok94-la.github.io</a>

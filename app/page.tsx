@@ -13,6 +13,8 @@ import {
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { LearningBadges } from '@/components/learning-badges';
+
 import { badgeVariants } from '@/components/ui/badge';
 import { buttonVariants } from '@/components/ui/button';
 import { credentials, profile, projects, type Achievement } from '@/lib/content';
@@ -267,6 +269,7 @@ export default function Home() {
                 <span>{item.summary}</span>
               </article>
             ))}
+            <LearningBadges variant="web" />
             <Link href="/resume">전체 이력서 보기 <ArrowRight /></Link>
           </div>
         </div>

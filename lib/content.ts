@@ -43,6 +43,15 @@ export type Credentials = {
     date: string;
     badgePath?: string;
   }>;
+  learningBadges: Array<{
+    name: string;
+    program: string;
+    issuer: string;
+    label: string;
+    date: string;
+    summary: string;
+    verificationUrl: string;
+  }>;
   training: Array<{ name: string; period: string; team?: string; award?: string; contribution?: Contribution; summary: string }>;
   languages: Array<{ language: string; level: string; date: string }>;
 };

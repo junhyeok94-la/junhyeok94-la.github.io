@@ -3,6 +3,8 @@ import { ArrowLeft, Download } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { LearningBadges } from '@/components/learning-badges';
+
 import { credentials, profile, projects, type Achievement, type Project } from '@/lib/content';
 
 const projectCategoryLabelsKo: Record<string, string> = {
@@ -244,6 +246,7 @@ export default function ResumePage() {
               </div>
             ))}
           </section>
+          <LearningBadges variant="resume" />
           <footer className="resume-page-footer"><span>{profile.nameEn} · 이력서</span><span>03 / 03</span></footer>
         </section>
       </main>
