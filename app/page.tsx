@@ -5,10 +5,7 @@ import {
   Award,
   CheckCircle2,
   ChevronDown,
-  DatabaseZap,
-  GitBranch,
   Layers3,
-  ShieldCheck,
 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -19,8 +16,6 @@ import { badgeVariants } from '@/components/ui/badge';
 import { buttonVariants } from '@/components/ui/button';
 import { credentials, profile, projects, type Achievement } from '@/lib/content';
 import { cn } from '@/lib/utils';
-
-const focusIcons = [GitBranch, DatabaseZap, ShieldCheck];
 
 function ProjectAchievement({ achievement }: { achievement: Achievement }) {
   return (
@@ -86,25 +81,6 @@ export default function Home() {
           </div>
         </div>
 
-        <aside className="signal-panel" id="focus" aria-label="핵심 역량">
-          <div className="panel-heading"><span>CORE SIGNALS</span><span>{profile.experienceLabel}</span></div>
-          <div className="signal-orbit" aria-hidden="true">
-            <span className="orbit-core">DE</span>
-            <span className="orbit-ring orbit-ring-one" />
-            <span className="orbit-ring orbit-ring-two" />
-          </div>
-          <div className="focus-list">
-            {profile.focus.map((item, index) => {
-              const Icon = focusIcons[index];
-              return (
-                <div className="focus-item" key={item.label}>
-                  <Icon />
-                  <div><strong>{item.label}</strong><span>{item.value}</span></div>
-                </div>
-              );
-            })}
-          </div>
-        </aside>
       </section>
 
       <section className="project-preview" id="projects">

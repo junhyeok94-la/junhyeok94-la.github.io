@@ -10,12 +10,6 @@ import { popTalk, profile, projects, type Achievement, type Project } from '@/li
 
 const TOTAL_PAGES = 7;
 
-const focusLabelsKo: Record<string, string> = {
-  'Batch Optimization': '배치 최적화',
-  'Platform Modernization': '플랫폼 전환',
-  'Data Reliability': '데이터 신뢰성',
-};
-
 export const metadata: Metadata = {
   title: '나준혁 | 데이터 엔지니어 포트폴리오 PDF',
   description: '채용 제출용으로 구성한 데이터 엔지니어 나준혁의 프로젝트 포트폴리오입니다.',
@@ -136,21 +130,15 @@ export default function PortfolioPdfPage() {
             <div className="portfolio-pdf-cover-profile">
               <small>CAREER SNAPSHOT</small>
               {profile.summary.map((text) => <p key={text}>{text}</p>)}
-              <div className="portfolio-pdf-cover-career">
-                {profile.employment.map((item, index) => (
-                  <article key={item.company}>
-                    <span>0{index + 1}</span>
-                    <div><strong>{item.company}</strong><p>{item.position}</p><small>{item.period} · {item.duration}</small></div>
-                  </article>
-                ))}
-              </div>
             </div>
-            <aside>
-              <small>CORE SIGNALS</small>
-              {profile.focus.map((item, index) => (
-                <div key={item.label}><span>0{index + 1}</span><strong>{focusLabelsKo[item.label] ?? item.label}</strong><p>{item.value}</p></div>
+            <div className="portfolio-pdf-cover-career">
+              {profile.employment.map((item, index) => (
+                <article key={item.company}>
+                  <span>0{index + 1}</span>
+                  <div><strong>{item.company}</strong><p>{item.position}</p><small>{item.period} · {item.duration}</small></div>
+                </article>
               ))}
-            </aside>
+            </div>
           </div>
           <LearningBadges variant="portfolio" />
           <div className="portfolio-pdf-cover-footer">

@@ -83,15 +83,8 @@ a { color: inherit; text-decoration: none; }
 .site-header nav a:hover { color: var(--blue); }
 .header-contact { justify-self: end; }
 
-.hero {
-  display: grid;
-  grid-template-columns: minmax(0, 1.45fr) minmax(320px, 0.75fr);
-  gap: clamp(3rem, 7vw, 8rem);
-  align-items: center;
-  min-height: calc(100vh - 76px);
-  padding: clamp(5rem, 9vw, 8rem) 7vw;
-}
-.hero-copy { max-width: 880px; }
+.hero { padding: clamp(4rem, 6vw, 6rem) 7vw; }
+.hero-copy { max-width: 1500px; margin: 0 auto; }
 .eyebrow {
   display: flex;
   align-items: center;
@@ -105,9 +98,9 @@ a { color: inherit; text-decoration: none; }
 }
 .status-dot { width: 0.65rem; height: 0.65rem; border-radius: 50%; background: var(--lime); box-shadow: 0 0 0 5px rgb(217 255 87 / 0.28); }
 .hero h1 {
-  max-width: 920px;
+  max-width: 1120px;
   margin: 0;
-  font-size: clamp(2.55rem, 4.8vw, 5.5rem);
+  font-size: clamp(2.55rem, 4.2vw, 4.5rem);
   font-weight: 900;
   letter-spacing: -0.065em;
   line-height: 1.04;
@@ -118,29 +111,6 @@ a { color: inherit; text-decoration: none; }
 .hero-summary p { margin: 0.75rem 0; }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2.4rem; }
 .primary-action { box-shadow: 0 10px 28px rgb(8 100 241 / 0.22); }
-
-.signal-panel {
-  position: relative;
-  overflow: hidden;
-  min-height: 600px;
-  padding: 1.35rem;
-  border-radius: 1.5rem;
-  background: var(--ink);
-  color: white;
-  box-shadow: 0 32px 80px rgb(7 17 31 / 0.22);
-}
-.panel-heading { display: flex; justify-content: space-between; color: #91a0b4; font-family: ui-monospace, SFMono-Regular, Menlo, 'Noto Sans KR Variable', monospace; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; }
-.signal-orbit { position: relative; display: grid; place-items: center; height: 300px; }
-.orbit-core { z-index: 2; display: grid; place-items: center; width: 78px; height: 78px; border-radius: 50%; background: var(--lime); color: var(--ink); font-size: 1.4rem; font-weight: 950; box-shadow: 0 0 60px rgb(217 255 87 / 0.25); }
-.orbit-ring { position: absolute; border: 1px solid rgb(217 255 87 / 0.3); border-radius: 50%; }
-.orbit-ring-one { width: 170px; height: 170px; }
-.orbit-ring-two { width: 265px; height: 265px; border-color: rgb(255 255 255 / 0.12); }
-.focus-list { display: grid; gap: 0.55rem; }
-.focus-item { display: grid; grid-template-columns: auto 1fr; gap: 0.9rem; align-items: center; padding: 1rem; border: 1px solid rgb(255 255 255 / 0.11); border-radius: 0.8rem; background: rgb(255 255 255 / 0.055); }
-.focus-item svg { width: 1.25rem; color: var(--lime); }
-.focus-item strong, .focus-item span { display: block; }
-.focus-item strong { margin-bottom: 0.12rem; font-size: 0.86rem; }
-.focus-item span { color: #9dacbf; font-size: 0.75rem; }
 
 .project-preview { padding: 8rem 7vw; border-top: 1px solid rgb(7 17 31 / 0.14); background: #e9eef3; }
 .section-heading { display: grid; grid-template-columns: 1fr minmax(280px, 0.42fr); gap: 3rem; align-items: end; max-width: 1500px; margin: 0 auto 3.5rem; }
@@ -163,15 +133,12 @@ a { color: inherit; text-decoration: none; }
 @media (max-width: 980px) {
   .site-header { grid-template-columns: 1fr auto; }
   .site-header nav { display: none; }
-  .hero { grid-template-columns: 1fr; }
-  .signal-panel { min-height: auto; }
   .section-heading { grid-template-columns: 1fr; }
 }
 @media (max-width: 680px) {
   .site-header { min-height: 64px; padding: 0 1rem; }
   .hero, .project-preview { padding: 4.5rem 1rem; }
   .hero h1 { font-size: 2.35rem; }
-  .signal-panel { border-radius: 1rem; }
   .project-grid { grid-template-columns: 1fr; }
   .project-card { min-height: auto; }
 }
@@ -652,11 +619,6 @@ button.agent-graph-node:hover, button.agent-graph-node[aria-pressed='true'] { tr
 .portfolio-pdf-cover-main > p { max-width: 130mm; margin: 7mm 0 0; color: #d8e1ed; font-size: 12pt; font-weight: 700; letter-spacing: -0.03em; }
 .portfolio-pdf-cover-summary { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 9mm; margin-top: auto; padding: 7mm 0; border-top: 1px solid rgb(255 255 255 / 0.16); border-bottom: 1px solid rgb(255 255 255 / 0.16); }
 .portfolio-pdf-cover-summary > div > p { margin: 0 0 3mm; color: #aebccd; font-size: 7pt; line-height: 1.65; }
-.portfolio-pdf-cover-summary aside { display: grid; gap: 2mm; }
-.portfolio-pdf-cover-summary aside > div { display: grid; grid-template-columns: 9mm 1fr; gap: 0 2mm; padding: 2.5mm; border: 1px solid rgb(255 255 255 / 0.12); background: rgb(255 255 255 / 0.04); }
-.portfolio-pdf-cover-summary aside span { grid-row: 1 / 3; color: var(--lime); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 6pt; }
-.portfolio-pdf-cover-summary aside strong { font-size: 7pt; }
-.portfolio-pdf-cover-summary aside p { margin: 0.8mm 0 0; color: #8fa0b5; font-size: 5.8pt; line-height: 1.35; }
 .portfolio-pdf-cover-footer { display: flex; justify-content: space-between; margin-top: 6mm; color: #77889e; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 5.7pt; }
 
 .portfolio-pdf-profile-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 4mm; }
@@ -832,8 +794,6 @@ button.agent-graph-node:hover, button.agent-graph-node[aria-pressed='true'] { tr
 .portfolio-pdf-cover-main { margin-top: 20mm; }
 .portfolio-pdf-cover h1 { font-size: 35pt; }
 .portfolio-pdf-cover-summary { grid-template-columns: 1.15fr 1.35fr; margin-top: auto; padding: 5mm 0; }
-.portfolio-pdf-cover-summary aside { grid-template-columns: repeat(3, 1fr); }
-.portfolio-pdf-cover-summary aside > div { grid-template-columns: 7mm 1fr; }
 .portfolio-pdf-cover-footer { margin-top: 4mm; }
 .portfolio-pdf-profile-grid { grid-template-columns: 0.75fr 1.25fr; }
 .portfolio-pdf-skill-block { margin-top: 3mm; }
@@ -876,19 +836,14 @@ button.agent-graph-node:hover, button.agent-graph-node[aria-pressed='true'] { tr
 .portfolio-pdf-cover h1 { margin-top: 3mm; font-size: 34pt; }
 .portfolio-pdf-cover-main > p { max-width: 195mm; margin-top: 4mm; font-size: 11pt; }
 .portfolio-pdf-cover-summary { grid-template-columns: 1.05fr 0.95fr; gap: 6mm; margin-top: auto; padding: 4mm 0; }
-.portfolio-pdf-cover-profile > small, .portfolio-pdf-cover-summary aside > small { display: block; margin-bottom: 2.5mm; color: var(--lime); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 7.2pt; font-weight: 800; letter-spacing: 0.08em; }
+.portfolio-pdf-cover-profile > small { display: block; margin-bottom: 2.5mm; color: var(--lime); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 7.2pt; font-weight: 800; letter-spacing: 0.08em; }
 .portfolio-pdf-cover-summary > div > p { margin-bottom: 2mm; font-size: 8pt; line-height: 1.55; }
-.portfolio-pdf-cover-career { display: grid; grid-template-columns: repeat(2, 1fr); gap: 3mm; margin-top: 4mm; }
+.portfolio-pdf-cover-career { display: grid; grid-template-columns: repeat(2, 1fr); gap: 3mm; align-items: start; }
 .portfolio-pdf-cover-career article { display: grid; grid-template-columns: 8mm 1fr; gap: 2mm; padding: 3.5mm; border: 1px solid rgb(255 255 255 / 0.13); background: rgb(255 255 255 / 0.04); }
 .portfolio-pdf-cover-career article > span { color: #7caeff; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 7pt; }
 .portfolio-pdf-cover-career strong { font-size: 8.5pt; }
 .portfolio-pdf-cover-career p { margin: 0.8mm 0; color: #b8c4d3; font-size: 7.2pt; }
 .portfolio-pdf-cover-career small { color: #7f8ea2; font-size: 6.5pt; }
-.portfolio-pdf-cover-summary aside { grid-template-columns: repeat(3, 1fr); gap: 2mm; }
-.portfolio-pdf-cover-summary aside > small { grid-column: 1 / -1; }
-.portfolio-pdf-cover-summary aside > div { grid-template-columns: 7mm 1fr; padding: 3.5mm; }
-.portfolio-pdf-cover-summary aside strong { font-size: 8.5pt; }
-.portfolio-pdf-cover-summary aside p { font-size: 7.2pt; line-height: 1.45; }
 .portfolio-pdf-cover-credentials { display: grid; gap: 2mm; padding: 3mm 0; border-bottom: 1px solid rgb(255 255 255 / 0.16); }
 .portfolio-pdf-cover-credentials > div { display: grid; grid-template-columns: 17mm 1fr; gap: 2mm; }
 .portfolio-pdf-cover-credentials p { display: grid; grid-template-columns: 17mm 1fr; gap: 2mm; margin: 0; color: #aebccd; font-size: 6pt; line-height: 1.45; }
