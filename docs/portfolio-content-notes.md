@@ -49,7 +49,7 @@
 - LinkedIn 등록 내용과 Snowflake 공식 발급 페이지에서 본인 이름, 과정명, 발급일을 확인했다(2026-09-30).
 - Hands-On Essentials: Data Warehousing Workshop (Badge 1), 2026.09.21 발급.
 - Hands-On Essentials: Collaboration, Marketplace & Cost Estimation Workshop (Badge 2), 2026.09.30 발급.
-- Hands-On Essentials: Data Engineering Workshop, 2026.10.06 발급. [공식 개인 증서](https://www.credential.net/e8becfb6-1f5c-42e5-b297-83d965ae247f)에서 수료자 NAH Junhyeok과 발급자 Snowflake Education Services, 발급일 및 DORA 실습 평가를 확인했다.
+- Hands-On Essentials: Data Engineering Workshop (Badge 5), 2026.10.06 발급. [Snowflake 공식 과정](https://learn.snowflake.com/en/courses/uni-ess-dngw/)의 Badge 5 표기를 확인했다. [공식 개인 증서](https://www.credential.net/e8becfb6-1f5c-42e5-b297-83d965ae247f)에서 수료자 NAH Junhyeok과 발급자 Snowflake Education Services, 발급일 및 DORA 실습 평가를 확인했다.
 - Data Engineering Workshop의 증서에는 날짜·시간대 변환, IP 기반 위치 매핑, Tasks·MERGE 실행, Streams 기반 CDC, Snowpipe 이벤트 기반 연속 적재가 명시돼 있다. 공개 요약은 CDC·Tasks·MERGE·Snowpipe 실습으로 제한하며 상용 운영 경험으로 확대하지 않는다.
 - 새 [Data Engineering 공식 배지 PNG](https://templates.images.credential.net/16994664153733159231938818971877.png)는 증서에서 확인한 1065×1065 투명 원본을 그대로 사용한다. 교육·실습 PDF 영역만 3열로 배치하며 기존 프로젝트 본문 크기는 유지한다.
 - `content/credentials.yaml`의 `learningBadges`에서 관리하고 웹·이력서·포트폴리오에 같은 수료 사실과 공개 검증 링크를 표시한다.
