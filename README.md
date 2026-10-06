@@ -16,6 +16,7 @@ app/
   page.tsx               웹 포트폴리오
   resume/page.tsx        A4 이력서 템플릿
   projects/pop-talk/     Pop Talk 프로젝트 상세 페이지
+public/portfolio-pdf/    승인된 12쪽 편집형 포트폴리오 HTML·CSS·폰트
 scripts/
   generate-pdf.mjs       Chrome 기반 PDF 생성
 output/pdf/              생성된 최종 PDF
@@ -35,6 +36,7 @@ npm run dev
 - 포트폴리오: `http://localhost:3000`
 - 프로젝트 상세: `http://localhost:3000/projects/pop-talk`
 - 이력서 미리보기: `http://localhost:3000/resume`
+- 편집형 포트폴리오: `http://localhost:3000/portfolio-pdf/index.html` (배포 주소는 `/portfolio-pdf/`)
 
 ## GitHub 기반 관리 흐름
 
@@ -49,7 +51,7 @@ npm run dev
 
 ## 경력 수정
 
-일반적인 내용 수정은 `content/` 아래 YAML 파일만 편집합니다.
+웹·이력서의 일반적인 내용 수정은 `content/` 아래 YAML을 편집합니다. 승인된 12쪽 편집형 포트폴리오는 `public/portfolio-pdf/index.html`과 두 CSS 파일을 편집하며, 공통 경력 사실은 YAML과 대조합니다.
 
 1. `profile.yaml`에서 소개, 이메일, 기술, 회사 경력을 수정합니다.
 2. `projects.yaml`에서 프로젝트 기간과 문제·실행·성과를 수정합니다.
@@ -84,6 +86,8 @@ npm run resume:pdf -- --start
 npm run portfolio:pdf -- --start
 ```
 
+편집형 포트폴리오는 `public/portfolio-pdf/index.html`을 그대로 인쇄합니다. Next.js 정적 내보내기가 이 디렉터리를 복사하므로 공개 `/portfolio-pdf/`와 PDF의 원본이 같습니다. 이미지와 폰트는 모두 로컬 자산이며, 내부 자료나 비공개 생성 스크립트에 의존하지 않습니다.
+
 이력서와 포트폴리오를 한 번에 생성하려면 `npm run pdfs:generate -- --start`를 사용합니다. 포트폴리오 결과는 `output/pdf/na-junhyeok-data-engineer-portfolio-ko.pdf`와 웹 다운로드용 `public/portfolio.pdf`에 생성됩니다.
 
 ## 자동 배포
@@ -97,7 +101,7 @@ npm run lint
 npm run build
 ```
 
-PDF 내용을 변경한 뒤에는 생성된 3개 페이지를 이미지로 렌더링해 잘림, 겹침, 빈 페이지가 없는지 확인합니다.
+PDF 내용을 변경한 뒤에는 이력서 3쪽과 포트폴리오 12쪽을 이미지로 렌더링해 잘림, 겹침, 빈 페이지가 없는지 확인합니다.
 
 ## 콘텐츠 원칙
 

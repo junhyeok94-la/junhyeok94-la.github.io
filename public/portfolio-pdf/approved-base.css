@@ -1,0 +1,82 @@
+:root{--paper:#f6f5f1;--ink:#17262f;--blue:#264ce4;--muted:#52616a;--line:#cdd2d3;}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;background:#e5e7e7;color:var(--ink);font-family:'Noto Sans KR Variable','Malgun Gothic',sans-serif;}
+body{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+a{color:inherit;text-decoration:none;}
+h1,h2,h3,p,figure{margin:0;}
+.sheet{position:relative;width:297mm;height:210mm;padding:12mm 15mm 13mm;overflow:hidden;background:var(--paper);break-after:page;page-break-after:always;}
+.sheet:last-child{break-after:auto;page-break-after:auto;}
+.masthead{display:flex;justify-content:space-between;align-items:start;border-bottom:1px solid var(--ink);padding-bottom:5mm;}
+.wordmark{font-size:25pt;font-weight:800;letter-spacing:-.065em;line-height:1;}
+.wordmark span{font-size:21pt;padding-left:3mm;color:var(--blue);}
+.edition{font-size:8pt;line-height:1.65;letter-spacing:.1em;text-align:right;}
+.edition strong{font-size:7pt;font-weight:500;color:var(--muted);}
+.eyebrow{font-size:7.5pt;font-weight:650;letter-spacing:.09em;}
+.dot{display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--blue);margin-right:7px;vertical-align:middle;}
+.cover-title-block{position:relative;z-index:1;margin-top:16mm;}
+.cover h1{margin-top:5mm;font-size:35pt;font-weight:730;letter-spacing:-.065em;line-height:1.3;}
+.cover h1 em{color:var(--blue);font-style:normal;}
+.cover-deck{margin-top:6mm;font-size:11pt;line-height:1.8;letter-spacing:-.025em;color:var(--muted);}
+.cover-flow{position:absolute;right:15mm;top:97mm;width:99mm;}
+.cover-flow svg{display:block;width:100%;height:auto;}
+.cover-graph-label{font-size:14px;font-weight:650;fill:var(--ink);}
+.cover-flow figcaption{text-align:right;font-size:7.5pt;color:var(--muted);margin-top:1mm;}
+.cover-bottom{position:absolute;left:15mm;right:15mm;bottom:24mm;display:grid;grid-template-columns:1.05fr 1fr;gap:12mm;border-top:1px solid var(--ink);padding-top:6mm;}
+.identity h2{font-size:24pt;letter-spacing:-.05em;font-weight:700;margin:2mm 0 3mm;}
+.identity h2 span{font-size:8pt;font-weight:500;letter-spacing:.08em;margin-left:4mm;vertical-align:middle;}
+.identity>p:last-child{font-size:9pt;}
+.soft{font-size:8pt;color:var(--muted);margin-left:3mm;}
+.career{display:grid;grid-template-columns:1fr 1fr;gap:7mm;padding-top:2mm;}
+.career span{display:block;font-size:7.5pt;color:var(--muted);letter-spacing:.035em;}
+.career strong{display:block;font-size:11pt;margin-top:3mm;}
+.career p{font-size:8.5pt;margin-top:1.5mm;color:var(--muted);}
+.folio{position:absolute;left:15mm;right:15mm;bottom:8mm;display:flex;justify-content:space-between;gap:5mm;border-top:1px solid var(--line);padding-top:3mm;font-size:7pt;letter-spacing:.015em;color:var(--muted);}
+.case-masthead{display:flex;align-items:center;justify-content:space-between;font-size:8pt;border-bottom:1px solid var(--ink);padding-bottom:3mm;}
+.case-masthead b{color:var(--blue);font-size:11pt;margin-right:2mm;}
+.case-masthead>span:last-child{font-size:7.5pt;letter-spacing:.04em;}
+.case-heading{display:grid;grid-template-columns:1.75fr 1fr;gap:8mm;margin-top:6mm;align-items:start;}
+.case-heading .eyebrow{font-size:7pt;color:var(--blue);letter-spacing:.065em;}
+.case h1{font-size:27pt;font-weight:730;line-height:1.22;letter-spacing:-.055em;margin-top:2.8mm;}
+.case-outcome{border-left:1px solid var(--line);padding-left:9mm;}
+.case-outcome>p:first-child{font-size:8pt;font-weight:650;}
+.range{display:flex;align-items:baseline;gap:4mm;line-height:1;margin:3mm 0;}
+.range-before{font-size:31pt;font-weight:400;color:#9aa1a5;}
+.range-before>span,.range-after>span{font-size:16pt;margin-left:1mm;}
+.range-arrow{font-size:21pt;font-weight:350;color:#9aa1a5;}
+.range-after{font-size:37pt;font-weight:730;color:var(--blue);letter-spacing:-.04em;}
+.range-after small{font-size:8pt;margin-right:2mm;font-weight:600;letter-spacing:0;}
+.range-note{font-size:7.6pt;line-height:1.55;color:var(--muted);}
+.case-intro{display:grid;grid-template-columns:1.8fr 1fr;gap:8mm;margin:5mm 0 5mm;}
+.case-intro>p:first-child{font-size:9.2pt;line-height:1.65;letter-spacing:-.02em;}
+.scope{font-size:8pt;line-height:1.9;color:var(--muted);padding-left:4mm;}
+.scope b{display:inline-block;width:9mm;color:var(--ink);font-weight:650;}
+.case-core{display:grid;grid-template-columns:1.9fr 1fr;gap:8mm;}
+.batch-figure{border-top:2px solid var(--ink);padding-top:3mm;}
+.figure-heading{display:flex;justify-content:space-between;align-items:baseline;gap:4mm;}
+.figure-heading>span{font-size:9pt;font-weight:700;}
+.figure-heading>small{font-size:6.8pt;color:var(--muted);}
+.batch-figure svg{display:block;width:100%;margin-top:1mm;}
+.dependency{fill:none;stroke:#53636f;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+.time-dependency{stroke:var(--blue);stroke-dasharray:5 4;}
+.graph-node{fill:white;stroke:#a9b2b7;stroke-width:1;}
+.graph-node.source{fill:#e9edee;stroke:none;}
+.graph-node.daily{fill:#e9edff;stroke:#a9b9f0;}
+.graph-kicker{font-size:10px;font-weight:550;fill:#52616a;letter-spacing:.04em;}
+.graph-title{font-size:14px;font-weight:650;fill:var(--ink);}
+.graph-note{font-size:10.5px;font-weight:450;fill:#52616a;}
+.accent{fill:var(--blue);}
+.batch-figure figcaption{font-size:6.8pt;line-height:1.55;color:var(--muted);margin-top:1.5mm;max-width:168mm;}
+.implementation{border-top:2px solid var(--blue);padding-top:3mm;}
+.implementation>h2{font-size:9pt;font-weight:700;color:var(--blue);margin-bottom:2mm;}
+.implementation section{display:grid;grid-template-columns:6mm 1fr;gap:2mm;margin-top:3.2mm;}
+.implementation section>span{font-size:7pt;color:var(--blue);font-weight:650;padding-top:.5mm;}
+.implementation h3{font-size:9.2pt;font-weight:650;}
+.implementation p{font-size:9.2pt;line-height:1.6;letter-spacing:-.01em;color:var(--muted);margin-top:1mm;}
+code{font-family:inherit;font-size:8pt;color:var(--ink);}
+.related-work{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9mm;border-top:1px solid var(--line);padding-top:4mm;margin-top:6mm;}
+.related-work h3{font-size:9pt;font-weight:650;margin-bottom:1.5mm;}
+.related-work p{font-size:9pt;line-height:1.7;letter-spacing:-.02em;color:var(--muted);}
+.case .folio{font-size:6.7pt;}
+@page{size:A4 landscape;margin:0;}
+@media screen{main{display:grid;justify-content:center;gap:25px;padding:25px;} .sheet{box-shadow:0 10px 30px #0001;}}
+@media print{html,body{background:white;} main{display:block;} .sheet{margin:0;}}

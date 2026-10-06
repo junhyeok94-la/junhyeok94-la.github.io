@@ -42,7 +42,7 @@
 - 5,315편·5,309편·59,863건은 발표 시점의 구현 데이터 스냅샷이다. 활성 사용자 수나 상용 운영 성과로 해석하지 않는다.
 - 기존 발표 그림의 CIDR 표기와 초기 인프라 문서는 서로 다르다. 최종 서브넷을 확정할 자료가 없으므로 공개 구성도는 IP·서브넷 크기·서버 수를 생략한 논리 구성도로 제공한다.
 - 발표 그림은 PrivateLink, 초기 문서는 NAT 경유 CLOVA 호출로 적혀 있다. 본인 확인 전에는 최종 AI 연결 방식을 단정하지 않고 HyperCLOVA X API 연계로 표시한다.
-- 웹과 PDF는 `components/ncp-architecture.tsx`의 동일한 벡터 구성도를 사용한다. 과거 발표 이미지의 잘못된 주소를 다시 인용하지 않는다.
+- 웹은 `components/ncp-architecture.tsx`, 편집형 PDF는 같은 확인 범위의 별도 논리 구성도를 사용한다. 과거 발표 이미지의 잘못된 주소를 다시 인용하지 않는다.
 
 ## 교육·실습 배지
 
@@ -51,12 +51,13 @@
 - Hands-On Essentials: Collaboration, Marketplace & Cost Estimation Workshop (Badge 2), 2026.09.30 발급.
 - Hands-On Essentials: Data Engineering Workshop (Badge 5), 2026.10.06 발급. [Snowflake 공식 과정](https://learn.snowflake.com/en/courses/uni-ess-dngw/)의 Badge 5 표기를 확인했다. [공식 개인 증서](https://www.credential.net/e8becfb6-1f5c-42e5-b297-83d965ae247f)에서 수료자 NAH Junhyeok과 발급자 Snowflake Education Services, 발급일 및 DORA 실습 평가를 확인했다.
 - Data Engineering Workshop의 증서에는 날짜·시간대 변환, IP 기반 위치 매핑, Tasks·MERGE 실행, Streams 기반 CDC, Snowpipe 이벤트 기반 연속 적재가 명시돼 있다. 공개 요약은 CDC·Tasks·MERGE·Snowpipe 실습으로 제한하며 상용 운영 경험으로 확대하지 않는다.
-- 새 [Data Engineering 공식 배지 PNG](https://templates.images.credential.net/16994664153733159231938818971877.png)는 증서에서 확인한 1065×1065 투명 원본을 그대로 사용한다. 교육·실습 PDF 영역만 3열로 배치하며 기존 프로젝트 본문 크기는 유지한다.
-- `content/credentials.yaml`의 `learningBadges`에서 관리하고 웹·이력서·포트폴리오에 같은 수료 사실과 공개 검증 링크를 표시한다.
+- 새 [Data Engineering 공식 배지 PNG](https://templates.images.credential.net/16994664153733159231938818971877.png)는 증서에서 확인한 1065×1065 투명 원본을 그대로 사용한다. 이력서 PDF의 교육·실습 영역은 3열을 유지한다. 포트폴리오 PDF에는 교육 배지를 표시하지 않는다.
+- `content/credentials.yaml`의 `learningBadges`에서 관리하고 웹·이력서에 같은 수료 사실과 공개 검증 링크를 표시한다.
 - 2026-10-06 공식 개인 발급 페이지에서 두 과정의 정식 명칭·발급일과 DORA 평가 기반 수료 사실을 재확인했다. Badge 1은 테이블·파일 형식·Warehouse·Stage 구성, COPY INTO, CSV·JSON 처리이며, Badge 2는 Listing·Marketplace·공유, 비용 추정·모니터링, UDTF 실습이다.
 - 기존 저장소와 포트폴리오 원본 자료에 Snowflake 배지 이미지가 없어 공식 발급 페이지의 투명 PNG 원본(1065×1065)을 `public/credentials/`에 추가했다: [Badge 1 이미지](https://templates.images.credential.net/169712375586692777710499885412.png), [Badge 2 이미지](https://templates.images.credential.net/16971233885374075532896130114336.png).
-- 웹·이력서·포트폴리오는 `LearningBadges`에서 동일한 이미지·과정명·취득일·실습 설명을 사용한다. 배지와 과정명에 개인 공식 발급 페이지를 연결하고 별도 “발급 내역 확인” 문구는 쓰지 않는다. 이름·날짜·설명은 PDF에서 추출 가능한 텍스트로 유지한다.
+- 웹·이력서는 `LearningBadges`에서 동일한 이미지·과정명·취득일·실습 설명을 사용한다. 배지와 과정명에 개인 공식 발급 페이지를 연결하고 별도 “발급 내역 확인” 문구는 쓰지 않는다. 이름·날짜·설명은 PDF에서 추출 가능한 텍스트로 유지한다.
 - 공통 섹션 제목은 `교육·실습`이다. 기존 `직무 교육 및 프로젝트` 이력과 중복 항목을 만들지 않으며, 제공기관·수료 배지 구분·프로그램·평가 방식은 개별 `learningBadges` 데이터에서 표시한다. 기관별 평가 설명은 선택 항목 `assessment`로 관리해 다른 제공기관의 배지도 추가할 수 있다.
+- 경력 포트폴리오와 이력서의 중복을 줄이기 위해 교육 배지는 웹·이력서에만 유지한다. 포트폴리오 PDF 표지는 소개와 경력 요약에 집중하고, 마지막 12쪽은 Pop Talk 논리 아키텍처와 실제 구현·향후 고도화 과제를 구분해 마무리한다. Snowflake는 향후 실제 구현 증거가 확인된 프로젝트가 있을 때 포트폴리오에 반영한다(최종 구성 승인, 2026-10-06).
 - Snowflake 배지는 DORA 실습 평가로 발급됐다. 개별 과정에 수료 배지로 표시하며 SnowPro 시험 합격이나 상용 Snowflake 운영 경력으로 표현하지 않는다.
 - 자격증 번호, 학습자 ID, Snowflake 계정 식별자는 복사하지 않는다.
 
@@ -66,8 +67,18 @@
 - 웹은 문제·실행·성과를 표시하고, 제출 PDF는 프로젝트별 대표 사례의 문제·실행·성과를 우선한다.
 - 웹 첫 화면과 포트폴리오 PDF 표지에는 프로젝트 내용을 반복하는 `CORE SIGNALS` 패널을 두지 않는다. 소개 다음에 실제 경력과 프로젝트 근거가 드러나도록 간결하게 구성한다(본인 요청, 2026-09-30).
 - 경력 프로젝트의 문제 해결 경험을 데이터 신뢰성 및 AI 서비스 구현 경험과 연결한다. 교육 프로젝트와 상용 프로젝트의 범위는 구분한다.
-- 공통 경력 정보는 `content/`에서 관리해 웹·이력서·포트폴리오가 어긋나지 않게 한다.
+- 웹·이력서의 공통 경력 정보는 `content/`에서 관리한다. 승인된 편집형 포트폴리오는 `public/portfolio-pdf/index.html`에 별도 보존하며, 공통 경력 정보를 변경할 때 함께 대조한다.
 - 내용 변경 후 린트·빌드와 PDF 페이지 배치를 확인하고, 배포 후 다운로드 PDF 본문과 링크를 다시 검사한다.
 - 로컬 PDF 생성은 기존 dev 서버의 캐시를 재사용하지 않도록 새 빌드의 정적 페이지를 대상으로 한다.
 
 참조: 본인 확인 내용(2026-09-22, 2026-09-28) 및 면접 준비 중 직접 진술(2026-09-29, 2026-10-02, 2026-10-03), GS리테일 제출 이력서(2026-09-14), [Pop Talk 통합 저장소](https://github.com/junhyeok94-la/pop-talk).
+
+## 12쪽 편집형 포트폴리오 공개 원본
+
+- 2026-10-06 사용자가 검토·승인한 12쪽 편집형 PDF를 공개 포트폴리오로 교체한다. 웹 본문·이력서 원본과 배지 1·2·5는 유지한다.
+- 인쇄 원본은 `public/portfolio-pdf/index.html`, `full.css`, `approved-base.css`다. 공개 `/portfolio-pdf/`와 PDF 생성은 같은 HTML을 사용한다. 기존 7쪽 React 인쇄 템플릿은 제거해 다음 배포 때 되돌아가지 않게 한다.
+- GS리테일의 성공 구간 상태 저장·최대 24시간 자동 복구, 설정된 고부하 모델의 선택적 Serverless 실행, 업무 도메인별 DAG, Diff Check·모니터링을 각각 설명한다. 추정 성과 수치나 가정형 면접 답변은 포함하지 않는다.
+- 지방재정의 공통 집계 Fact는 본인 설명에 근거한 설계 개념도다. 물리적 키·파티션·스타 스키마를 단정하지 않는다. 유형분류 업무 화면은 실제 캡처가 아닌 재구성 화면과 예시 데이터로 표시한다. 기준 설정·산출, 전문기관 결과 비교, 연도별 확정 관리의 관계와 제약을 분리한다.
+- Pop Talk 4개 제품 이미지는 이미 공개한 `public/projects/pop-talk/`의 자료를 재사용한다. 교육 팀 구현, 본인 기여, 발표 당시 데이터 스냅샷, 향후 개인 확장 과제를 구분한다.
+- 원본 운영 가이드, HWP/PDF, 내부 캡처, 실제 데이터와 비공개 검토 자료는 저장소에 포함하지 않는다. 폰트는 Noto Sans KR Variable의 SIL Open Font License와 함께 저장한다.
+- PDF 생성은 포트폴리오 12쪽을 엄격히 검사한다. 결과 PDF를 다시 이미지·텍스트로 확인하고, 배포된 다운로드 파일과 3쪽 이력서도 검증한다.

@@ -3,7 +3,6 @@ import { existsSync } from 'node:fs';
 import { spawn } from 'node:child_process';
 import { join, resolve } from 'node:path';
 import { tmpdir } from 'node:os';
-import { pathToFileURL } from 'node:url';
 import { PDFDocument } from 'pdf-lib';
 
 const shouldStartServer = process.argv.includes('--start');
@@ -18,13 +17,14 @@ const documentConfigs = {
     outputPath: resolve(outputDir, 'na-junhyeok-data-engineer-resume-ko.pdf'),
     publicPath: resolve(projectRoot, 'public', 'resume.pdf'),
     expectedPages: 3,
+    allowTrailingBlankPage: true,
   },
   portfolio: {
     label: '포트폴리오',
-    siteUrl: process.env.PORTFOLIO_PDF_URL ?? 'http://127.0.0.1:3000/portfolio-pdf',
+    siteUrl: process.env.PORTFOLIO_PDF_URL ?? 'http://127.0.0.1:3000/portfolio-pdf/index.html',
     outputPath: resolve(outputDir, 'na-junhyeok-data-engineer-portfolio-ko.pdf'),
     publicPath: resolve(projectRoot, 'public', 'portfolio.pdf'),
-    expectedPages: 7,
+    expectedPages: 12,
   },
 };
 
@@ -63,7 +63,7 @@ async function waitForPage(url, timeoutMs = 45_000) {
 
 function run(command, args, options = {}) {
   return new Promise((resolveRun, rejectRun) => {
-    const child = spawn(command, args, { stdio: 'inherit', ...options });
+    const child = spawn(command, args, { stdio: 'inherit', windowsHide: true, ...options });
     child.on('error', rejectRun);
     child.on('exit', (code) => code === 0 ? resolveRun() : rejectRun(new Error(`${command} exited with ${code}`)));
   });
@@ -94,7 +94,7 @@ async function generatePdf(config) {
 
   // Headless Chromium on Windows can append one empty sheet after fixed A4 sections.
   const pdfDocument = await PDFDocument.load(await readFile(config.outputPath));
-  if (pdfDocument.getPageCount() === config.expectedPages + 1) {
+  if (config.allowTrailingBlankPage && pdfDocument.getPageCount() === config.expectedPages + 1) {
     pdfDocument.removePage(config.expectedPages);
     await writeFile(config.outputPath, await pdfDocument.save());
   } else if (pdfDocument.getPageCount() !== config.expectedPages) {
@@ -111,42 +111,13 @@ async function generatePdf(config) {
   browserProfile = undefined;
 }
 
-async function generateGraphSnapshot() {
-  const graphSourcePath = resolve(projectRoot, 'public', 'projects', 'pop-talk', 'langgraph-flow.html');
-  const graphOutputPath = resolve(projectRoot, 'public', 'projects', 'pop-talk', 'langgraph-flow-print.png');
-  const graphSourceUrl = pathToFileURL(graphSourcePath);
-  graphSourceUrl.searchParams.set('print', '1');
-  browserProfile = await mkdtemp(join(tmpdir(), 'njh-langgraph-'));
-  await run(browser, [
-    '--headless=new',
-    '--no-sandbox',
-    '--disable-gpu',
-    '--disable-extensions',
-    '--no-first-run',
-    '--no-default-browser-check',
-    '--hide-scrollbars',
-    '--run-all-compositor-stages-before-draw',
-    '--virtual-time-budget=2500',
-    '--window-size=1600,900',
-    `--user-data-dir=${browserProfile}`,
-    `--screenshot=${graphOutputPath}`,
-    graphSourceUrl.href,
-  ]);
-  const snapshot = await stat(graphOutputPath);
-  if (snapshot.size < 10_000) throw new Error(`LangGraph 스냅샷 크기가 비정상적으로 작습니다: ${snapshot.size} bytes`);
-  console.log(`Created ${graphOutputPath} (${snapshot.size} bytes)`);
-  await rm(browserProfile, { recursive: true, force: true });
-  browserProfile = undefined;
-}
-
 try {
   if (shouldStartServer) {
     const npmCommand = process.platform === 'win32' ? 'npm.cmd' : 'npm';
-    server = spawn(npmCommand, ['run', 'dev'], { cwd: projectRoot, stdio: 'inherit', shell: process.platform === 'win32' });
+    server = spawn(npmCommand, ['run', 'dev'], { cwd: projectRoot, stdio: 'inherit', windowsHide: true, shell: process.platform === 'win32' });
   }
 
   await mkdir(outputDir, { recursive: true });
-  if (documents.includes(documentConfigs.portfolio)) await generateGraphSnapshot();
   for (const document of documents) await generatePdf(document);
 } finally {
   if (server && !server.killed) server.kill();
