@@ -25,28 +25,28 @@
       result: 상시 클러스터 증설 없이 피크 시간대 자원 경합을 완화했습니다.
     - title: 시간 단위 배치 누락 구간 자동 복구
       problem: 시간 단위 배치의 소급 범위가 4시간으로 고정되어 장시간 장애 시 누락 구간을 복구하는 데 제약이 있었습니다.
-      action: Airflow Variable에 마지막 성공 data_interval_end를 기록하고, 업무일 경계와 대기 시간을 확인해 다음 배치에서 누락 구간을 자동 처리하도록 구현했습니다.
-      result: 자동 복구 범위를 최대 24시간으로 확장해, 일별 배치에 필요한 해당 일자 00시 시간 단위 배치를 복구할 수 있도록 했습니다.
+      action: 마지막 성공 구간의 종료 시각(data_interval_end)을 Airflow Variable에 저장했습니다. 다음 배치는 저장된 시점과 업무일 경계·대기 조건을 확인해 누락 구간을 처리하도록 구현했습니다.
+      result: 과거 누락 구간의 자동 복구 범위를 고정 4시간에서 최대 24시간으로 확장해, 일별 배치가 참조하는 해당 일자 00시 배치도 복구할 수 있게 했습니다.
     - title: 대규모 오케스트레이션 표준화
       problem: 단일 DAG에서 대규모 모델을 파싱할 때 렌더링 지연과 워커 슬롯 낭비가 발생했습니다.
-      action: 도메인별 실행 DAG와 이를 제어하는 Control DAG로 분리하고, 공통 모듈·태그·품질 규칙과 deferrable 실행 방식을 표준화했습니다.
+      action: BI 모델·주요 최종 테이블 기준으로 공통 사용 테이블을 묶고 고객사 운영팀과 도메인별 실행 DAG를 확정했습니다. Control DAG로 실행을 제어하고 dbt 모델·Airflow TaskGroup의 tag 기반 호출, 공통 모듈·품질 규칙·deferrable 실행을 표준화했습니다.
       result: DAG 파싱 부하와 워커 점유를 완화하고 여러 수행사가 같은 기준으로 개발·운영할 수 있게 했습니다.
     - title: 데이터 품질 가드레일
       problem: 중복 키 검증 외에도 AS-IS·TO-BE의 건수와 주요 컬럼 값을 함께 확인할 공통 기준이 필요했습니다.
       action: dbt test·후행 중복 검증에 더해, 주요 컬럼을 Group By한 건수·값을 비교하는 Diff Check DAG를 개발하고 결과를 Redshift에 매일 적재했습니다.
       result: 수행사와 고객사가 같은 검증 결과를 확인하도록 해 수작업 검증과 반복 협의를 줄였습니다.
     - title: 메타 DB 부하 개선
-      problem: Grafana의 비효율적인 메타 DB 쿼리가 Airflow 스케줄러 지연을 유발했습니다.
-      action: 인덱스를 고려한 경량 쿼리로 대시보드를 재설계하고, 도메인별 실행 추이·실패 태스크·Pool Slot·배치 지연율을 확인하도록 구성했습니다.
+      problem: Grafana 대시보드의 Airflow 메타 DB 조회에서 슬로우 쿼리가 발생해 스케줄러 지연으로 이어졌습니다.
+      action: 문제가 된 조회 쿼리를 인덱스를 고려해 경량화하고, 프로젝트 운영에 맞춰 도메인별 실행 추이·실패 태스크·Pool Slot·배치 지연율을 보여주도록 대시보드 내용을 수정했습니다.
       result: 스케줄러 응답을 정상화하고 태스크·Pool Slot·지연율 모니터링을 안정화했습니다.
 - id: pop-talk-ai-agent
   title: Pop Talk · Personal Movie AI Agent
   category: AI PBL · Awarded Project
   period: "2026.08"
-  role: 4인 팀 · 데이터·AI Agent 구현 참여
+  role: 4인 팀 · 데이터·AI Agent·NCP 인프라 구현 참여
   contribution:
     rate: 40%
-    basis: 데이터·AI Agent 구현
+    basis: 데이터·AI Agent·NCP 인프라 구현
   company: NIPA-NAVER Cloud Sovereign AI PBL
   featured: true
   award: 우수상
@@ -59,6 +59,7 @@
     - FastAPI
     - PostgreSQL/pgvector
     - NAVER Cloud Platform
+    - Terraform
   achievements:
     - title: 근거 기반 자가교정 Agent Flow
       problem: 생성형 AI의 영화 추천은 출처가 불명확하거나 사용자 조건과 어긋나는 환각 위험이 있었습니다.
@@ -70,7 +71,7 @@
       result: 실제 영화 데이터와 리뷰를 바탕으로 추천 이유를 설명하는 RAG 기반 서비스를 완성했습니다.
     - title: 팀 프로젝트 우수상
       problem: 교육에서 학습한 Sovereign AI, 생성형 AI, 데이터 파이프라인과 NCP 인프라를 하나의 실행 가능한 서비스로 통합해야 했습니다.
-      action: 4인 팀으로 사용자·관리자 기능, 배치 수집, AI Agent, 데이터베이스와 보안 네트워크를 연결해 데모 가능한 시스템을 구현했습니다.
+      action: 4인 팀이 서비스·배치·AI Agent 구현을 분담했습니다. NCP 웹 애플리케이션 아키텍처를 설계하고 Terraform으로 인프라를 구성했습니다.
       result: 최종 프로젝트 평가에서 우수상을 수상했습니다.
 - id: next-kics
   title: 차세대 KICS 데이터 플랫폼 구축
@@ -129,12 +130,12 @@
     basis: 원천 분석·적재 전략 핵심 담당
   company: 누리꿈소프트(주)
   featured: true
-  summary: 전사 정형 데이터를 AWS 데이터 레이크로 이관하기 위한 원천 분석과 적재 전략 수립을 담당했습니다.
+  summary: 전사 정형 데이터를 AWS 데이터 레이크로 이관하기 위한 원천 분석, ODS Full·Incremental 적재 방식 결정과 Airflow DAG 생성·적용을 담당했습니다.
   stack: [AWS S3, AWS Glue, Athena, Apache Airflow, Python]
   achievements:
     - title: 테이블별 적재 전략 최적화
       problem: 모든 원천 테이블을 Full Load하면 처리 시간과 클라우드 비용이 불필요하게 증가할 수 있었습니다.
-      action: 볼륨, 휘발성, 예상 증가량, 갱신 주기를 프로파일링해 Full·Incremental 전략을 세분화했습니다.
+      action: 볼륨·휘발성·예상 증가량·갱신 주기를 프로파일링해 ODS Full·Incremental 적재 방식을 결정하고, 이에 맞는 Airflow DAG 코드를 생성·적용했습니다.
       result: 테이블 특성에 따라 적재 대상·우선순위와 Full·Incremental 적재 기준을 마련했습니다.
 - id: hanwha-esh
   title: 한화솔루션 ESH Portal

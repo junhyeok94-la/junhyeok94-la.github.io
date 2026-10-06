@@ -944,27 +944,38 @@ button.agent-graph-node:hover, button.agent-graph-node[aria-pressed='true'] { tr
 }
 
 /* Hands-on course badges remain distinct from exam-based certifications. */
-.learning-badges h3 { margin: 0 0 0.75rem; color: var(--blue); font-size: 0.78rem; }
+.learning-badges-heading { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.3rem 0.8rem; margin-bottom: 0.75rem; }
+.learning-badges h3 { margin: 0; color: var(--blue); font-size: 0.78rem; }
+.learning-badges-heading > span { color: #677588; font-size: 0.65rem; line-height: 1.4; }
 .learning-badge-list { display: grid; gap: 1rem; }
-.learning-badge-list article { min-width: 0; }
+.learning-badge-list article { display: grid; grid-template-columns: 3.5rem minmax(0, 1fr); gap: 0.8rem; align-items: start; min-width: 0; }
+.learning-badge-image-link { display: block; }
+.learning-badge-image-link img { display: block; width: 3.5rem; height: 3.5rem; object-fit: contain; }
+.learning-badge-copy { min-width: 0; }
 .learning-badge-meta { display: block; color: #677588; font-size: 0.7rem; line-height: 1.45; }
 .learning-badges h4 { margin: 0.35rem 0; font-size: 0.88rem; line-height: 1.4; overflow-wrap: anywhere; }
+.learning-badges h4 a { color: inherit; font-size: inherit; font-weight: inherit; text-decoration: none; }
+.learning-badges h4 a:hover { text-decoration: underline; }
 .learning-badges p { margin: 0; color: #56657a; font-size: 0.77rem; line-height: 1.5; }
-.learning-badges a { display: inline-block; margin-top: 0.4rem; color: var(--blue); font-size: 0.72rem; font-weight: 700; }
-.learning-badges a:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+.learning-badges a:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
 .learning-badges-web { margin-top: 2rem; }
 .credential-columns .learning-badges h3 { margin-bottom: 0; }
-.credential-columns .learning-badges a { font-size: 0.72rem; }
 .learning-badges-resume, .learning-badges-portfolio { margin-top: 3mm; padding-top: 2.5mm; border-top: 1px solid #cbd4de; }
-.learning-badges-resume .learning-badge-list, .learning-badges-portfolio .learning-badge-list { grid-template-columns: 1fr 1fr; gap: 5mm; }
-.learning-badges-resume h3 { margin-bottom: 1.5mm; font-size: 7pt; }
+.learning-badges-resume .learning-badge-list, .learning-badges-portfolio .learning-badge-list { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4mm; }
+.learning-badges-resume .learning-badges-heading { gap: 1mm 3mm; margin-bottom: 1.5mm; }
+.learning-badges-resume h3 { font-size: 7pt; }
+.learning-badges-resume .learning-badges-heading > span { font-size: 5.7pt; }
+.learning-badges-resume .learning-badge-list article { grid-template-columns: 12mm minmax(0, 1fr); gap: 2mm; }
+.learning-badges-resume .learning-badge-image-link img { width: 12mm; height: 12mm; }
 .learning-badges-resume .learning-badge-meta { font-size: 5.7pt; }
 .learning-badges-resume h4 { margin: 0.6mm 0; font-size: 6.6pt; line-height: 1.3; }
 .learning-badges-resume p { font-size: 5.8pt; line-height: 1.35; }
-.learning-badges-resume a { margin-top: 0.7mm; font-size: 5.7pt; }
 .learning-badges-portfolio { margin-top: 0; border-color: rgb(255 255 255 / 0.16); }
-.learning-badges-portfolio h3 { margin-bottom: 2mm; color: var(--lime); font-size: 7.2pt; }
+.learning-badges-portfolio .learning-badges-heading { gap: 1mm 3mm; margin-bottom: 2mm; }
+.learning-badges-portfolio h3 { color: var(--lime); font-size: 7.2pt; }
+.learning-badges-portfolio .learning-badges-heading > span { color: #aebccd; font-size: 6pt; }
+.learning-badges-portfolio .learning-badge-list article { grid-template-columns: 18mm minmax(0, 1fr); gap: 3mm; }
+.learning-badges-portfolio .learning-badge-image-link img { width: 18mm; height: 18mm; }
 .learning-badges-portfolio .learning-badge-meta { color: #aebccd; font-size: 6pt; }
 .learning-badges-portfolio h4 { margin: 1mm 0; color: white; font-size: 7.6pt; line-height: 1.35; }
 .learning-badges-portfolio p { color: #b8c4d3; font-size: 6.5pt; }
-.learning-badges-portfolio a { margin-top: 1mm; color: #7caeff; font-size: 6pt; }

@@ -1,6 +1,6 @@
 # 포트폴리오 내용 검증 기준
 
-최종 정리: 2026-09-30
+최종 정리: 2026-10-06
 
 ## 사실관계의 우선순위
 
@@ -13,7 +13,7 @@
 - 루나랩스 종료: 2021.07
 - 컴퓨터공학 학사: 2021.01 - 2025.02
 - 서일대학교 졸업: 2018.03
-- 자동 소급: 최대 24시간. Daily 배치가 Hourly 데이터를 사용하므로 해당 일자 00시 Hourly 배치를 복구할 수 있어야 한다. 24시간 이상 또는 무제한 복구로 표현하지 않는다.
+- 자동 소급: 고정 4시간에서 최대 24시간으로 확장했다. 24시간은 복구에 걸린 시간이 아니라 과거 누락 구간을 자동 처리하는 대상 범위다. Daily 배치가 Hourly 데이터를 사용하므로 해당 일자 00시 Hourly 배치를 복구할 수 있어야 한다. 24시간을 초과한 범위 또는 무제한 복구로 표현하지 않는다.
 - 시간 단위 배치 복구는 마지막 성공 시점을 기록해 다음 배치에서 누락 구간을 처리하는 자체 로직이다. Airflow backfill 옵션은 사용하지 않았다. 공개 제목은 `시간 단위 배치 누락 구간 자동 복구`로 쓰고, 구현 범위가 모호한 `Stateful Backfill 체계` 표기는 피한다.
 - 전체 개발 경력에는 웹 개발 경험이 포함된다. 데이터 엔지니어 근무 기간만 5년 이상인 것처럼 표시하지 않는다.
 
@@ -22,26 +22,42 @@
 - manifest.json의 의존성과 태그를 분석해 고부하 모델만 Redshift Serverless로 분리했다. 전체 모델을 Serverless로 전환한 것으로 쓰지 않는다.
 - CTE 중간 결과를 CTAS로 물리화하고 Sort Key를 적용할 수 있도록 쿼리 구조를 개선했다.
 - 도메인별 실행 DAG와 Control DAG 구조다. Airflow의 SubDagOperator 사용으로 오해할 수 있는 `Sub DAG` 표기를 피한다.
-- Airflow Variable로 마지막 성공 data_interval_end를 관리하고 업무일 경계와 대기 시간을 확인했다.
+- 도메인은 BI 모델과 주요 최종 테이블을 기준으로 공통 테이블을 묶고 고객사 운영팀과 정기 미팅을 거쳐 확정했다. dbt 태그 호출과 Airflow TaskGroup을 표준화했다(본인 진술, 2026-09-29). 이 업무 도메인 분류를 고부하 모델의 선별 기준으로 혼용하지 않는다.
+- 마지막 성공 구간의 종료 시각인 `data_interval_end`를 Airflow Variable에 저장하고 다음 배치에서 참조했다. 업무일 경계와 대기 조건을 확인해 누락 구간을 처리하는 방식으로 설명한다. 이 저장된 성공 시점이 상태 관리의 근거이며, Airflow native backfill 설정으로 표현하지 않는다.
 - Diff Check DAG에서 AS-IS·TO-BE의 주요 컬럼을 Group By한 건수와 값을 비교하고 Redshift에 검증 결과를 매일 적재했다.
-- Grafana의 메타 DB 조회를 경량화하고 도메인별 실행·실패·Pool Slot·배치 지연을 확인하도록 구성했다.
+- Grafana 대시보드의 Airflow 메타 DB 조회에서 슬로우 쿼리가 발생해 조회 쿼리를 바꾸고 프로젝트에 맞게 대시보드 내용을 수정했다(본인 진술, 2026-10-03). 기존 제출 이력서의 인덱스를 고려한 조회 경량화, 스케줄러 응답 정상화, 도메인별 실행·실패·Pool Slot·배치 지연 모니터링과 대조해 반영한다.
+- 이어진 “해당 지표가 반드시 필요한 쿼리라면 어떻게 해소할지”는 가정형 면접 질문이다. 캐시·읽기 복제본·별도 집계 등의 답변 제안을 실제 적용한 개선이나 성과로 쓰지 않는다.
 - 검증된 전후 수치가 추가로 확인되기 전에는 비용 절감률·처리 시간 감소율을 만들지 않는다. 결과는 자원 경합 완화, 수작업 검증 및 반복 협의 감소처럼 확인되는 범위로 쓴다.
+
+## LG화학 담당 범위
+
+- 원천 분석 → ODS Full·Incremental 적재 방식 결정 → Airflow DAG 코드 생성·적용이 본인 담당 범위다(본인 진술, 2026-10-02).
+- 기존 내용의 테이블별 볼륨·휘발성·예상 증가량·갱신 주기 분석에 실제 DAG 생성·적용까지의 범위를 보강한다. 프로젝트 환경의 Glue·Athena와 본인 역할을 구분하며, Glue·Lake Formation의 주도 설계·운영 실적으로 확대하지 않는다.
 
 ## Pop Talk 공개 범위
 
-- 4인 팀의 교육 프로젝트이며 개인 담당 범위는 데이터 파이프라인, 임베딩·검색, Agent 처리·검수 흐름이다.
+- 4인 팀의 교육 프로젝트이며 개인 담당 범위는 데이터 파이프라인, 임베딩·검색, Agent 처리·검수 흐름과 NCP 웹 애플리케이션 아키텍처 설계·Terraform 인프라 구성이다.
+- NCP 설계·Terraform 구현 진술(2026-10-02)은 기존 로컬 `pop_talk-local_dev/infra_setting/main.tf`의 Ncloud 리소스 선언과 `docs/03-infrastructure.md`의 교육·시연 환경 설명으로 대조했다. Terraform 원본 관련 커밋은 `c32a987`(2026-08-07)이다.
+- 이후 별도로 작성한 `pop_talk_infra`의 기존 콘솔 리소스 import 계획을 완료된 운영 실적으로 쓰지 않는다. Pop Talk 경험을 AWS 데이터 플랫폼 IaC 실무나 GS리테일 ECS Fargate 롤링 배포 설계로 확대하지 않는다.
 - 5,315편·5,309편·59,863건은 발표 시점의 구현 데이터 스냅샷이다. 활성 사용자 수나 상용 운영 성과로 해석하지 않는다.
 - 기존 발표 그림의 CIDR 표기와 초기 인프라 문서는 서로 다르다. 최종 서브넷을 확정할 자료가 없으므로 공개 구성도는 IP·서브넷 크기·서버 수를 생략한 논리 구성도로 제공한다.
 - 발표 그림은 PrivateLink, 초기 문서는 NAT 경유 CLOVA 호출로 적혀 있다. 본인 확인 전에는 최종 AI 연결 방식을 단정하지 않고 HyperCLOVA X API 연계로 표시한다.
 - 웹과 PDF는 `components/ncp-architecture.tsx`의 동일한 벡터 구성도를 사용한다. 과거 발표 이미지의 잘못된 주소를 다시 인용하지 않는다.
 
-## Snowflake 실습 수료 배지
+## 교육·실습 배지
 
 - LinkedIn 등록 내용과 Snowflake 공식 발급 페이지에서 본인 이름, 과정명, 발급일을 확인했다(2026-09-30).
 - Hands-On Essentials: Data Warehousing Workshop (Badge 1), 2026.09.21 발급.
 - Hands-On Essentials: Collaboration, Marketplace & Cost Estimation Workshop (Badge 2), 2026.09.30 발급.
+- Hands-On Essentials: Data Engineering Workshop, 2026.10.06 발급. [공식 개인 증서](https://www.credential.net/e8becfb6-1f5c-42e5-b297-83d965ae247f)에서 수료자 NAH Junhyeok과 발급자 Snowflake Education Services, 발급일 및 DORA 실습 평가를 확인했다.
+- Data Engineering Workshop의 증서에는 날짜·시간대 변환, IP 기반 위치 매핑, Tasks·MERGE 실행, Streams 기반 CDC, Snowpipe 이벤트 기반 연속 적재가 명시돼 있다. 공개 요약은 CDC·Tasks·MERGE·Snowpipe 실습으로 제한하며 상용 운영 경험으로 확대하지 않는다.
+- 새 [Data Engineering 공식 배지 PNG](https://templates.images.credential.net/16994664153733159231938818971877.png)는 증서에서 확인한 1065×1065 투명 원본을 그대로 사용한다. 교육·실습 PDF 영역만 3열로 배치하며 기존 프로젝트 본문 크기는 유지한다.
 - `content/credentials.yaml`의 `learningBadges`에서 관리하고 웹·이력서·포트폴리오에 같은 수료 사실과 공개 검증 링크를 표시한다.
-- DORA의 실습 평가로 발급된 배지다. 자격증과 구분해 `실습 수료 배지`로 표시하며 SnowPro 시험 합격이나 상용 Snowflake 운영 경력으로 표현하지 않는다.
+- 2026-10-06 공식 개인 발급 페이지에서 두 과정의 정식 명칭·발급일과 DORA 평가 기반 수료 사실을 재확인했다. Badge 1은 테이블·파일 형식·Warehouse·Stage 구성, COPY INTO, CSV·JSON 처리이며, Badge 2는 Listing·Marketplace·공유, 비용 추정·모니터링, UDTF 실습이다.
+- 기존 저장소와 포트폴리오 원본 자료에 Snowflake 배지 이미지가 없어 공식 발급 페이지의 투명 PNG 원본(1065×1065)을 `public/credentials/`에 추가했다: [Badge 1 이미지](https://templates.images.credential.net/169712375586692777710499885412.png), [Badge 2 이미지](https://templates.images.credential.net/16971233885374075532896130114336.png).
+- 웹·이력서·포트폴리오는 `LearningBadges`에서 동일한 이미지·과정명·취득일·실습 설명을 사용한다. 배지와 과정명에 개인 공식 발급 페이지를 연결하고 별도 “발급 내역 확인” 문구는 쓰지 않는다. 이름·날짜·설명은 PDF에서 추출 가능한 텍스트로 유지한다.
+- 공통 섹션 제목은 `교육·실습`이다. 기존 `직무 교육 및 프로젝트` 이력과 중복 항목을 만들지 않으며, 제공기관·수료 배지 구분·프로그램·평가 방식은 개별 `learningBadges` 데이터에서 표시한다. 기관별 평가 설명은 선택 항목 `assessment`로 관리해 다른 제공기관의 배지도 추가할 수 있다.
+- Snowflake 배지는 DORA 실습 평가로 발급됐다. 개별 과정에 수료 배지로 표시하며 SnowPro 시험 합격이나 상용 Snowflake 운영 경력으로 표현하지 않는다.
 - 자격증 번호, 학습자 ID, Snowflake 계정 식별자는 복사하지 않는다.
 
 ## 설명과 검증 방식
@@ -54,4 +70,4 @@
 - 내용 변경 후 린트·빌드와 PDF 페이지 배치를 확인하고, 배포 후 다운로드 PDF 본문과 링크를 다시 검사한다.
 - 로컬 PDF 생성은 기존 dev 서버의 캐시를 재사용하지 않도록 새 빌드의 정적 페이지를 대상으로 한다.
 
-참조: 본인 확인 내용(2026-09-22, 2026-09-28), GS리테일 제출 이력서(2026-09-14), [Pop Talk 통합 저장소](https://github.com/junhyeok94-la/pop-talk).
+참조: 본인 확인 내용(2026-09-22, 2026-09-28) 및 면접 준비 중 직접 진술(2026-09-29, 2026-10-02, 2026-10-03), GS리테일 제출 이력서(2026-09-14), [Pop Talk 통합 저장소](https://github.com/junhyeok94-la/pop-talk).

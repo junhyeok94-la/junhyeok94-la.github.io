@@ -4,7 +4,7 @@ context: NIPA-NAVER Cloud Sovereign AI PBL 기반 프로젝트
 period: "2026.08"
 team: 4인 팀
 award: 우수상
-role: 데이터·AI Agent 구현 참여
+role: 데이터·AI Agent·NCP 인프라 구현 참여
 overview: 사용자의 취향뿐 아니라 누구와 보는지, 현재 기분과 시청 가능 시간 같은 상황까지 이해하고 추천 이유와 검증 근거를 함께 제공하는 Personal Movie AI Agent입니다.
 problem:
   - 영화 선택에 시간이 오래 걸리지만 기존 추천은 현재 상황을 충분히 반영하지 못했습니다.
@@ -80,13 +80,13 @@ architecture:
   - layer: Data
     detail: KOBIS·KMDB 수집 배치, PostgreSQL 16, pgvector
   - layer: NCP Infrastructure
-    detail: Public·Private Subnet, Public·Private Load Balancer, Bastion, NAT Gateway
+    detail: 교육 팀프로젝트의 NCP 웹 애플리케이션 아키텍처를 설계하고 Terraform으로 인프라를 구성했습니다.
 stack:
   Front-End: [Next.js, React, TypeScript, Tailwind CSS]
   Back-End: [Python, FastAPI, SQLAlchemy]
   AI & Agent: [HyperCLOVA X, LangGraph, RAG, CLOVA Studio]
   Data: [PostgreSQL, pgvector, KOBIS API, KMDB API]
-  Infra: [NAVER Cloud Platform, VPC, Load Balancer, Object Storage]
+  Infra: [NAVER Cloud Platform, Terraform, VPC, Load Balancer, Object Storage]
 roadmap:
   - title: 추천 검증 고도화
     description: 벡터 저장과 RAG 조회 과정에서 아쉬웠던 검색 정확도와 추천 근거의 적합도를 개선합니다.
