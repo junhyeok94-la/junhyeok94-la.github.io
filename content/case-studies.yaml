@@ -53,24 +53,58 @@
 
 - id: next-kics
   type: platform
-  label: 공공 데이터 · 수집 표준화
-  question: 기관마다 다른 형식의 데이터를 어떻게 같은 적재 기준으로 다룰까?
-  overview: 4개 사법기관의 이기종·비정형 데이터를 수집·적재하는 데이터 플랫폼 구축. 공통 지원 선임으로 ETL 개발 가이드와 데이터 표준, Python 법령정보 API 신규 연계 프로그램 담당.
+  label: 데이터플랫폼 · ETL · 대시보드 설계
+  question: 기관별 데이터 수집·적재와 3개 기관 대시보드 화면 설계
+  overview: 법무부·검찰청·경찰청·해양경찰청이 참여한 차세대 KICS 사업의 데이터플랫폼 구축 참여. LG CNS SBP 기반 Hadoop 환경에서 TeraStream 데이터 파이프라인과 공통 ETL 표준, Python 법령정보 API 연계 프로그램 담당. 검찰청·경찰청·해양경찰청의 대시보드는 화면 설계와 문서 작성 후 MSTR 개발 담당자에게 인계.
   scope:
-    - 기관별 데이터 형식과 BLOB 적재 오류에 대응하는 ETL 공통 개발 가이드·표준 수립
+    - TeraStream을 사용한 데이터 파이프라인 개발, 기관별 형식 차이와 BLOB 적재 오류에 대응하는 공통 가이드·표준 수립
     - 메타데이터로 수집 대상을 판별하는 Python 법령정보 API 연계·전처리·적재 프로그램 개발
+    - 법무부를 제외한 검찰청·경찰청·해양경찰청 대시보드 화면 설계 및 설계 문서 작성
+    - 1차 설계 완료 후 MSTR 개발 담당자에게 문서를 인계하여 화면 구현으로 연결
+  publicMaterialsTitle: 사업 개요와 사용 기술 참고 자료
+  publicMaterialsNote: 정부 자료는 KICS 전체 사업을, 제품 자료는 SBP·TeraStream의 역할을 설명합니다. 아래 구성도는 본인 수행 경험을 바탕으로 재구성했습니다.
+  publicMaterials:
+    - title: 차세대 형사사법정보시스템 개통
+      url: https://www.korea.kr/news/policyNewsView.do?newsId=148934088
+      publisher: 대한민국 정책브리핑 · 관계기관 합동
+      date: '2024.09.19'
+      description: 4개 형사사법기관이 참여한 차세대 KICS의 개통과 전체 서비스 목표를 설명하는 정부 자료.
+    - title: Hadoop 기반 스마트 빅데이터 플랫폼 SBP
+      url: https://www.newswire.co.kr/newsRead.php?no=660742
+      publisher: LG CNS 제공 보도자료 · 뉴스와이어
+      date: '2012.10.31'
+      description: Hadoop 등 오픈소스 기반의 수집·저장·처리·분석 환경과 관리 기능을 설명하는 SBP 출시 자료. 최신 제품 기능을 당시 KICS 구성에 소급하지 않고 제품의 기본 역할 참고.
+    - title: 데이터 통합 솔루션 TeraStream
+      url: https://datastreams.co.kr/products/data-integration-terastream/
+      publisher: 데이터스트림즈
+      date: 제품 소개
+      description: 데이터 추출·매핑 룰 기반 변환·적재와 작업 이력 관리 등 ETL 솔루션의 역할을 설명하는 공식 자료.
   architecture:
-    title: 기관별 원천 형식을 공통 적재 기준으로 연결
-    description: 기관별 원천 데이터의 형식 차이를 공통 ETL 가이드와 데이터 표준으로 정리하고 적재에 적용. 법령정보 API를 신규 연계하고 메타데이터 판단과 Python 전처리를 거쳐 분석 데이터로 적재.
-    image: /projects/next-kics/data-standard.svg
-    alt: 4개 기관 원천 데이터, ETL 공통 표준과 BLOB 적재의 관계
-    caption: 본인 수행 범위의 논리 흐름을 재구성한 도식. 사법기관의 실제 망 구성·데이터 구조를 나타내는 인프라 구성도가 아님.
-  figures: []
+    title: SBP 기반 Hadoop 데이터플랫폼과 데이터 파이프라인
+    description: TeraStream으로 기관별 데이터를 추출·변환·적재하고, SBP 기반 Hadoop·Hive 환경에서 분석용 데이터 구성. 외부 법령정보는 Python API 연계·전처리로 확보. 대시보드는 설계 문서를 인계받은 MSTR 개발 담당자가 구현.
+    image: /projects/next-kics/platform-architecture.svg
+    alt: 기관별 원천과 TeraStream ETL, LG CNS SBP 기반 Hadoop·Hive 데이터플랫폼 및 대시보드 활용을 나타낸 논리 구성도
+    caption: 본인 수행 경험과 공개 제품 설명을 바탕으로 정리한 도구별 역할도. 기관별 적용 흐름을 묶어 표현했으며, 실제 기관 간 데이터 공유·단일 클러스터·물리 망 연결을 의미하지 않음. 내부 테이블·데이터·접속 정보는 생략.
+  figures:
+    - title: 데이터플랫폼 사업 내 담당 영역
+      image: /projects/next-kics/project-scope.svg
+      alt: 데이터플랫폼 사업 아래 데이터플랫폼 구축과 지능형 사건처리지원 서비스를 구분하고 본인 담당 영역을 표시한 구성도
+      caption: 현황분석서의 사업 범위를 역할 중심으로 재구성. 본인은 데이터플랫폼 구축 영역의 파이프라인·표준과 대시보드 설계 담당. 지능형 사건처리지원 서비스와 분석과제 발굴은 별도 수행 영역.
+    - title: 3개 기관 대시보드 설계·개발 인계
+      image: /projects/next-kics/dashboard-handoff.svg
+      alt: 검찰청·경찰청·해양경찰청 대시보드의 화면 설계와 문서 작성 후 MSTR 개발 담당자에게 인계되는 흐름
+      caption: 화면 설계 대상은 법무부를 제외한 3개 기관. 본인 산출물은 1차 화면 설계 문서이며, 실제 MSTR 화면 개발은 인계받은 담당자가 수행. 내부 설계서와 실제 화면은 공개하지 않음.
+    - title: 기관별 데이터 형식과 공통 적재 기준
+      image: /projects/next-kics/data-standard.svg
+      alt: 기관별 원천 형식 차이를 ETL 공통 가이드와 데이터 표준으로 정리해 적재에 적용하는 흐름
+      caption: 기관별 형식 차이와 BLOB 적재 오류에 대응한 공통 개발 가이드·데이터 표준 적용 범위.
   results:
-    - 기관별 형식 차이에 따른 BLOB 적재 오류 개선
-    - 법령정보를 신규 분석 데이터로 확보하는 API 연계·전처리·적재 기반 마련
-  limits: 전체 사법 시스템의 설계나 모든 기관의 파이프라인 개발을 단독 수행한 것으로 표현하지 않음. 처리량·오류율의 검증된 전후 수치는 없음.
-  takeaway: 개별 오류를 수정하는 데서 끝내지 않고 공통 가이드와 데이터 기준으로 남겨야 반복되는 적재 문제를 줄일 수 있다는 점을 확인.
+    - 기관별 이기종 데이터에 적용할 ETL 공통 개발 가이드·표준 수립
+    - BLOB 적재 오류 대응을 통한 데이터 파이프라인 안정성 개선
+    - 법령정보 API 신규 연계로 분석용 데이터 확보 기반 마련
+    - 검찰청·경찰청·해양경찰청 대시보드 화면 설계 문서 작성 및 MSTR 개발 담당자 인계
+  limits: 지능형 사건처리지원 서비스 개발과 3개 기관의 MSTR 화면 개발은 본인 실적에 포함하지 않음. 처리량·성능 개선율·화면 수는 검증된 수치가 없어 표시하지 않음.
+  takeaway: 데이터 적재 기준과 화면 설계를 문서로 남겨 기관별 데이터 차이에 대응하고, 플랫폼 개발과 시각화 개발 담당자 사이의 인계를 지원.
 
 - id: local-finance
   type: platform

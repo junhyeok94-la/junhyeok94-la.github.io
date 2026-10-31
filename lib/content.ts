@@ -54,16 +54,18 @@ export type CaseStudy = {
     caption: string;
   };
   figures: CaseFigure[];
+  publicMaterialsTitle?: string;
+  publicMaterialsNote?: string;
   publicMaterials?: Array<{
     title: string;
     url: string;
     publisher: string;
     date: string;
     description: string;
-    image: string;
-    width: number;
-    height: number;
-    credit: string;
+    image?: string;
+    width?: number;
+    height?: number;
+    credit?: string;
   }>;
   results: string[];
   limits: string;

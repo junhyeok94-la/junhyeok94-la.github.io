@@ -54,3 +54,4 @@ yarn-error.log*
 # Private local document sources; deploy only the project website
 /documents/resume/
 /documents/portfolio-archive/
+/.codex-attachments/

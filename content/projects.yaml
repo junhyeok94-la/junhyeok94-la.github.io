@@ -77,14 +77,14 @@
   title: 차세대 KICS 데이터 플랫폼 구축
   category: Public Sector
   period: 2023.09 - 2024.12
-  role: 공통 지원 선임
+  role: 데이터플랫폼 공통 지원 선임 · 대시보드 화면 설계
   contribution:
     rate: 70%
     basis: 공통 표준·자동 수집 핵심 담당
   company: 누리꿈소프트(주)
   featured: true
-  summary: 다수 사법기관의 이기종·비정형 데이터를 안정적으로 수집하기 위한 공통 표준과 자동 수집 프로세스를 구축했습니다.
-  stack: [TeraStream, Hive, Hadoop, Python, Shell]
+  summary: 차세대 KICS 데이터플랫폼의 수집·적재 파이프라인과 공통 표준을 구축하고, 법무부를 제외한 3개 기관 대시보드 화면 설계 문서를 작성해 MSTR 개발 담당자에게 인계했습니다.
+  stack: [LG CNS SBP, TeraStream, Hadoop, Hive, Python, Shell, MSTR 화면 설계]
   achievements:
     - title: 이기종 데이터 표준화
       problem: 4개 기관별 데이터 형식 차이로 BLOB 적재 오류가 반복됐습니다.
@@ -94,6 +94,10 @@
       problem: 차세대 KICS의 분석 데이터 범위를 확대하려면 기존에 없던 법령정보를 API로 신규 수집하고 분석 가능한 형태로 가공할 필요가 있었습니다.
       action: 법령정보 API를 연계하고, 메타데이터를 기준으로 수집 대상을 판별해 전처리·적재하는 Python 프로그램을 개발했습니다.
       result: 법령정보를 신규 분석 데이터로 확보해 차세대 KICS에서 활용할 수 있는 기반을 마련했습니다.
+    - title: 3개 기관 대시보드 화면 설계·인계
+      problem: 기관별 대시보드 화면을 설계하고, 별도 MSTR 개발 담당자가 구현할 수 있는 문서가 필요했습니다.
+      action: 검찰청·경찰청·해양경찰청 대시보드 화면을 설계하고 문서화했습니다. 1차 화면 설계가 완료된 뒤 설계 문서를 MSTR 개발 담당자에게 인계했습니다.
+      result: 기관별 시각화 요구를 화면 설계 문서로 정리해 구현 단계로 전달했습니다. 실제 화면 개발은 MSTR 담당자가 수행했습니다.
 - id: local-finance
   title: 차세대 지방재정관리 정책지원시스템 구축
   category: Public Sector
