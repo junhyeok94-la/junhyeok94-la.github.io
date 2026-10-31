@@ -6,8 +6,8 @@ ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/'public/projects/gs-retail-hbu'
 ICONS=OUT/'icons'
 
-def svg(desc,height):
- return [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 {height}" role="img" aria-label="{escape(desc)}"><style>text{{font-family:"Noto Sans KR","Malgun Gothic",sans-serif;fill:#152335}}.label{{font-size:22px;font-weight:700}}.detail{{font-size:18px;fill:#536277}}.section{{font-size:20px;font-weight:700;fill:#38648a}}</style><defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10" fill="#64788d"/></marker></defs><rect width="1100" height="{height}" fill="white"/>']
+def svg(desc,height,width=1100):
+ return [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} {height}" role="img" aria-label="{escape(desc)}"><style>text{{font-family:"Noto Sans KR","Malgun Gothic",sans-serif;fill:#152335}}.label{{font-size:22px;font-weight:700}}.detail{{font-size:18px;fill:#536277}}.section{{font-size:20px;font-weight:700;fill:#38648a}}</style><defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10" fill="#64788d"/></marker></defs><rect width="{width}" height="{height}" fill="white"/>']
 
 def text(a,x,y,t,cls='detail',anchor='middle'):
  a.append(f'<text x="{x}" y="{y}" text-anchor="{anchor}" class="{cls}">{escape(t)}</text>')
@@ -68,4 +68,46 @@ a.append('<rect x="30" y="518" width="1040" height="94" rx="8" fill="#eef5ff"/>'
 text(a,550,554,'환경별 dbt 배포 → Airflow DAG 배포 → 반영 확인','label')
 text(a,550,586,'배포 단계: dbt parse로 manifest 생성  /  데이터 처리: 스케줄 실행 시 dbt run · test')
 a.append('</svg>');(OUT/'delivery-flow.svg').write_text(''.join(a),encoding='utf-8')
-print('Rebuilt STG / downstream and sequential dev → prd delivery diagrams')
+
+# Overall system context from the reviewed architecture, without internal names.
+a=svg('원천 DB와 로그를 Fargate 수집 API 및 EMR로 수집해 S3와 Redshift에 적재. Airflow가 배치를 제어하며 dbt로 변환. 선택적 Serverless 실행과 Data Sharing, Athena 및 BI 활용. Aurora, ECR, Lambda 운영 지원.',900,1400)
+for x,label in [(25,'원천 데이터'),(275,'배치 제어 · 수집'),(835,'저장 · 변환'),(1160,'데이터 활용')]:
+ text(a,x,36,label,'section','start')
+box(a,25,70,190,145,'Aurora',['업무 서비스 DB'],'Amazon-Aurora')
+box(a,25,260,190,130,'관계형 DB',['기존 Oracle 등'])
+box(a,25,435,190,145,'CloudFront · S3',['액세스 로그'],'Amazon-CloudFront')
+box(a,275,70,245,145,'Airflow',['ECS Fargate · 배치 제어'],'AWS-Fargate',True)
+box(a,275,285,245,145,'수집 API',['ECS Fargate'],'AWS-Fargate')
+box(a,275,490,245,145,'Amazon EMR',['대용량 분산 처리'],'Amazon-EMR')
+box(a,580,490,210,145,'Amazon S3',['원천 데이터','데이터 레이크'],'Amazon-Simple-Storage-Service')
+box(a,835,285,285,155,'Amazon Redshift',['STG · Mart · BI · IF','dbt 변환 · 테스트'],'Amazon-Redshift',True)
+box(a,835,530,285,145,'Redshift Serverless',['선정한 고부하 모델 실행'],'Amazon-Redshift',True)
+box(a,1160,285,215,155,'BI · 리포트',['분석 데이터 활용'])
+box(a,1160,490,215,145,'Amazon Athena',['S3 데이터 조회'],'Amazon-Athena')
+# Source connections are logical; network topology and individual ingestion routes are omitted.
+arrow(a,'M215 142H242V357H275')
+arrow(a,'M215 325H242')
+arrow(a,'M215 507H242V357')
+arrow(a,'M397 215V285',True)
+arrow(a,'M520 142H978V285',True)
+text(a,728,127,'실행 제어 · Cosmos 연동')
+arrow(a,'M397 430V490')
+arrow(a,'M520 562H580')
+arrow(a,'M790 562H812V400H835')
+arrow(a,'M1120 362H1160')
+# Bidirectional sharing is distinct from a mandatory data-processing sequence.
+arrow(a,'M877 440V530')
+arrow(a,'M1078 530V440')
+text(a,977,493,'Data Sharing')
+arrow(a,'M685 635V704H1267V635')
+text(a,1000,730,'S3 직접 조회')
+# Supporting services are not placed on the primary data flow.
+a.append('<rect x="25" y="773" width="1350" height="100" rx="8" fill="#f4f7fa" stroke="#d5dfe8"/>')
+text(a,45,810,'운영 지원','section','start')
+for x,service,label,desc in [(250,'Amazon-Aurora','Aurora','메타데이터'),(620,'Amazon-Elastic-Container-Registry','Amazon ECR','컨테이너 이미지'),(1000,'AWS-Lambda','AWS Lambda','보조 처리')]:
+ icon(a,service,x,796,48)
+ text(a,x+65,820,label,'label','start')
+ text(a,x+65,850,desc,'detail','start')
+a.append('</svg>')
+(OUT/'system-architecture.svg').write_text(''.join(a),encoding='utf-8')
+print('Rebuilt overall system architecture, STG flow and dev-to-prd delivery diagrams')

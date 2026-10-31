@@ -36,3 +36,7 @@
 ## 도식 관리
 
 `python scripts/build-gs-diagrams.py`로 플랫폼·배포 도식을 다시 생성한다. 개인 자료를 읽는 스크립트가 아니며 검토된 공개 개념만 포함한다. AWS 아이콘은 공식 Architecture Icons 패키지를 사용하고 출처는 아이콘 폴더 README에 기록했다. 문서용 기존 SVG는 각 viewBox 비율을 그대로 사용한다.
+
+## 전체 시스템 도식 보완
+
+`01-1. 시스템 아키텍처 및 역할 정의` 첫 페이지에 전체 시스템 도식이 존재한다. 최초 웹 수정에서는 STG 경로가 대표 아키텍처로 배치되어 범위가 축소됐다. 전체 구성도에 수집 API/Fargate, EMR, S3, Redshift, 선택적 Serverless 및 Data Sharing, BI/Athena, Aurora·ECR·Lambda 지원 서비스를 반영하고 STG 처리 흐름은 상세 도식으로 이동했다. 원천 시스템·스키마 이름과 물리 망 정보는 제외했다. 원본 AWS 계정·VPC 등의 연결 토폴로지를 재현한 물리 구성도가 아닌 공개용 시스템 역할도다.
