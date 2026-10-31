@@ -528,6 +528,20 @@
   padding: 0;
   list-style: none;
 }
+.publicMaterials {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  margin-top: 24px;
+}
+.publicMaterials figure { margin: 0; min-width: 0; border: 1px solid var(--line); background: white; }
+.publicMaterials figure > a { display: flex; align-items: center; justify-content: center; height: 290px; padding: 16px; background: #f0f3f6; }
+.publicMaterials img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.publicMaterials figcaption { padding: 22px; }
+.publicMaterials small, .publicMaterials figcaption > span { display: block; color: #647387; font-size: 10px; line-height: 1.8; }
+.publicMaterials h3 { margin: 12px 0; font-size: 16px; font-weight: 650; line-height: 1.6; }
+.publicMaterials p { color: #45586f; font-size: 12px; line-height: 1.9; margin: 0 0 12px; }
+.publicMaterials figcaption > a { display: inline-flex; align-items: center; gap: 6px; margin-top: 18px; color: #1b4e8b; font-size: 12px; font-weight: 650; }
 .logicalSteps li {
   padding: 24px 15px;
   border: 1px solid #c7d5e6;
@@ -654,6 +668,7 @@
   outline-offset: 5px;
 }
 @media (max-width: 760px) {
+  .publicMaterials { grid-template-columns: 1fr; }
   .header {
     padding-inline: 20px;
     min-height: 72px;

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import { ProjectDiagramImage } from '@/components/project-diagram-image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -71,6 +72,7 @@ export default async function ProjectPage({
       </div>
       <nav className={styles.caseNav} aria-label="프로젝트 목차">
         <a href="#overview">프로젝트 개요</a>
+        {study.publicMaterials && <a href="#public-materials">공개 자료</a>}
         <a href="#architecture">아키텍처</a>
         {project.achievements.length > 0 && (
           <a href="#decisions">문제와 해결 과정</a>
@@ -93,6 +95,30 @@ export default async function ProjectPage({
             </ul>
           </div>
         </section>
+        {study.publicMaterials && (
+          <section id="public-materials" className={styles.caseSection}>
+            <div className={styles.sectionLabel}>
+              <span>REFERENCE</span><h2>공개된 서비스 화면과 보도자료</h2>
+            </div>
+            <p>정책지원시스템 전체의 공개 소개 자료입니다. 본인 담당 범위는 위 업무 목록과 아래 구현 설명에 정리했습니다.</p>
+            <div className={styles.publicMaterials}>
+              {study.publicMaterials.map((item) => (
+                <figure key={item.url}>
+                  <a href={item.url} target="_blank" rel="noreferrer" aria-label={`${item.publisher}: ${item.title} 기사 원문 보기`}>
+                    <Image src={item.image} alt={item.title} width={item.width} height={item.height} unoptimized />
+                  </a>
+                  <figcaption>
+                    <small>{item.publisher} · {item.date}</small>
+                    <h3>{item.title}</h3>
+                    <p>{item.description}</p>
+                    <span>{item.credit}</span>
+                    <a href={item.url} target="_blank" rel="noreferrer">기사 원문 <ArrowUpRight size={14} /></a>
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+          </section>
+        )}
         <section id="architecture" className={styles.caseSection}>
           <div className={styles.sectionLabel}>
             <span>02</span>
