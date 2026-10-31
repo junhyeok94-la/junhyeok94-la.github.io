@@ -1,267 +1,151 @@
-import {
-  ArrowDownRight,
-  ArrowRight,
-  ArrowUpRight,
-  Award,
-  CheckCircle2,
-  ChevronDown,
-  Layers3,
-} from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-
-import { LearningBadges } from '@/components/learning-badges';
-
-import { badgeVariants } from '@/components/ui/badge';
-import { buttonVariants } from '@/components/ui/button';
-import { credentials, profile, projects, type Achievement } from '@/lib/content';
-import { cn } from '@/lib/utils';
-
-function ProjectAchievement({ achievement }: { achievement: Achievement }) {
-  return (
-    <div className="achievement-item">
-      <CheckCircle2 aria-hidden="true" />
-      <div>
-        <h4>{achievement.title}</h4>
-        <dl className="achievement-narrative">
-          <div><dt>문제</dt><dd>{achievement.problem}</dd></div>
-          <div><dt>실행</dt><dd>{achievement.action}</dd></div>
-          <div className="achievement-result"><dt>성과</dt><dd>{achievement.result}</dd></div>
-        </dl>
-      </div>
-    </div>
-  );
-}
+import { ArrowDown, ArrowUpRight, Award } from 'lucide-react';
+import { PortfolioFooter, PortfolioHeader } from '@/components/portfolio-shell';
+import { caseStudies, projects, popTalk } from '@/lib/content';
+import styles from '@/components/portfolio.module.css';
 
 export default function Home() {
-  const featured = projects.filter((project) => project.featured);
-  const foundations = projects.filter((project) => !project.featured);
-
+  const platforms = caseStudies.filter((item) => item.type === 'platform');
+  const webProjects = caseStudies.filter((item) => item.type === 'web');
   return (
-    <main>
-      <header className="site-header">
-        <a className="brand" href="#top" aria-label="맨 위로 이동">
-          NJH<span>.</span>
-        </a>
-        <nav aria-label="주요 메뉴">
-          <a href="#projects">Projects</a>
-          <a href="#career">Career</a>
-          <a href="#skills">Skills</a>
-          <Link href="/resume">Resume</Link>
-        </nav>
-        <a className={cn(buttonVariants({ size: 'lg' }), 'header-contact')} href={`mailto:${profile.email}`}>
-          Contact <ArrowUpRight />
-        </a>
-      </header>
-
-      <section className="hero" id="top">
-        <div className="hero-copy">
-          <div className="eyebrow">
-            <span className="status-dot" />
-            {profile.experienceLabel} · {profile.role}
-          </div>
-          <h1>
-            현업의 맥락을 이해하고,
-            <br />
-            <span>운영 가능한 데이터 흐름</span>을 설계합니다.
-          </h1>
-          <div className="hero-summary">
-            {profile.summary.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-          </div>
-          <div className="hero-actions">
-            <a className={cn(buttonVariants({ size: 'lg' }), 'primary-action')} href="#projects">
-              프로젝트 살펴보기 <ArrowDownRight />
-            </a>
-            <Link className={cn(buttonVariants({ variant: 'outline', size: 'lg' }))} href="/resume">
-              이력서 보기
-            </Link>
-            <a className={cn(buttonVariants({ variant: 'outline', size: 'lg' }))} href="/portfolio.pdf" download>
-              제출용 포트폴리오 PDF
-            </a>
-          </div>
+    <main className={styles.site}>
+      <PortfolioHeader />
+      <section className={styles.hero}>
+        <h1>나준혁 프로젝트 포트폴리오</h1>
+        <div className={styles.heroBottom}>
+          <a href="#projects">
+            프로젝트 살펴보기 <ArrowDown size={18} />
+          </a>
         </div>
-
       </section>
 
-      <section className="project-preview" id="projects">
-        <div className="section-heading">
+      <section id="projects" className={styles.indexSection}>
+        <div className={styles.indexHeading}>
           <div>
-            <span className="section-number">01 / PROJECTS</span>
-            <h2>복잡한 운영 문제를<br />구조로 해결한 경험</h2>
+            <p className={styles.eyebrow}>01 / PROFESSIONAL WORK</p>
+            <h2>데이터 플랫폼 프로젝트</h2>
           </div>
-          <p>최근 프로젝트부터 문제, 판단, 실행, 결과가 드러나는 사례를 정리했습니다.</p>
         </div>
-
-        <div className="project-grid full-project-grid">
-          {featured.map((project, index) => {
-            const initiallyVisible = index === 0 ? 3 : 2;
-            const primaryAchievements = project.achievements.slice(0, initiallyVisible);
-            const additionalAchievements = project.achievements.slice(initiallyVisible);
-
+        <div className={styles.projectGrid}>
+          {platforms.map((study, index) => {
+            const project = projects.find((item) => item.id === study.id)!;
             return (
-            <article className={cn('project-card', index === 0 && 'project-card-featured')} key={project.id}>
-              <div className="project-meta">
-                <span>{String(index + 1).padStart(2, '0')}</span>
-                <span>{project.category}</span>
-              </div>
-              <div>
-                <p className="project-period">{project.period} · {project.role}</p>
+              <Link
+                className={styles.projectCard}
+                href={`/projects/${project.id}/`}
+                key={project.id}
+              >
+                <div className={styles.cardTop}>
+                  <span>
+                    0{index + 1} / {study.label}
+                  </span>
+                  <ArrowUpRight size={22} />
+                </div>
+                <p className={styles.cardPeriod}>{project.period}</p>
                 <h3>{project.title}</h3>
-                <p className="project-summary">{project.summary}</p>
-                {project.contribution && <p className="project-contribution">기여도 {project.contribution.rate} · {project.contribution.basis}</p>}
-                {project.award && <span className="award-chip"><Award /> {project.award}</span>}
-              </div>
-              <div className="stack-list">
-                {project.stack.map((skill) => (
-                  <span className={badgeVariants({ variant: 'outline' })} key={skill}>{skill}</span>
-                ))}
-              </div>
-              <div className="achievement-list">
-                {primaryAchievements.map((achievement) => (
-                  <ProjectAchievement achievement={achievement} key={achievement.title} />
-                ))}
-                {additionalAchievements.length > 0 && (
-                  <details className="achievement-disclosure">
-                    <summary>
-                      문제 해결 사례 {additionalAchievements.length}개 더 보기
-                      <ChevronDown aria-hidden="true" />
-                    </summary>
-                    <div className="achievement-expanded">
-                      {additionalAchievements.map((achievement) => (
-                        <ProjectAchievement achievement={achievement} key={achievement.title} />
-                      ))}
-                    </div>
-                  </details>
-                )}
-              </div>
-              {project.detailPath && (
-                <Link className="project-detail-link" href={project.detailPath}>
-                  프로젝트 설계 자세히 보기 <ArrowUpRight />
-                </Link>
-              )}
-            </article>
+                <p className={styles.cardQuestion}>{study.question}</p>
+                <div className={styles.cardImage}>
+                  <Image
+                    src={study.architecture.image!}
+                    alt={study.architecture.alt!}
+                    width={900}
+                    height={320}
+                    unoptimized
+                  />
+                </div>
+                <div className={styles.cardBottom}>
+                  <div className={styles.tags}>
+                    {project.stack.slice(0, 4).map((item) => (
+                      <span key={item}>{item}</span>
+                    ))}
+                  </div>
+                  <span className={styles.readMore}>
+                    설계와 문제 해결 과정 <ArrowUpRight size={15} />
+                  </span>
+                </div>
+              </Link>
             );
           })}
         </div>
-
-        <div className="foundation-block">
-          <div>
-            <span className="section-number">FOUNDATION</span>
-            <h3>웹 개발에서 시작한<br />엔드투엔드 관점</h3>
-          </div>
-          <div className="foundation-list">
-            {foundations.map((project) => (
-              <article key={project.id}>
-                <span>{project.period}</span>
-                <h4>{project.title}</h4>
-                <p>{project.summary}</p>
-                <div className="stack-list">
-                  {project.stack.map((skill) => <span key={skill}>{skill}</span>)}
-                </div>
-              </article>
-            ))}
-          </div>
+        <div className={styles.webHeading}>
+          <h3>웹 업무 시스템 개발</h3>
         </div>
-      </section>
-
-      <section className="career-section" id="career">
-        <div className="section-kicker">
-          <span className="section-number">02 / CAREER</span>
-          <p>역할의 경계를 넘나들며 데이터 플랫폼의 전체 흐름을 이해해 왔습니다.</p>
-        </div>
-        <div className="career-timeline">
-          {profile.employment.map((item, index) => (
-            <article key={item.company}>
-              <span className="timeline-index">0{index + 1}</span>
-              <div>
-                <p>{item.period} · {item.duration}</p>
-                <h3>{item.company}</h3>
-              </div>
-              <strong>{item.position}</strong>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="skills-section" id="skills">
-        <div className="skills-intro">
-          <span className="section-number">03 / TOOLBOX</span>
-          <h2>도구보다 먼저<br />문제의 성격을 봅니다.</h2>
-          <p>수집부터 품질, 모델링, 운영 모니터링까지 상황에 맞는 도구를 조합합니다.</p>
-        </div>
-        <div className="skill-groups">
-          {Object.entries(profile.skills).map(([group, skills], index) => (
-            <article key={group}>
-              <div className="skill-group-heading">
-                <span>0{index + 1}</span>
-                <h3>{group}</h3>
-              </div>
-              <div>{skills.map((skill) => <span key={skill}>{skill}</span>)}</div>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="credential-section">
-        <div className="credential-heading">
-          <Layers3 />
-          <div><span className="section-number">04 / CREDENTIALS</span><h2>계속 확장하는 기반 역량</h2></div>
-        </div>
-        <div className="credential-columns">
-          <div>
-            <h3>학력</h3>
-            {credentials.education.map((item) => (
-              <article key={item.school}><strong>{item.school}</strong><span>{item.major} · {item.period}</span></article>
-            ))}
-          </div>
-          <div>
-            <h3>자격증</h3>
-            {credentials.certifications.map((item) => (
-              <article className={item.badgePath ? 'credential-certification credential-certification-featured' : 'credential-certification'} key={item.name}>
-                {item.badgePath && (
-                  <Image
-                    className="credential-badge"
-                    src={item.badgePath}
-                    alt={`${item.name} 공식 배지`}
-                    width={72}
-                    height={72}
-                    loading="eager"
-                    unoptimized
-                  />
-                )}
+        <div className={styles.webGrid}>
+          {webProjects.map((study) => {
+            const project = projects.find((item) => item.id === study.id)!;
+            return (
+              <Link
+                className={styles.webCard}
+                href={`/projects/${project.id}/`}
+                key={project.id}
+              >
                 <div>
-                  <strong>{item.name}</strong>
-                  <span>{item.issuer} · {item.date}</span>
+                  <span>{project.period}</span>
+                  <ArrowUpRight size={20} />
                 </div>
-              </article>
-            ))}
-          </div>
-          <div>
-            <h3>직무 교육 및 프로젝트</h3>
-            {credentials.training.map((item) => (
-              <article key={item.name}>
-                <strong>{item.name}</strong>
-                {(item.team || item.award) && <span className="credential-award">{[item.team, item.award].filter(Boolean).join(' · ')}</span>}
-                <span>{item.summary}</span>
-              </article>
-            ))}
-            <LearningBadges variant="web" />
-            <Link href="/resume">전체 이력서 보기 <ArrowRight /></Link>
-          </div>
+                <h3>{project.title}</h3>
+                <p>{study.overview}</p>
+                <div className={styles.tags}>
+                  {project.stack.map((item) => (
+                    <span key={item}>{item}</span>
+                  ))}
+                </div>
+              </Link>
+            );
+          })}
         </div>
       </section>
 
-      <footer className="site-footer">
-        <div>
-          <span>LET&apos;S BUILD RELIABLE DATA FLOWS.</span>
-          <h2>데이터가 제시간에,<br />신뢰할 수 있게 흐르도록.</h2>
+      <section id="ai-project" className={styles.aiSection}>
+        <div className={styles.aiIntro}>
+          <p className={styles.eyebrow}>02 / AI · EXTERNAL PROJECT</p>
+          <span className={styles.award}>
+            <Award size={17} /> 교육 팀 프로젝트 · 우수상
+          </span>
+          <h2>
+            Pop Talk
+            <span>영화 추천 AI 서비스</span>
+          </h2>
+          <p>
+            2주 교육·실습 후 마지막 1주 동안 진행한 4인 팀 프로젝트. KOBIS·KMDB
+            데이터, RAG 검색, LangGraph 검수 흐름과 NCP 인프라를 하나의 서비스로
+            연결했습니다.
+          </p>
+          <div className={styles.tags}>
+            {[
+              'HyperCLOVA X',
+              'LangGraph',
+              'RAG',
+              'PostgreSQL / pgvector',
+              'NCP',
+            ].map((item) => (
+              <span key={item}>{item}</span>
+            ))}
+          </div>
+          <Link className={styles.aiLink} href="/projects/pop-talk/">
+            실제 화면과 아키텍처 보기 <ArrowUpRight size={18} />
+          </Link>
         </div>
-        <div className="footer-links">
-          <a href={`mailto:${profile.email}`}>{profile.email} <ArrowUpRight /></a>
-          <a href={profile.linkedin} target="_blank" rel="noreferrer">LinkedIn <ArrowUpRight /></a>
-        </div>
-        <p>© 2026 {profile.nameEn}. Last updated {profile.updatedAt}.</p>
-      </footer>
+        <figure className={styles.aiPreview}>
+          <Link
+            href="/projects/pop-talk/"
+            aria-label="Pop Talk 실제 구현 화면과 상세 프로젝트 보기"
+          >
+            <Image
+              src={popTalk.productViews[0].image}
+              alt={popTalk.productViews[0].alt}
+              width={1900}
+              height={930}
+              unoptimized
+            />
+          </Link>
+          <figcaption>
+            교육 팀 프로젝트의 실제 구현 화면 · 발표 시점 기준
+          </figcaption>
+        </figure>
+      </section>
+      <PortfolioFooter />
     </main>
   );
 }

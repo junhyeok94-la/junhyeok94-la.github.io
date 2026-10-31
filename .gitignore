@@ -38,6 +38,19 @@ yarn-error.log*
 
 # generated PDF artifacts
 /output/
+/tmp/
 /public/resume.pdf
 /public/portfolio.pdf
 /public/projects/pop-talk/langgraph-flow-print.png
+
+# Standalone resume workspace (never part of the public site export)
+/documents/resume/.next/
+/documents/resume/out/
+/documents/resume/next-env.d.ts
+/documents/resume/public/resume.pdf
+/documents/resume/tsconfig.tsbuildinfo
+/documents/portfolio-archive/portfolio.pdf
+
+# Private local document sources; deploy only the project website
+/documents/resume/
+/documents/portfolio-archive/

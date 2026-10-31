@@ -2,23 +2,20 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { parse } from 'yaml';
 
-export type Focus = { label: string; value: string };
-export type Employment = { company: string; period: string; duration: string; position: string };
 export type Profile = {
   updatedAt: string;
   name: string;
   nameEn: string;
   role: string;
-  experienceLabel: string;
   email: string;
-  linkedin: string;
-  headline: string;
-  summary: string[];
-  focus: Focus[];
-  skills: Record<string, string[]>;
-  employment: Employment[];
 };
-export type Achievement = { title: string; problem: string; action: string; result: string; summary?: string };
+export type Achievement = {
+  title: string;
+  problem: string;
+  action: string;
+  result: string;
+  summary?: string;
+};
 export type Contribution = { rate: string; basis: string };
 export type Project = {
   id: string;
@@ -35,29 +32,32 @@ export type Project = {
   stack: string[];
   achievements: Achievement[];
 };
-export type Credentials = {
-  education: Array<{ school: string; major: string; period: string; status: string }>;
-  certifications: Array<{
-    name: string;
-    issuer: string;
-    date: string;
-    badgePath?: string;
-  }>;
-  learningBadges: Array<{
-    name: string;
-    program: string;
-    assessment?: string;
-    issuer: string;
-    label: string;
-    date: string;
-    summary: string;
-    verificationUrl: string;
-    badgePath: string;
-  }>;
-  training: Array<{ name: string; period: string; team?: string; award?: string; contribution?: Contribution; summary: string }>;
-  languages: Array<{ language: string; level: string; date: string }>;
+export type CaseFigure = {
+  title: string;
+  image: string;
+  alt: string;
+  caption: string;
 };
-
+export type CaseStudy = {
+  id: string;
+  type: 'platform' | 'web';
+  label: string;
+  question: string;
+  overview: string;
+  scope: string[];
+  architecture: {
+    title: string;
+    description: string;
+    image?: string;
+    alt?: string;
+    steps?: string[];
+    caption: string;
+  };
+  figures: CaseFigure[];
+  results: string[];
+  limits: string;
+  takeaway: string;
+};
 export type PopTalk = {
   title: string;
   subtitle: string;
@@ -70,7 +70,12 @@ export type PopTalk = {
   problem: string[];
   values: Array<{ name: string; description: string }>;
   contributions: Array<{ area: string; title: string; description: string }>;
-  productViews: Array<{ title: string; description: string; image: string; alt: string }>;
+  productViews: Array<{
+    title: string;
+    description: string;
+    image: string;
+    alt: string;
+  }>;
   demoSnapshot: Array<{ label: string; value: string }>;
   dataFlow: string[];
   agentFlow: Array<{ stage: string; detail: string }>;
@@ -79,13 +84,12 @@ export type PopTalk = {
   roadmap: Array<{ title: string; description: string }>;
   sourcesNote: string;
 };
-
 function loadYaml<T>(filename: string): T {
-  const file = readFileSync(join(process.cwd(), 'content', filename), 'utf8');
-  return parse(file) as T;
+  return parse(
+    readFileSync(join(process.cwd(), 'content', filename), 'utf8'),
+  ) as T;
 }
-
 export const profile = loadYaml<Profile>('profile.yaml');
 export const projects = loadYaml<Project[]>('projects.yaml');
-export const credentials = loadYaml<Credentials>('credentials.yaml');
 export const popTalk = loadYaml<PopTalk>('pop-talk.yaml');
+export const caseStudies = loadYaml<CaseStudy[]>('case-studies.yaml');

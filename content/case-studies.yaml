@@ -1,0 +1,153 @@
+- id: gs-retail-hbu
+  type: platform
+  label: 배치 최적화 · 플랫폼 전환
+  question: Airflow·dbt 배치 실행 표준화와 누락 구간 복구
+  overview: Oracle·SAS 기반 홈쇼핑 데이터를 AWS 데이터 플랫폼으로 전환. STG 수집·적재와 Mart·BI·IF 변환 배치를 구분해 운영하며, 배치 실행 제어·선택적 Serverless 실행·누락 구간 복구·비교 검증을 담당.
+  scope:
+    - 고객사 운영팀과 도메인별 실행 DAG 범위 합의, 태그·TaskGroup 공통 호출 규칙 정리
+    - manifest.json의 의존성·태그를 분석하고, 선정한 고부하 모델의 run·test를 Serverless 태스크로 분리
+    - Airflow Variable과 선행 배치 완료 구간을 기준으로 실행 범위를 계산하고, 최대 24시간 누락 구간 복구
+    - 전환 전후 데이터를 비교하는 Diff Check DAG 개발 및 Grafana 조회 쿼리·운영 지표 개선
+  architecture:
+    title: STG 수집·적재와 Mart·BI·IF 변환
+    description: 원천 데이터를 수집 도구·EMR로 추출해 S3에 1차 적재하고, dbt Bash 실행으로 Redshift STG 테이블 생성. 이후 Mart·BI·IF 모델은 Cosmos DbtTaskGroup으로 실행. Airflow가 실행 주기·선행 완료·처리 구간을 제어.
+    image: /projects/gs-retail-hbu/platform-overview.svg
+    alt: STG의 수집 API·EMR·S3·dbt Bash 적재와 Cosmos를 이용한 Mart·BI·IF 변환을 구분한 구성도
+    caption: 운영 가이드를 바탕으로 재구성한 일반 RDBMS 수집·변환 경로. 로그·외부 API 등 별도 경로와 내부 시스템·테이블·접속 정보는 생략.
+  figures:
+    - title: 도메인별 배치 실행 제어
+      image: /projects/gs-retail-hbu/orchestration.svg
+      alt: Control DAG가 선행 완료와 처리 구간을 확인하고 실행 DAG와 dbt TaskGroup을 호출하는 흐름
+      caption: Mart·BI·IF 실행 구조. Control DAG가 선행 완료를 확인하고 처리 구간을 하위 DAG에 전달. Cosmos는 태그로 모델을 선택하고 모델 의존성에 따라 실행.
+    - title: 개발 검증 후 운영 브랜치 병합·배포
+      image: /projects/gs-retail-hbu/delivery-flow.svg
+      alt: dev 브랜치를 Bamboo로 개발 배포하고 검증한 다음 prd로 병합해 운영 배포하는 순차 흐름
+      caption: dev 배포·검증 → dev를 prd에 병합 → 운영 배포. 환경별 dbt와 DAG 코드는 구분해 배포. 배포 단계에서는 dbt parse로 manifest를 생성하고, 실제 데이터 처리는 Airflow 스케줄 실행 시 수행.
+    - title: 고부하 모델의 선택적 실행 환경 분리
+      image: /projects/gs-retail-hbu/workload-isolation.svg
+      alt: 선정한 dbt 모델만 Serverless run·test 태스크로 전환하고 선행·후행 의존성을 연결하는 흐름
+      caption: DbtTaskGroup의 모델별 실행 대상 변경을 보완하는 공통 함수 적용. 선정 모델의 run·test 태스크를 별도로 구성하고 기존 선행·후행 의존성 복원. 전체 모델의 Serverless 전환은 아님.
+    - title: 마지막 성공 구간을 기준으로 누락 범위 복구
+      image: /projects/gs-retail-hbu/interval-recovery.svg
+      alt: 마지막 성공 종료 구간과 선행 완료 구간으로 다음 처리 범위를 계산하고 최대 24시간까지 복구하는 흐름
+      caption: 시간별 배치의 마지막 성공 종료 구간을 Variable에 저장하고 다음 시작 구간으로 사용. 선행 배치 완료 범위와 최대 소급 범위를 함께 확인. 24시간은 처리 소요 시간이 아닌 자동 복구 대상 범위.
+    - title: 전환 전후 데이터 비교 검증
+      image: /projects/gs-retail-hbu/quality-check.svg
+      alt: AS-IS와 TO-BE의 주요 컬럼 집계를 Diff Check DAG로 비교하는 흐름
+      caption: 주요 컬럼별 건수·값을 같은 기준으로 비교하고 결과를 Redshift에 적재. 수행사와 고객사가 동일한 결과로 전환 정합성 확인.
+    - title: Grafana 조회 부하와 운영 지표 개선
+      image: /projects/gs-retail-hbu/monitoring.svg
+      alt: Airflow 메타 DB 조회 쿼리 경량화와 Grafana 대시보드 지표 개선 관계
+      caption: 기존 Grafana의 Airflow 메타 DB 조회 쿼리와 표시 지표 개선. 신규 모니터링 플랫폼 구축이 아닌 기존 운영 체계 개선 범위.
+  results:
+    - 1,000+ dbt 모델의 도메인별 실행 및 공통 호출 규칙 적용
+    - 시간별 배치의 누락 구간 자동 복구 범위를 4시간에서 최대 24시간으로 확장
+    - 선정한 고부하 모델을 분리해 상시 클러스터 증설 없이 자원 경합 완화
+    - 공통 데이터 비교 검증과 배치 운영 지표 제공
+  limits: 내부 식별자와 접속 정보는 제외한 논리 구성도. 전체 인프라·배포 체계 구축은 개인 담당 범위에 포함하지 않으며, 비용·처리 시간의 검증되지 않은 개선율은 표시하지 않음.
+  takeaway: 업무별 실행 단위, 선행 완료 조건, 처리 구간과 검증 결과를 공통 규칙으로 정리해 여러 수행사와 운영팀이 같은 기준으로 개발·운영하도록 구성.
+
+- id: next-kics
+  type: platform
+  label: 공공 데이터 · 수집 표준화
+  question: 기관마다 다른 형식의 데이터를 어떻게 같은 적재 기준으로 다룰까?
+  overview: 4개 사법기관의 이기종·비정형 데이터를 수집·적재하는 데이터 플랫폼 구축. 공통 지원 선임으로 ETL 개발 가이드와 데이터 표준, Python 법령정보 API 신규 연계 프로그램 담당.
+  scope:
+    - 기관별 데이터 형식과 BLOB 적재 오류에 대응하는 ETL 공통 개발 가이드·표준 수립
+    - 메타데이터로 수집 대상을 판별하는 Python 법령정보 API 연계·전처리·적재 프로그램 개발
+  architecture:
+    title: 기관별 원천 형식을 공통 적재 기준으로 연결
+    description: 기관별 원천 데이터의 형식 차이를 공통 ETL 가이드와 데이터 표준으로 정리하고 적재에 적용. 법령정보 API를 신규 연계하고 메타데이터 판단과 Python 전처리를 거쳐 분석 데이터로 적재.
+    image: /projects/next-kics/data-standard.svg
+    alt: 4개 기관 원천 데이터, ETL 공통 표준과 BLOB 적재의 관계
+    caption: 본인 수행 범위의 논리 흐름을 재구성한 도식. 사법기관의 실제 망 구성·데이터 구조를 나타내는 인프라 구성도가 아님.
+  figures: []
+  results:
+    - 기관별 형식 차이에 따른 BLOB 적재 오류 개선
+    - 법령정보를 신규 분석 데이터로 확보하는 API 연계·전처리·적재 기반 마련
+  limits: 전체 사법 시스템의 설계나 모든 기관의 파이프라인 개발을 단독 수행한 것으로 표현하지 않음. 처리량·오류율의 검증된 전후 수치는 없음.
+  takeaway: 개별 오류를 수정하는 데서 끝내지 않고 공통 가이드와 데이터 기준으로 남겨야 반복되는 적재 문제를 줄일 수 있다는 점을 확인.
+
+- id: local-finance
+  type: platform
+  label: 데이터 모델링 · 통계·BI
+  question: 200여 개 화면을 화면별 물리 테이블 없이 어떻게 관리할까?
+  overview: 행정안전부·전국 지자체 정책지원서비스의 통계·BI 화면 및 데이터 연계 구축. OLAP 개발 선임·Admin 역할로 공통 모델과 지표 산출, 외부 수집·연계 POC 수행.
+  scope:
+    - 화면 ID를 조회·구분 기준으로 사용하는 One-Table 통합 모델과 개발 규칙 설계
+    - 담당 공무원과 요구사항을 조율하고 내부 데이터·Open API 기반 지표 산출 구현
+    - Python 초기 수집·적재 스크립트 및 ETL 연계 POC 수행
+  architecture:
+    title: 수집·매핑 기준과 화면별 조회 조건을 분리
+    description: 외부 통계 수집·정제 후 지자체·주기·화면 기준으로 매핑하고 화면용 공통 집계 구조를 사용. 화면별 조회는 화면 ID와 주기 조건으로 구분.
+    image: /projects/local-finance/data-model.svg
+    alt: 외부 통계 수집부터 차원 매핑, 공통 집계와 화면별 조회까지의 흐름
+    caption: 본인 설명에 근거한 설계 개념도. 실제 DB의 물리적 키 구성이나 전체 스타 스키마를 단정하지 않으며, 모든 재정위기관리 화면이 외부 API로 구성된 것은 아님.
+  figures: []
+  results:
+    - 200여 개 통계·BI 화면에 공통 테이블 모델과 개발 규칙 적용
+    - 유형분류·재정위기관리 심화 화면 30여 본 구축
+    - 통계청·한국은행 데이터의 초기 수집·적재 및 ETL 연계 기반 검증
+  limits: 공통 집계 흐름은 개념 수준의 공개 설명. 비공개 원본 화면·실제 지자체 데이터는 게시하지 않으며, 화면 수는 본인 단독 개발 수와 구분.
+  takeaway: 담당자의 업무 규칙을 산출 조건·데이터 기준·화면 동작으로 나눠 합의하는 과정이 모델 재사용과 검증의 출발점임을 확인.
+
+- id: lgchem-data-lake
+  type: platform
+  label: 데이터 레이크 · 적재 전략
+  question: 모든 테이블을 Full Load하지 않고 적재 방식을 어떻게 나눌까?
+  overview: 전사 정형 데이터를 AWS 데이터 레이크로 이관하는 프로젝트. 원천 데이터 분석과 ODS 적재 방식 결정, Airflow DAG 코드 생성·적용이 본인 담당 범위.
+  scope:
+    - 원천 테이블의 볼륨·휘발성·예상 증가량·갱신 주기 프로파일링
+    - ODS Full·Incremental 적재 방식과 대상·우선순위 결정
+    - 결정한 적재 기준에 맞는 Airflow DAG 코드 생성·적용
+  architecture:
+    title: 원천 분석 결과를 적재 방식과 실행 코드로 연결
+    description: 원천 테이블 특성을 분석해 Full·Incremental 방식을 결정하고 Airflow DAG로 실행에 적용. AWS S3·Glue·Athena는 프로젝트 환경이며 본인의 역할은 원천 분석과 적재 전략·DAG 적용 범위.
+    image: /projects/lgchem-data-lake/loading-strategy.svg
+    alt: 원천 프로파일링, Full·Incremental 적재 판단과 DAG 생성·적용 흐름
+    caption: 본인 담당 업무를 재구성한 논리 흐름도. 전사 데이터 레이크 전체의 AWS 인프라 구성도가 아님.
+  figures: []
+  results:
+    - 테이블 특성에 따른 Full·Incremental 적재 기준 수립
+    - 적재 대상·우선순위와 실제 Airflow 실행 코드의 연결
+  limits: Glue·Lake Formation의 주도 설계·운영 실적으로 확대하지 않음. 처리 시간·비용 절감률의 검증된 전후 수치는 없음.
+  takeaway: 적재 도구를 정하기 전에 테이블의 변화 특성과 갱신 주기를 확인하고, 판단 기준을 실행 코드까지 연결하는 접근을 경험.
+
+- id: hanwha-esh
+  type: web
+  label: 웹 개발 · 업무 포털
+  question: 임직원 건강관리와 환경 공정시설 업무를 포털에 어떻게 담을까?
+  overview: 임직원 건강관리 및 환경 공정시설을 통합 관리하는 ESH 포털 구축. 루나랩스 주임으로 프런트엔드·백엔드 개발 참여.
+  scope:
+    - Vue.js 프런트엔드 개발
+    - Spring Framework 백엔드 및 MSSQL 사용 환경에서 포털 기능 개발
+  architecture:
+    title: 화면·백엔드·데이터베이스의 개발 범위
+    description: Vue.js 화면, Spring Framework 백엔드, MSSQL을 사용하는 웹 업무 포털. 공개 자료가 없는 네트워크 구성이나 상세 API·스키마는 추가하지 않음.
+    steps: [Vue.js 업무 화면, Spring Framework 백엔드, MSSQL]
+    caption: 확인된 기술 구성의 역할 관계만 정리한 개념도. 실제 운영 배포 구조와 상세 호출 방향을 나타내지 않음.
+  figures: []
+  results:
+    - 임직원 건강관리·환경 공정시설 관리 기능을 제공하는 포털 구축 참여
+  limits: 공개 가능한 실제 화면·상세 설계 자료가 없어 개요와 확인된 담당 범위만 제시. 성능·사용자 수·업무 개선율을 추정하지 않음.
+  takeaway: 업무 화면과 백엔드, 데이터베이스를 함께 다루며 웹 개발의 기본 흐름을 경험.
+
+- id: ubase-hr
+  type: web
+  label: 웹 개발 · 인사평가
+  question: 평가 이력을 남기고 인사평가 메뉴의 로직을 어떻게 정리할까?
+  overview: 관리자 인사평가 메뉴 개편 및 평가 히스토리 관리 도입. 루나랩스 주임으로 Java·Spring Framework·JavaScript·Oracle 환경의 개발 참여.
+  scope:
+    - 인사평가 메뉴 전체 로직 재설계
+    - Oracle 기반 평가 이력 관리 기능 도입
+  architecture:
+    title: 평가 메뉴와 이력 관리의 구현 범위
+    description: JavaScript 기반 화면과 Java·Spring Framework 백엔드, Oracle 환경에서 인사평가 로직을 재설계하고 평가 이력을 관리하도록 개선.
+    steps: [JavaScript 평가 화면, Java · Spring Framework, Oracle · 평가 이력]
+    caption: 확인된 개발 기술과 담당 기능의 역할 관계. 실제 테이블·API·네트워크 구성은 공개 자료가 없어 생략.
+  figures: []
+  results:
+    - 인사평가 메뉴의 전체 로직 재설계
+    - 평가 히스토리 관리 도입
+  limits: 원본 코드·화면이 공개되지 않아 구체적인 스키마·API와 성능 지표를 추정하지 않음.
+  takeaway: 현재 평가 처리뿐 아니라 이후의 이력 관리까지 업무 로직에 포함하는 개발 경험.

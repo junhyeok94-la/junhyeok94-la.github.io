@@ -9,6 +9,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "resume:dev": "next dev documents/resume --webpack --port 3001",
+    "resume:build": "next build documents/resume --webpack",
     "resume:pdf": "node scripts/generate-pdf.mjs resume",
     "portfolio:pdf": "node scripts/generate-pdf.mjs portfolio",
     "pdfs:generate": "node scripts/generate-pdf.mjs all",

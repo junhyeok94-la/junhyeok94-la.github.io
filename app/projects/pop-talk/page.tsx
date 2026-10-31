@@ -1,215 +1,107 @@
 import type { Metadata } from 'next';
-import { ArrowLeft, ArrowUpRight, Award, Bot, Database, Network, ShieldCheck } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-
+import { ArrowLeft, ArrowUpRight } from 'lucide-react';
 import { LangGraphFlowEmbed } from '@/components/langgraph-flow-embed';
-import { NcpArchitecture } from '@/components/ncp-architecture';
-import { badgeVariants } from '@/components/ui/badge';
-import { buttonVariants } from '@/components/ui/button';
+import { PortfolioFooter, PortfolioHeader } from '@/components/portfolio-shell';
 import { popTalk } from '@/lib/content';
-import { cn } from '@/lib/utils';
+import styles from '@/components/portfolio.module.css';
+import detail from './pop-talk.module.css';
 
 export const metadata: Metadata = {
-  title: 'Pop Talk AI Agent | 나준혁 포트폴리오',
-  description: 'HyperCLOVA X, RAG, LangGraph와 NAVER Cloud Platform을 결합한 수상 팀 프로젝트입니다.',
-  openGraph: {
-    title: 'Pop Talk · Personal Movie AI Agent',
-    description: '근거를 검색하고 답변을 스스로 검수하는 영화 추천 멀티 챗봇 에이전트',
-  },
+  title: 'Pop Talk | 나준혁 프로젝트 포트폴리오',
+  description: '영화 추천 AI 서비스. 데이터 수집·RAG·LangGraph 검수와 NCP 인프라 구현에 참여한 4인 팀 프로젝트.',
 };
 
-const architectureIcons = [Bot, Database, Network, ShieldCheck];
+const decisions = [
+  { title: '영화 데이터 수집·통합', problem: '영화 정보와 포스터·줄거리·키워드가 서로 다른 API에 분산.', action: 'KOBIS·KMDB 데이터를 수집·정제·병합하고 PostgreSQL에 UPSERT.', result: '영화 메타데이터와 리뷰를 검색·추천의 공통 데이터로 활용.' },
+  { title: '추천 근거 검색', problem: 'LLM 자체 지식만으로는 영화 정보와 추천 이유의 근거 확인이 어려움.', action: '영화·리뷰 임베딩을 pgvector에 저장하고 검색 결과와 근거 ID를 생성 컨텍스트에 전달.', result: '검색한 영화 데이터와 리뷰를 바탕으로 추천 이유 생성.' },
+  { title: '응답 검수·재시도', problem: '추천 결과가 요청 조건과 어긋나거나 근거가 부족한 경우 발생.', action: 'LangGraph에서 분류·검색·생성·검수를 분리. 실패 원인에 따라 재분류·재검색·재생성.', result: '검수 통과 응답을 반환하고, 재시도 소진 시 안전 응답으로 전환.' },
+];
+
+function ProductView({ item }: { item: (typeof popTalk.productViews)[number] }) {
+  return (
+    <figure className={detail.product}>
+      <a href={item.image} target="_blank" rel="noreferrer" aria-label={`${item.title} 크게 보기`}>
+        <Image src={item.image} alt={item.alt} width={1900} height={930} sizes="(max-width: 760px) 100vw, 50vw" unoptimized />
+      </a>
+      <figcaption>{item.title}</figcaption>
+    </figure>
+  );
+}
 
 export default function PopTalkPage() {
   return (
-    <main className="case-study">
-      <header className="case-header">
-        <Link href="/"><ArrowLeft /> Portfolio</Link>
-        <Link href="/resume">Resume <ArrowUpRight /></Link>
+    <main className={styles.site}>
+      <PortfolioHeader />
+      <header className={styles.caseHero}>
+        <Link className={styles.back} href="/#ai-project"><ArrowLeft size={15} /> 프로젝트 목록</Link>
+        <p className={styles.eyebrow}>AI · 교육 팀 프로젝트</p>
+        <h1>Pop Talk · 영화 추천 AI 서비스</h1>
+        <p className={styles.caseQuestion}>KOBIS·KMDB 영화 데이터와 사용자 취향·상황을 바탕으로 추천하고, 응답 근거를 검수하는 서비스.</p>
+        <dl className={styles.facts}>
+          <div><dt>교육기간</dt><dd>{popTalk.period}<br />2주 교육·실습 + 1주 팀 프로젝트</dd></div>
+          <div><dt>팀 · 결과</dt><dd>{popTalk.team} · 최종 평가 {popTalk.award}</dd></div>
+          <div><dt>담당 역할</dt><dd>{popTalk.role}</dd></div>
+        </dl>
+        <p className={detail.program}>{popTalk.context}</p>
+        <a className={detail.repository} href="https://github.com/junhyeok94-la/pop-talk" target="_blank" rel="noreferrer">GitHub 저장소 <ArrowUpRight size={15} /></a>
       </header>
-
-      <section className="case-hero">
-        <div className="case-kicker">AWARDED AI PBL PROJECT · 2026</div>
-        <h1>{popTalk.title}</h1>
-        <p className="case-subtitle">{popTalk.subtitle}</p>
-        <p className="case-overview">{popTalk.overview}</p>
-        <div className="case-facts">
-          <div><span>Program</span><strong>{popTalk.context}</strong></div>
-          <div><span>Collaboration</span><strong>{popTalk.team} · {popTalk.role}</strong></div>
-          <div className="case-award"><Award /><span>Result</span><strong>{popTalk.award}</strong></div>
-        </div>
-      </section>
-
-      <section className="case-section case-problem">
-        <div className="case-section-heading">
-          <span>01 / PROBLEM</span>
-          <h2>추천을 생성하는 것보다<br />신뢰하게 만드는 문제</h2>
-        </div>
-        <ol>
-          {popTalk.problem.map((item, index) => (
-            <li key={item}><span>{String(index + 1).padStart(2, '0')}</span><p>{item}</p></li>
-          ))}
-        </ol>
-      </section>
-
-      <section className="case-section case-values">
-        <div className="case-section-heading">
-          <span>02 / PRODUCT PRINCIPLES</span>
-          <h2>개인화부터 검증까지<br />네 가지 설계 원칙</h2>
-        </div>
-        <div className="value-grid">
-          {popTalk.values.map((item, index) => (
-            <article key={item.name}><span>0{index + 1}</span><h3>{item.name}</h3><p>{item.description}</p></article>
-          ))}
-        </div>
-      </section>
-
-      <section className="case-section case-contribution">
-        <div className="case-section-heading">
-          <span>03 / MY FOCUS</span>
-          <h2>제가 집중한 구현 범위는<br />데이터에서 Agent 품질까지</h2>
-          <p>팀 프로젝트 중 데이터·AI Agent 구현에 참여한 범위를 발표자료의 처리 흐름에 맞춰 구체화했습니다.</p>
-        </div>
-        <div className="contribution-grid">
-          {popTalk.contributions.map((item, index) => (
-            <article key={item.area}>
-              <span>{String(index + 1).padStart(2, '0')} / {item.area}</span>
-              <h3>{item.title}</h3>
-              <p>{item.description}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="case-section case-product">
-        <div className="case-section-heading">
-          <span>04 / WORKING PRODUCT</span>
-          <h2>추천 화면뿐 아니라<br />운영과 검수까지 구현</h2>
-          <p>발표자료에 포함된 실제 구현 화면입니다. 사용자 경험과 데이터 운영 화면을 함께 보여주어 서비스가 어디까지 완성됐는지 확인할 수 있습니다.</p>
-        </div>
-        <div className="product-gallery">
-          {popTalk.productViews.map((item, index) => (
-            <figure key={item.title} className={index < 2 ? 'product-view product-view-user' : 'product-view'}>
-              <a href={item.image} target="_blank" rel="noreferrer" aria-label={`${item.title} 원본 크기로 보기`}>
-                <Image src={item.image} alt={item.alt} width={1900} height={930} sizes="(max-width: 900px) 100vw, 50vw" unoptimized />
-              </a>
-              <figcaption>
-                <span>{index < 2 ? 'USER EXPERIENCE' : 'ADMIN OPERATIONS'}</span>
-                <h3>{item.title}</h3>
-                <p>{item.description}</p>
-                <a href={item.image} target="_blank" rel="noreferrer">크게 보기 ↗</a>
-              </figcaption>
-            </figure>
-          ))}
-        </div>
-        <aside className="demo-snapshot">
-          <div>
-            <span>DEMO SNAPSHOT · 2026.08</span>
-            <strong>발표 시점 관리자 대시보드</strong>
-            <p>사용자 성과 지표가 아닌, 수집·검수·운영 범위를 확인하기 위한 구현 데이터 스냅샷입니다.</p>
+      <nav className={styles.caseNav} aria-label="프로젝트 목차">
+        <a href="#scope">담당 업무</a><a href="#product">구현 결과</a><a href="#architecture">아키텍처</a><a href="#decisions">문제와 해결</a><a href="#stack">사용 기술</a>
+      </nav>
+      <div className={styles.caseBody}>
+        <section id="scope" className={styles.caseSection}>
+          <div className={styles.sectionLabel}><span>01</span><h2>담당 업무</h2></div>
+          <ul className={detail.scope}>
+            <li><strong>데이터 수집</strong><span>KOBIS·KMDB 수집·정제·병합, PostgreSQL 적재.</span></li>
+            <li><strong>RAG 검색</strong><span>영화·리뷰 임베딩 저장과 검색 근거 전달.</span></li>
+            <li><strong>AI Agent</strong><span>LangGraph 기반 응답 검수·재시도 흐름 구현.</span></li>
+            <li><strong>NCP 인프라</strong><span>웹 애플리케이션 아키텍처 설계와 Terraform 구성 참여.</span></li>
+          </ul>
+        </section>
+        <section id="product" className={styles.caseSection}>
+          <div className={styles.sectionLabel}><span>02</span><h2>구현 결과</h2></div>
+          <p>자연어 영화 추천, 영화 탐색·리뷰, 취향 입력 및 관리자 검수 화면 구현. 팀 프로젝트 우수상 수상.</p>
+          <div className={detail.gallery}>{popTalk.productViews.slice(0, 2).map(item => <ProductView key={item.image} item={item} />)}</div>
+          <details className={detail.disclosure}>
+            <summary>관리자 대시보드·검수 화면 보기</summary>
+            <div className={detail.gallery}>{popTalk.productViews.slice(2).map(item => <ProductView key={item.image} item={item} />)}</div>
+            <p className={detail.note}>발표 시점 데이터: {popTalk.demoSnapshot.map(item => `${item.label} ${item.value}`).join(' · ')}. 서비스 이용 성과가 아닌 구현 데이터 기준.</p>
+          </details>
+        </section>
+        <section id="architecture" className={styles.caseSection}>
+          <div className={styles.sectionLabel}><span>03</span><h2>시스템 아키텍처</h2></div>
+          <p>Public LB → Web → Private LB → WAS·ChatBot. 수집 배치는 PostgreSQL에 적재하고, ChatBot은 pgvector 검색과 HyperCLOVA X를 사용.</p>
+          <figure className={styles.diagram}>
+            <a href="/projects/pop-talk/ncp-system-architecture.png" target="_blank" rel="noreferrer" aria-label="NCP 시스템 아키텍처 크게 보기">
+              <Image src="/projects/pop-talk/ncp-system-architecture.png" alt="Pop Talk NCP 시스템 아키텍처: Web, WAS, ChatBot, Batch와 PostgreSQL 연결" width={2400} height={1350} sizes="(max-width: 1100px) 100vw, 1000px" unoptimized />
+            </a>
+            <figcaption>교육 팀 프로젝트 발표자료 · 클릭하면 크게 보기</figcaption>
+          </figure>
+        </section>
+        <section id="decisions" className={styles.caseSection}>
+          <div className={styles.sectionLabel}><span>04</span><h2>문제와 해결</h2></div>
+          <div className={styles.decisions}>
+            {decisions.map((item, index) => (
+              <article key={item.title}>
+                <div className={styles.decisionHeading}><span>0{index + 1}</span><h3>{item.title}</h3></div>
+                <dl><div><dt>문제</dt><dd>{item.problem}</dd></div><div><dt>구현</dt><dd>{item.action}</dd></div><div className={styles.resultRow}><dt>결과</dt><dd>{item.result}</dd></div></dl>
+              </article>
+            ))}
           </div>
-          {popTalk.demoSnapshot.map((item) => (
-            <dl key={item.label}><dt>{item.label}</dt><dd>{item.value}</dd></dl>
-          ))}
-        </aside>
-      </section>
-
-      <section className="case-section case-agent">
-        <div className="case-section-heading light-heading">
-          <span>05 / LANGGRAPH AGENT FLOW</span>
-          <h2>실패 원인에 따라<br />이전 단계로 돌아가는 Agent</h2>
-          <p>한 번 생성하고 끝내지 않습니다. 검색 근거와 응답 품질을 검수하고, 원인에 맞는 단계부터 다시 실행합니다.</p>
-        </div>
-        <LangGraphFlowEmbed />
-      </section>
-
-      <section className="case-section case-data">
-        <div className="case-section-heading">
-          <span>06 / GROUNDED DATA</span>
-          <h2>영화 공공데이터에서<br />답변 근거까지</h2>
-        </div>
-        <div className="data-flow">
-          {popTalk.dataFlow.map((item, index) => (
-            <div key={item}><span>{String(index + 1).padStart(2, '0')}</span><p>{item}</p></div>
-          ))}
-        </div>
-      </section>
-
-      <section className="case-section case-architecture">
-        <div className="case-section-heading">
-          <span>07 / ARCHITECTURE</span>
-          <h2>서비스와 데이터 흐름을<br />구분한 NCP 구조</h2>
-          <p>사용자 요청은 Public LB와 Web을 거쳐 내부 서비스로 전달됩니다. 영화 데이터 수집·적재와 AI API 연계를 함께 표시했습니다.</p>
-        </div>
-        <figure className="architecture-figure">
-          <div className="architecture-image-scroll">
-            <NcpArchitecture />
-          </div>
-          <figcaption>
-            <span>REQUEST PATH</span>
-            <strong>Public LB → Web → Private LB → WAS / ChatBot</strong>
-            <p>발표자료를 역할과 주요 호출 방향 중심으로 재구성했습니다. IP와 서브넷 크기를 생략한 논리 구성도입니다.</p>
-          </figcaption>
-        </figure>
-        <div className="architecture-grid">
-          {popTalk.architecture.map((item, index) => {
-            const Icon = architectureIcons[index];
-            return <article key={item.layer}><Icon /><h3>{item.layer}</h3><p>{item.detail}</p></article>;
-          })}
-        </div>
-      </section>
-
-      <section className="case-section case-stack">
-        <div className="case-section-heading">
-          <span>08 / STACK</span>
-          <h2>학습한 기술을<br />하나의 서비스로 통합</h2>
-        </div>
-        <div className="case-stack-groups">
-          {Object.entries(popTalk.stack).map(([group, items]) => (
-            <article key={group}>
-              <h3>{group}</h3>
-              <div>{items.map((item) => <span className={badgeVariants({ variant: 'outline' })} key={item}>{item}</span>)}</div>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="case-section case-outcome">
-        <div className="case-section-heading light-heading">
-          <span>09 / RESULT &amp; NEXT</span>
-          <h2>완성한 범위와<br />다음 과제를 구분</h2>
-        </div>
-        <div className="outcome-grid">
-          <article className="outcome-result">
-            <Award />
-            <span>FINAL EVALUATION</span>
-            <h3>{popTalk.context}<br />{popTalk.award}</h3>
-            <p>자연어 추천, 데이터 수집·RAG, 자가교정 Agent, 사용자·관리자 화면과 NCP 인프라까지 하나의 서비스로 통합했습니다.</p>
-          </article>
-          <article className="outcome-roadmap">
-            <span>NEXT ITERATION</span>
-            <ol>
-              {popTalk.roadmap.map((item, index) => (
-                <li key={item.title}>
-                  <span>{String(index + 1).padStart(2, '0')}</span>
-                  <div><strong>{item.title}</strong><p>{item.description}</p></div>
-                </li>
-              ))}
-            </ol>
-          </article>
-        </div>
-      </section>
-
-      <footer className="case-footer">
-        <div><Award /><span>{popTalk.team}</span><strong>최종 평가 {popTalk.award}</strong></div>
-        <p>{popTalk.sourcesNote}</p>
-        <div className="case-footer-actions">
-          <Link className={cn(buttonVariants({ size: 'lg' }), 'primary-action')} href="/">포트폴리오로 돌아가기</Link>
-          <a className={cn(buttonVariants({ variant: 'outline', size: 'lg' }))} href="https://github.com/junhyeok94-la/pop-talk" target="_blank" rel="noreferrer">GitHub 저장소 <ArrowUpRight /></a>
-          <Link className={cn(buttonVariants({ variant: 'outline', size: 'lg' }))} href="/resume">이력서 보기</Link>
-        </div>
-      </footer>
+          <details className={detail.disclosure}>
+            <summary>LangGraph 전체 노드와 처리 로직 보기</summary>
+            <LangGraphFlowEmbed />
+          </details>
+        </section>
+        <section id="stack" className={styles.caseSection}>
+          <div className={styles.sectionLabel}><span>05</span><h2>사용 기술</h2></div>
+          <dl className={detail.stack}>{Object.entries(popTalk.stack).map(([group, items]) => <div key={group}><dt>{group}</dt><dd>{items.join(' · ')}</dd></div>)}</dl>
+        </section>
+        <p className={detail.note}>{popTalk.sourcesNote}</p>
+      </div>
+      <PortfolioFooter />
     </main>
   );
 }
