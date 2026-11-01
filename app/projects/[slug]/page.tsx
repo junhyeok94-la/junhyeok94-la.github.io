@@ -95,6 +95,16 @@ export default async function ProjectPage({
             </ul>
           </div>
         </section>
+        {study.serviceContext && (
+          <section className={styles.caseSection} aria-label={study.serviceContext.title}>
+            <h2>{study.serviceContext.title}</h2>
+            <p>{study.serviceContext.description}</p>
+            <ul className={styles.resultList}>
+              {study.serviceContext.items.map(item => <li key={item}>{item}</li>)}
+            </ul>
+            <p className={styles.scopeNote}>{study.serviceContext.note}</p>
+          </section>
+        )}
         {study.publicMaterials && (
           <section id="public-materials" className={styles.caseSection}>
             <div className={styles.sectionLabel}>
@@ -197,7 +207,7 @@ export default async function ProjectPage({
           <section className={styles.caseSection}>
             <div className={styles.sectionLabel}>
               <span>DETAILS</span>
-              <h2>구현 흐름 자세히 보기</h2>
+              <h2>{study.type === 'web' ? '업무 흐름 참고' : '구현 흐름 자세히 보기'}</h2>
             </div>
             {study.figures.map((item) => (
               <figure key={item.image} className={styles.diagram}>

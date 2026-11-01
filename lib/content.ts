@@ -45,6 +45,12 @@ export type CaseStudy = {
   question: string;
   overview: string;
   scope: string[];
+  serviceContext?: {
+    title: string;
+    description: string;
+    items: string[];
+    note: string;
+  };
   architecture: {
     title: string;
     description: string;
@@ -98,6 +104,8 @@ export type PopTalk = {
   stack: Record<string, string[]>;
   roadmap: Array<{ title: string; description: string }>;
   sourcesNote: string;
+  runtimeExamples: Array<{ title: string; observation: string; action: string; result: string }>;
+  runtimeNote: string;
 };
 function loadYaml<T>(filename: string): T {
   return parse(

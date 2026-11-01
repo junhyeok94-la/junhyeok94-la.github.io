@@ -131,10 +131,10 @@
       problem: 연도별 행정단위·지표·가중치·산출 차수 관리와 확정·비교 규칙의 화면 반영 필요.
       action: 담당 공무원과 요구사항을 조율해 유형분류 11개 화면 개발. 가중치 합계 검증, 차수별 산출·저장, 연도별 확정 관리와 전문기관 업로드 자료 비교 구현. 사용자지침서 작성.
       result: 기준 설정부터 산출·확정·비교까지 업무 흐름 구현. 유형분류·재정위기관리 심화 화면은 합계 30여 개 구축.
-    - title: 통계청·한국은행 API 연계와 통계 화면 개발
-      problem: 외부 통계를 수집·가공해 정책지원 통계 화면에 연결할 처리 흐름 필요.
-      action: Python 초기 수집·적재 스크립트와 ETL 연계 검증(POC) 수행. 수집 데이터를 활용한 통계·BI 화면 개발.
-      result: 외부 통계 수집·적재 스크립트, ETL 연계 POC와 통계·BI 화면 구현.
+    - title: Open API 초기 수집과 대량 조회 대응
+      problem: 지표마다 수집 주기와 응답 형식이 다르고, KOSIS 대량 조회에서 4만 셀 초과 데이터의 수집에 제약 발생.
+      action: 엑셀 지표 목록에서 대상을 선택하고 일·월·분기·반기·연 단위로 기간을 순회하는 Python 스크립트 개발. KOSIS·ECOS 응답을 분리 처리하고, KOSIS 대량 데이터는 분류 항목별로 나누어 수집. JSON을 정규화·병합해 UTF-8 BOM CSV로 출력.
+      result: 초기 적재·ETL 연계 POC에 사용할 지표별 CSV 생성 흐름 구현. 지표별 오류와 성공·실패 건수를 실행 결과로 확인. 수집 데이터를 활용한 통계·BI 화면 개발.
 - id: lgchem-data-lake
   title: LG화학 전사 데이터 레이크 1차 구축
   category: Private Sector
@@ -161,13 +161,13 @@
   title: 한화솔루션 ESH 포털 구축
   category: Web Foundation
   period: 2021.03 - 2021.05
-  role: 프런트엔드 · 백엔드 개발 · 주임
+  role: 백엔드 중심 개발 · 일부 프런트엔드 · 주임
   contribution:
     rate: 70%
     basis: Backend·Frontend 주요 구현
   company: 루나랩스주식회사
   featured: false
-  summary: 임직원 건강관리와 환경 공정시설을 통합 관리하는 포털을 개발
+  summary: 환경·안전·보건 통합 ESH 포털의 Spring Framework 백엔드와 일부 Vue.js 업무 화면 개발
   stack:
     - Vue.js
     - Spring Framework
@@ -183,7 +183,7 @@
     basis: 인사평가 메뉴 전면 재설계
   company: 루나랩스주식회사
   featured: false
-  summary: 평가 히스토리 관리를 도입하고 인사평가 메뉴의 전체 로직을 재설계
+  summary: 평가 이력 관리를 도입하고 인사평가 메뉴의 전체 로직을 재설계
   stack:
     - Java
     - Spring Framework

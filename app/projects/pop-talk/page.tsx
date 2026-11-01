@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 const decisions = [
   { title: '영화 데이터 수집·통합', problem: '영화 정보와 포스터·줄거리·키워드가 서로 다른 API에 분산.', action: 'KOBIS·KMDB 데이터를 수집·정제·병합하고 PostgreSQL에 UPSERT.', result: '영화 메타데이터와 리뷰를 검색·추천의 공통 데이터로 활용.' },
   { title: '추천 근거 검색', problem: 'LLM 자체 지식만으로는 영화 정보와 추천 이유의 근거 확인이 어려움.', action: '영화·리뷰 임베딩을 pgvector에 저장하고 검색 결과와 근거 ID를 생성 컨텍스트에 전달.', result: '검색한 영화 데이터와 리뷰를 바탕으로 추천 이유 생성.' },
-  { title: '응답 검수·재시도', problem: '추천 결과가 요청 조건과 어긋나거나 근거가 부족한 경우 발생.', action: 'LangGraph에서 분류·검색·생성·검수를 분리. 실패 원인에 따라 재분류·재검색·재생성.', result: '검수 통과 응답을 반환하고, 재시도 소진 시 안전 응답으로 전환.' },
+  { title: '응답 검수·재시도', problem: '추천 결과가 요청 조건과 어긋나거나 근거가 부족한 경우 발생.', action: 'LangGraph에서 분류·검색·생성·검수를 분리. 실패 원인에 따라 재분류·재검색·재생성.', result: '검수 결과에 따라 재시도·응답 확정·폴백으로 분기. 실행 로그에서 재검색 후 검수 통과와 재시도 소진 후 안전 종료 확인.' },
 ];
 
 function ProductView({ item }: { item: (typeof popTalk.productViews)[number] }) {
@@ -90,6 +90,22 @@ export default function PopTalkPage() {
               </article>
             ))}
           </div>
+          <details className={detail.disclosure}>
+            <summary>로그로 확인한 검수·재시도 사례</summary>
+            <div className={styles.decisions}>
+              {popTalk.runtimeExamples.map(item => (
+                <article key={item.title}>
+                  <h3>{item.title}</h3>
+                  <dl>
+                    <div><dt>관찰</dt><dd>{item.observation}</dd></div>
+                    <div><dt>처리</dt><dd>{item.action}</dd></div>
+                    <div className={styles.resultRow}><dt>결과</dt><dd>{item.result}</dd></div>
+                  </dl>
+                </article>
+              ))}
+            </div>
+            <p className={detail.note}>{popTalk.runtimeNote}</p>
+          </details>
           <details className={detail.disclosure}>
             <summary>LangGraph 전체 노드와 처리 로직 보기</summary>
             <LangGraphFlowEmbed />

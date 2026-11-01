@@ -50,7 +50,6 @@
     - 공통 데이터 비교 검증과 배치 운영 지표 제공
   limits: 공개용으로 재작성한 논리 구성도. 본인 담당 범위는 배치 실행·복구·검증·모니터링.
   takeaway: 업무별 실행 단위, 선행 완료 조건, 처리 구간과 검증 결과를 공통 규칙으로 정리해 여러 수행사와 운영팀이 같은 기준으로 개발·운영하도록 구성.
-
 - id: next-kics
   type: platform
   label: 데이터플랫폼 · ETL · 대시보드 설계
@@ -67,12 +66,12 @@
     - title: 차세대 형사사법정보시스템 개통
       url: https://www.korea.kr/news/policyNewsView.do?newsId=148934088
       publisher: 대한민국 정책브리핑 · 관계기관 합동
-      date: '2024.09.19'
+      date: 2024.09.19
       description: 4개 형사사법기관이 참여한 차세대 KICS의 개통과 전체 서비스 목표를 설명하는 정부 자료.
     - title: Hadoop 기반 스마트 빅데이터 플랫폼 SBP
       url: https://www.newswire.co.kr/newsRead.php?no=660742
       publisher: LG CNS 제공 보도자료 · 뉴스와이어
-      date: '2012.10.31'
+      date: 2012.10.31
       description: Hadoop 기반 수집·저장·처리·분석 플랫폼의 기본 구성과 관리 기능을 소개하는 SBP 출시 자료.
     - title: 데이터 통합 솔루션 TeraStream
       url: https://datastreams.co.kr/products/data-integration-terastream/
@@ -105,7 +104,6 @@
     - 검찰청·경찰청·해양경찰청 대시보드 화면 설계 문서 작성 및 MSTR 개발 담당자 인계
   limits: 본인 담당 범위는 데이터플랫폼 구축과 화면 설계·문서 인계. MSTR 화면 구현은 별도 개발 담당자 수행.
   takeaway: 데이터 적재 기준과 화면 설계를 문서로 남겨 기관별 데이터 차이에 대응하고, 플랫폼 개발과 시각화 개발 담당자 사이의 인계를 지원.
-
 - id: local-finance
   type: platform
   label: 정책지원시스템 · 통계·BI
@@ -113,14 +111,14 @@
   overview: 차세대 지방재정관리시스템(e호조+) 중 정책지원시스템 개발·구축 참여. OLAP 개발 선임·Admin으로 통계·BI 공통 모델과 개발 규칙, 통계청·한국은행 API 기반 통계 화면, 유형분류·재정위기관리 심화 화면 구현 담당.
   scope:
     - 공통 화면 ID 기반 통합 모델과 조회·개발 규칙을 200여 개 통계·BI 화면에 적용
-    - 통계청·한국은행 API 데이터의 초기 수집·적재 스크립트, ETL 연계 POC 및 통계·BI 화면 개발
+    - 통계청(KOSIS)·한국은행(ECOS) Open API의 초기 수집용 Python 스크립트, CSV 생성, ETL 연계 POC 및 통계·BI 화면 개발
     - 유사자치단체 유형관리 11개 화면 개발 — 기준·지표 설정, 가중치 기반 산출, 차수별 저장, 확정·비교
     - 담당 공무원과 요구사항 조율, 유형분류·재정위기관리 심화 화면 30여 개 구축 및 유형분류 사용자지침서 작성
   publicMaterials:
     - title: 종합지역현황 서비스 화면
       url: https://zdnet.co.kr/view/?no=20230918182336
       publisher: ZDNet Korea
-      date: '2023.09.18'
+      date: 2023.09.18
       description: 정책지원시스템의 지도·차트 기반 종합지역현황 화면. 기사에서 스마트빅보드와 통계·분석 기능 소개.
       image: https://image.zdnet.co.kr/2023/09/18/f4a087120a413f86ed85eda282ffab21.jpg
       width: 443
@@ -129,7 +127,7 @@
     - title: 지방자치단체 정책지원시스템 개요
       url: https://www.yna.co.kr/view/AKR20230825131300530
       publisher: 연합뉴스
-      date: '2023.08.27'
+      date: 2023.08.27
       description: 종합지역현황·데이터 기반 분석·지역상황 전망의 서비스 구성과 전 지자체 대상 개시 보도.
       image: https://img6.yna.co.kr/etc/inner/KR/2023/08/25/AKR20230825131300530_01_i_P4.jpg
       width: 625
@@ -146,14 +144,17 @@
       image: /projects/local-finance/classification-workflow.svg
       alt: 기준과 지표를 설정하고 가중치 합계를 확인해 유형분류를 산출·저장한 뒤 연도별 확정 또는 전문기관 자료 비교로 이어지는 업무 흐름
       caption: 본인 작성 사용자지침서의 11개 화면을 업무 단위로 정리한 도식. 가중치 합계 100%, 확정 차수의 재산출 제한, 연도별 한 차수 확정과 전문기관 자료 비교 규칙 반영. 내부 화면·화면 ID·실제 데이터는 게시하지 않음.
+    - title: Open API 초기 적재용 데이터 수집
+      image: /projects/local-finance/open-api-collection.svg
+      alt: 엑셀 지표 목록에서 수집 대상을 선택하고 주기별 API 조회 및 분류 항목 분할로 JSON을 수집해 CSV를 생성하는 흐름
+      caption: 보관 중인 Python 스크립트의 처리 흐름을 재구성. KOSIS·ECOS 응답 형식 분리, KOSIS 대량 조회의 분류 항목 분할과 UTF-8 BOM CSV 출력 반영. CSV 생성 이후의 DB 적재·ETL 연계는 별도 단계.
   results:
     - 공통 테이블 모델과 개발 규칙을 200여 개 통계·BI 화면 구축에 적용
     - 유형분류 관리 11개 화면과 사용자지침서 작성
     - 유형분류·재정위기관리 심화 화면 30여 개 구축
-    - 통계청·한국은행 API 수집·적재 스크립트, ETL 연계 POC와 통계·BI 화면 구현
+    - KOSIS·ECOS 초기 수집용 Python 스크립트와 CSV 생성, ETL 연계 POC 및 통계·BI 화면 구현
   limits: 공개 이미지는 정책지원시스템 전체의 소개 자료. 유형분류 11개 화면은 심화 화면 30여 개에 포함.
   takeaway: 공무원의 업무 기준을 지표·가중치·차수·확정 상태와 조회 조건으로 구체화하고, 산출 결과를 전문기관 자료와 비교할 수 있도록 업무 흐름 구현.
-
 - id: lgchem-data-lake
   type: platform
   label: 데이터 레이크 · 적재 전략
@@ -175,26 +176,40 @@
     - 적재 기준·대상·우선순위에 따른 Airflow DAG 코드 생성·적용
   limits: 공개 범위는 원천 분석·적재 방식 결정·DAG 적용. 상세 운영 구성과 원본 화면은 생략.
   takeaway: 원천 테이블의 변경 특성과 갱신 주기를 적재 기준으로 정리하고, 결정한 기준을 DAG 실행 코드에 반영.
-
 - id: hanwha-esh
   type: web
   label: 웹 개발 · 업무 포털
-  question: 임직원 건강관리·환경 공정시설 관리 포털 개발
-  overview: 임직원 건강관리 및 환경 공정시설을 통합 관리하는 ESH 포털 구축. 루나랩스 주임으로 프런트엔드·백엔드 개발 참여.
+  question: ESH 통합 업무 포털의 백엔드 중심 개발
+  overview: 환경·안전·보건 정보를 통합 관리하는 ESH 포털 구축 참여. Spring Framework·MSSQL 환경의 백엔드 개발을 주로 담당하고, 일부 Vue.js 업무 화면 개발 병행.
   scope:
-    - Vue.js 프런트엔드 개발
-    - Spring Framework·MSSQL 환경의 백엔드 기능 개발
+    - Spring Framework·MSSQL 환경의 백엔드 개발 중심 수행
+    - 일부 Vue.js 업무 화면 개발 병행
   architecture:
     title: 화면·백엔드·데이터베이스의 개발 범위
-    description: Vue.js로 업무 화면을 구성하고 Spring Framework·MSSQL 환경에서 백엔드 기능 개발.
-    steps: [Vue.js 업무 화면, Spring Framework 백엔드, MSSQL]
+    description: Spring Framework·MSSQL 환경에서 백엔드 기능을 주로 개발하고, Vue.js 기반 일부 업무 화면 구현 병행.
+    steps:
+      - Vue.js 업무 화면
+      - Spring Framework 백엔드
+      - MSSQL
     caption: 확인된 기술 구성의 역할 관계만 정리한 개념도. 실제 운영 배포 구조와 상세 호출 방향을 나타내지 않음.
   figures: []
   results:
-    - 임직원 건강관리·환경 공정시설 관리 기능을 제공하는 포털 구축 참여
-  limits: 확인된 개발 기술과 담당 범위를 기준으로 정리. 내부 화면·상세 설계는 생략.
+    - Spring Framework 기반 ESH 포털 백엔드 개발 참여
+    - Vue.js 기반 일부 업무 화면 개발
+  limits: 공개 이미지는 공식 블로그의 서비스 소개 자료. 본인 담당 범위는 백엔드 중심 개발과 일부 프런트엔드 개발.
   takeaway: Vue.js 화면과 Spring Framework·MSSQL 환경의 백엔드 개발 참여.
-
+  publicMaterialsTitle: 공식 블로그의 서비스 소개
+  publicMaterialsNote: 참여한 ESH 포털의 업무 맥락을 보여주는 공식 자료. 2020년 소개 화면이며 2021년 본인의 구현 결과 화면과는 구분.
+  publicMaterials:
+    - title: ESH 포털과 변경관리(MoC) 화면 소개
+      url: https://www.chemidream.com/2621
+      publisher: 한화솔루션 케미칼 부문 공식블로그
+      date: 2020.08.13
+      description: 환경·안전·보건 통합 관리와 변경관리 업무를 소개한 글. PSM 추적·MoC 목록·수행 화면 공개.
+      image: https://t1.daumcdn.net/cfile/tistory/9922A5465F34DEEF17
+      width: 900
+      height: 795
+      credit: © 한화솔루션(주) · 공식 블로그 공개 이미지 · 원본 이미지 그대로 표시
 - id: ubase-hr
   type: web
   label: 웹 개발 · 인사평가
@@ -206,11 +221,25 @@
   architecture:
     title: 평가 메뉴와 이력 관리의 구현 범위
     description: JavaScript 기반 화면과 Java·Spring Framework 백엔드, Oracle 환경에서 인사평가 로직을 재설계하고 평가 이력을 관리하도록 개선.
-    steps: [JavaScript 평가 화면, Java · Spring Framework, Oracle · 평가 이력]
+    steps:
+      - JavaScript 평가 화면
+      - Java · Spring Framework
+      - Oracle · 평가 이력
     caption: 확인된 개발 기술과 담당 기능의 역할 관계. 실제 테이블·API·네트워크 구성은 공개 자료가 없어 생략.
-  figures: []
+  figures:
+    - title: 매뉴얼에서 확인한 목표·행동지표 관리
+      image: /projects/ubase-hr/goal-management.svg
+      alt: 요소와 대상별 목표 등록 및 비율 입력, 목표 전송과 취소, 목표별 행동지표 저장과 수정 기능
+      caption: 2023년 목표수립 매뉴얼의 업무 기능을 재구성한 도식. 2021년 구현 범위나 실제 테이블·API 설계도를 나타내지 않음.
   results:
     - 인사평가 메뉴의 전체 로직 재설계
     - 평가 이력 관리 도입
-  limits: 확인된 메뉴 개편·평가 이력 관리 범위를 기준으로 정리. 내부 화면·상세 스키마는 생략.
+  limits: 2023년 사용자 매뉴얼은 서비스 기능의 참고 자료. 개인 담당 범위는 2021년 인사평가 메뉴 로직 개편과 평가 이력 관리 도입.
   takeaway: 평가 처리와 이력 관리를 함께 반영한 인사평가 메뉴 로직 개편.
+  serviceContext:
+    title: 매뉴얼로 확인한 서비스 기능
+    description: 2023년 목표수립 매뉴얼에서 확인한 사용자 업무. 2021년 본인의 개발 범위는 위의 메뉴 로직 개편과 평가 이력 관리.
+    items:
+      - "목표 관리: 요소·대상별 목표 등록, 비율 입력, 직전 목표 가져오기와 전송·전송 취소"
+      - "행동지표 관리: 목표별 5단계 기준 작성, 저장과 수정"
+    note: 당시 직접 개발한 세부 기능을 확정하는 근거로 사용하지 않고, 서비스 이해를 위한 참고로 활용. 원본 화면·실명·접속 안내는 미게시.

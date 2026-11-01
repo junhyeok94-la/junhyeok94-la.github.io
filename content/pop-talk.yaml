@@ -5,6 +5,16 @@ period: 2026.07.27 - 2026.08.14
 team: 4인 팀
 award: 우수상
 role: 데이터·AI Agent·NCP 인프라 구현 참여
+runtimeExamples:
+  - title: 근거 부족 판정 후 재검색·재생성
+    observation: 추천 초안의 근거 부족(insufficient_evidence) 판정. 재검색(retrieve) 경로와 재시도 허용 상태 기록.
+    action: 질의 분석·추천 검색·초안 생성을 다시 실행한 뒤 재검수.
+    result: 검수 통과(passed=true) 후 review_passed 상태로 응답 확정.
+  - title: 의도 불일치가 지속된 요청의 안전 종료
+    observation: 영화 정보 요청에서 의도 불일치(intent_mismatch) 판정. 의도 재분류(classify_intent) 경로 기록.
+    action: 의도 분류·영화 검색·초안 생성을 재실행했으나 검수 실패 지속. 해당 실행에서 2회 재시도 후 추가 재시도 차단.
+    result: review_failed_safe_response 상태로 안전 응답 종료.
+runtimeNote: 2026.08.14 실행 로그의 처리 상태를 요약한 사례. 전체 정확도나 성공률을 의미하지 않음. 별도 실행에서는 모델 호출 제한(HTTP 429) 후 규칙 검수·근거 기반 응답으로 전환한 기록도 확인. 원문 대화와 사용자·서버 식별정보는 미게시.
 overview: 사용자의 취향뿐 아니라 누구와 보는지, 현재 기분과 시청 가능 시간 같은 상황까지 이해하고 추천 이유와 검증 근거를 함께 제공하는 Personal Movie AI Agent입니다.
 problem:
   - 영화 선택에 시간이 오래 걸리지만 기존 추천은 현재 상황을 충분히 반영하지 못했습니다.

@@ -537,6 +537,8 @@
 .publicMaterials figure { margin: 0; min-width: 0; border: 1px solid var(--line); background: white; }
 .publicMaterials figure > a { display: flex; align-items: center; justify-content: center; height: 290px; padding: 16px; background: #f0f3f6; }
 .publicMaterials img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.publicMaterials > figure:only-child > a { height: auto; }
+.publicMaterials > figure:only-child img { width: auto; max-width: 100%; height: auto; max-height: 480px; }
 .publicMaterials figcaption { padding: 22px; }
 .publicMaterials small, .publicMaterials figcaption > span { display: block; color: #647387; font-size: 10px; line-height: 1.8; }
 .publicMaterials h3 { margin: 12px 0; font-size: 16px; font-weight: 650; line-height: 1.6; }
