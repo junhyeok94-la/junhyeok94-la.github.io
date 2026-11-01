@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { ArrowLeft, ArrowUpRight } from 'lucide-react';
 import { LangGraphFlowEmbed } from '@/components/langgraph-flow-embed';
 import { PortfolioFooter, PortfolioHeader } from '@/components/portfolio-shell';
+import { ProjectDiagramImage } from '@/components/project-diagram-image';
 import { popTalk } from '@/lib/content';
 import styles from '@/components/portfolio.module.css';
 import detail from './pop-talk.module.css';
@@ -88,6 +89,16 @@ export default function PopTalkPage() {
             </a>
             <figcaption>교육 팀 프로젝트 발표자료 · 클릭하면 크게 보기</figcaption>
           </figure>
+          <div id="database" className={detail.database}>
+            <h3>DB ERD · 핵심 데이터 모델</h3>
+            <p>영화에 미디어·리뷰·프로필 임베딩·임베딩 작업을 연결하고, 사용자별 대화 세션과 메시지를 분리한 구조.</p>
+            <figure className={styles.diagram}>
+              <a href="/projects/pop-talk/database-erd.svg" target="_blank" rel="noreferrer" aria-label="Pop Talk 핵심 8개 테이블 ERD 크게 보기">
+                <ProjectDiagramImage src="/projects/pop-talk/database-erd.svg" alt="영화, 미디어, 리뷰, 프로필 임베딩, 임베딩 작업 및 사용자, 대화 세션, 메시지의 8개 테이블과 실제 외래키 관계를 표시한 ERD" />
+              </a>
+              <figcaption>2026.08.17 논리 백업 DDL 기준. 실제 PK·FK와 필수·선택 관계를 표시하고 주요 필드만 발췌. 카테고리·관리·인증 보조 테이블 생략. 메시지의 sources는 JSONB 근거 참조이며 영화 테이블의 FK와 구분.</figcaption>
+            </figure>
+          </div>
         </section>
         <section id="decisions" className={styles.caseSection}>
           <div className={styles.sectionLabel}><span>04</span><h2>문제와 해결</h2></div>
