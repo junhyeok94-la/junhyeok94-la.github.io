@@ -105,9 +105,7 @@ export type PopTalk = {
   stack: Record<string, string[]>;
   roadmap: Array<{ title: string; description: string }>;
   sourcesNote: string;
-  runtimeExamples: Array<{ title: string; observation: string; action: string; result: string }>;
-  runtimeNote: string;
-  databaseExamples: Array<{
+  logExamples: Array<{
     title: string;
     description: string;
     image: string;

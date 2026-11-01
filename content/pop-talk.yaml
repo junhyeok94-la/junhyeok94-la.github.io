@@ -5,29 +5,6 @@ period: 2026.07.27 - 2026.08.14
 team: 4인 팀
 award: 우수상
 role: 데이터·AI Agent·NCP 인프라 구현 참여
-databaseExamples:
-  - title: 추천 응답과 영화 근거 연결
-    description: 저장된 응답의 sources에 연결된 영화 레코드를 대조한 예시.
-    image: /projects/pop-talk/db-recommendation-evidence.webp
-    width: 1600
-    height: 940
-    alt: 인터스텔라와 비슷한 영화 추천 요청의 저장 응답과 sources에 연결된 인천스텔라, 인투 더 미러, 에일리언 2020의 영화 데이터를 대조한 재구성 예시
-  - title: 평점 응답과 수집 리뷰 집계 대조
-    description: 헤레틱의 저장 평점 응답과 백업 리뷰 299건의 평균 3.8점을 대조한 예시. 실시간 플랫폼 수치와 구분.
-    image: /projects/pop-talk/db-rating-evidence.webp
-    width: 1600
-    height: 940
-    alt: 헤레틱 평점 요청의 저장 응답과 백업의 네이버 수집 리뷰 299건 및 평균 3.8점이 일치함을 보여주는 재구성 예시
-runtimeExamples:
-  - title: 근거 부족 판정 후 재검색·재생성
-    observation: 추천 초안의 근거 부족(insufficient_evidence) 판정. 재검색(retrieve) 경로와 재시도 허용 상태 기록.
-    action: 질의 분석·추천 검색·초안 생성을 다시 실행한 뒤 재검수.
-    result: 검수 통과(passed=true) 후 review_passed 상태로 응답 확정.
-  - title: 의도 불일치가 지속된 요청의 안전 종료
-    observation: 영화 정보 요청에서 의도 불일치(intent_mismatch) 판정. 의도 재분류(classify_intent) 경로 기록.
-    action: 의도 분류·영화 검색·초안 생성을 재실행했으나 검수 실패 지속. 해당 실행에서 2회 재시도 후 추가 재시도 차단.
-    result: review_failed_safe_response 상태로 안전 응답 종료.
-runtimeNote: 2026.08.14 실행 로그의 처리 상태를 요약한 사례. 전체 정확도나 성공률을 의미하지 않음. 별도 실행에서는 모델 호출 제한(HTTP 429) 후 규칙 검수·근거 기반 응답으로 전환한 기록도 확인. 원문 대화와 사용자·서버 식별정보는 미게시.
 overview: 사용자의 취향뿐 아니라 누구와 보는지, 현재 기분과 시청 가능 시간 같은 상황까지 이해하고 추천 이유와 검증 근거를 함께 제공하는 Personal Movie AI Agent입니다.
 problem:
   - 영화 선택에 시간이 오래 걸리지만 기존 추천은 현재 상황을 충분히 반영하지 못했습니다.
@@ -113,11 +90,31 @@ architecture:
   - layer: NCP Infrastructure
     detail: 교육 팀 프로젝트의 NCP 웹 애플리케이션 아키텍처를 설계하고 Terraform으로 인프라를 구성했습니다.
 stack:
-  Front-End: [Next.js, React, TypeScript, Tailwind CSS]
-  Back-End: [Python, FastAPI, SQLAlchemy]
-  AI & Agent: [HyperCLOVA X, LangGraph, RAG, CLOVA Studio]
-  Data: [PostgreSQL, pgvector, KOBIS API, KMDB API]
-  Infra: [NAVER Cloud Platform, Terraform, VPC, Load Balancer, Object Storage]
+  Front-End:
+    - Next.js
+    - React
+    - TypeScript
+    - Tailwind CSS
+  Back-End:
+    - Python
+    - FastAPI
+    - SQLAlchemy
+  AI & Agent:
+    - HyperCLOVA X
+    - LangGraph
+    - RAG
+    - CLOVA Studio
+  Data:
+    - PostgreSQL
+    - pgvector
+    - KOBIS API
+    - KMDB API
+  Infra:
+    - NAVER Cloud Platform
+    - Terraform
+    - VPC
+    - Load Balancer
+    - Object Storage
 roadmap:
   - title: 추천 검증 고도화
     description: 벡터 저장과 RAG 조회 과정에서 아쉬웠던 검색 정확도와 추천 근거의 적합도를 개선합니다.
@@ -126,3 +123,16 @@ roadmap:
   - title: 장기 취향 Profile
     description: 최초 선호 장르 선택에 그치지 않고, 시청 영화의 평점과 리뷰를 누적해 사용자 취향 선호도를 지속적으로 고도화합니다.
 sourcesNote: 팀원 개인정보가 포함된 원본 문서는 게시하지 않고, 비식별화한 구현 화면과 프로젝트 설명·시스템 아키텍처만 선별해 제공합니다.
+logExamples:
+  - title: 근거 부족 → 재검색 → 검수 통과
+    description: 근거 부족 판정 후 추천 검색을 재실행하고 검수를 통과한 로그.
+    image: /projects/pop-talk/log-retrieval-retry.webp
+    width: 1720
+    height: 800
+    alt: 실제 챗봇 로그의 근거 부족 판정, 추천 재검색, 검수 통과 및 응답 확정 단계 발췌
+  - title: 의도 불일치 → 재시도 제한 → 안전 응답
+    description: 의도 불일치가 반복되어 추가 재시도를 차단하고 안전 응답으로 종료한 로그.
+    image: /projects/pop-talk/log-safe-response.webp
+    width: 1720
+    height: 980
+    alt: 실제 챗봇 로그의 의도 불일치 반복, 재시도 제한과 안전 응답 종료 단계 발췌

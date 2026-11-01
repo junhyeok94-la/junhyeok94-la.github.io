@@ -49,7 +49,7 @@ export default function PopTalkPage() {
         <a className={detail.repository} href="https://github.com/junhyeok94-la/pop-talk" target="_blank" rel="noreferrer">GitHub 저장소 <ArrowUpRight size={15} /></a>
       </header>
       <nav className={styles.caseNav} aria-label="프로젝트 목차">
-        <a href="#scope">담당 업무</a><a href="#product">팀 구현 결과</a><a href="#evidence">DB 예시</a><a href="#architecture">아키텍처</a><a href="#decisions">문제와 해결</a><a href="#stack">사용 기술</a>
+        <a href="#scope">담당 업무</a><a href="#product">팀 구현 결과</a><a href="#evidence">데이터 로그</a><a href="#architecture">아키텍처</a><a href="#decisions">문제와 해결</a><a href="#stack">사용 기술</a>
       </nav>
       <div className={styles.caseBody}>
         <section id="scope" className={styles.caseSection}>
@@ -68,16 +68,16 @@ export default function PopTalkPage() {
           <details className={detail.disclosure}>
             <summary>관리자 대시보드·검수 화면 보기</summary>
             <div className={detail.gallery}>{popTalk.productViews.slice(2).map(item => <ProductView key={item.image} item={item} />)}</div>
-            <p className={detail.note}>발표 시점 데이터: {popTalk.demoSnapshot.map(item => `${item.label} ${item.value}`).join(' · ')}. 서비스 이용 성과가 아닌 구현 데이터 기준.</p>
+            <p className={detail.note}>관리자 화면: {popTalk.demoSnapshot.map(item => `${item.label} ${item.value}`).join(' · ')}</p>
           </details>
         </section>
         <section id="evidence" className={styles.caseSection}>
-          <div className={styles.sectionLabel}><span>DATA</span><h2>백업 데이터로 확인한 예시</h2></div>
-          <p>2026.08.17 논리 백업의 저장 대화와 영화·리뷰 데이터를 대조. 개인정보를 제외한 데이터를 재구성한 예시이며, 원본 서비스 캡처와 구분.</p>
-          <div className={detail.evidence}><ProductView item={popTalk.databaseExamples[0]} /></div>
+          <div className={styles.sectionLabel}><span>LOG</span><h2>데이터 로그</h2></div>
+          <p>검수 결과에 따른 재검색과 재시도 종료 흐름.</p>
+          <div className={detail.evidence}><ProductView item={popTalk.logExamples[0]} /></div>
           <details className={detail.disclosure}>
-            <summary>평점 응답과 수집 리뷰 집계 비교 보기</summary>
-            <ProductView item={popTalk.databaseExamples[1]} />
+            <summary>재시도 제한과 안전 응답 로그 보기</summary>
+            <ProductView item={popTalk.logExamples[1]} />
           </details>
         </section>
         <section id="architecture" className={styles.caseSection}>
@@ -87,7 +87,6 @@ export default function PopTalkPage() {
             <a href="/projects/pop-talk/ncp-system-architecture.png" target="_blank" rel="noreferrer" aria-label="NCP 시스템 아키텍처 크게 보기">
               <Image src="/projects/pop-talk/ncp-system-architecture.png" alt="Pop Talk NCP 시스템 아키텍처: Web, WAS, ChatBot, Batch와 PostgreSQL 연결" width={2400} height={1350} sizes="(max-width: 1100px) 100vw, 1000px" unoptimized />
             </a>
-            <figcaption>교육 팀 프로젝트 발표자료 · 클릭하면 크게 보기</figcaption>
           </figure>
           <div id="database" className={detail.database}>
             <h3>DB ERD · 핵심 데이터 모델</h3>
@@ -96,7 +95,6 @@ export default function PopTalkPage() {
               <a href="/projects/pop-talk/database-erd.svg" target="_blank" rel="noreferrer" aria-label="Pop Talk 핵심 8개 테이블 ERD 크게 보기">
                 <ProjectDiagramImage src="/projects/pop-talk/database-erd.svg" alt="영화, 미디어, 리뷰, 프로필 임베딩, 임베딩 작업 및 사용자, 대화 세션, 메시지의 8개 테이블과 실제 외래키 관계를 표시한 ERD" />
               </a>
-              <figcaption>2026.08.17 논리 백업 DDL 기준. 실제 PK·FK와 필수·선택 관계를 표시하고 주요 필드만 발췌. 카테고리·관리·인증 보조 테이블 생략. 메시지의 sources는 JSONB 근거 참조이며 영화 테이블의 FK와 구분.</figcaption>
             </figure>
           </div>
         </section>
@@ -111,22 +109,6 @@ export default function PopTalkPage() {
             ))}
           </div>
           <details className={detail.disclosure}>
-            <summary>로그로 확인한 검수·재시도 사례</summary>
-            <div className={styles.decisions}>
-              {popTalk.runtimeExamples.map(item => (
-                <article key={item.title}>
-                  <h3>{item.title}</h3>
-                  <dl>
-                    <div><dt>관찰</dt><dd>{item.observation}</dd></div>
-                    <div><dt>처리</dt><dd>{item.action}</dd></div>
-                    <div className={styles.resultRow}><dt>결과</dt><dd>{item.result}</dd></div>
-                  </dl>
-                </article>
-              ))}
-            </div>
-            <p className={detail.note}>{popTalk.runtimeNote}</p>
-          </details>
-          <details className={detail.disclosure}>
             <summary>LangGraph 전체 노드와 처리 로직 보기</summary>
             <LangGraphFlowEmbed />
           </details>
@@ -135,7 +117,6 @@ export default function PopTalkPage() {
           <div className={styles.sectionLabel}><span>05</span><h2>사용 기술</h2></div>
           <dl className={detail.stack}>{Object.entries(popTalk.stack).map(([group, items]) => <div key={group}><dt>{group}</dt><dd>{items.join(' · ')}</dd></div>)}</dl>
         </section>
-        <p className={detail.note}>{popTalk.sourcesNote}</p>
       </div>
       <PortfolioFooter />
     </main>
