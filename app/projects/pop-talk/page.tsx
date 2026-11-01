@@ -75,9 +75,11 @@ export default function PopTalkPage() {
           <div className={styles.sectionLabel}><span>LOG</span><h2>데이터 로그</h2></div>
           <p>검수 결과에 따른 재검색과 재시도 종료 흐름.</p>
           <div className={detail.evidence}><ProductView item={popTalk.logExamples[0]} /></div>
+          <a className={detail.rawLog} href={popTalk.logExamples[0].rawFile} target="_blank" rel="noreferrer">로그 원문 보기 ↗</a>
           <details className={detail.disclosure}>
             <summary>재시도 제한과 안전 응답 로그 보기</summary>
             <ProductView item={popTalk.logExamples[1]} />
+            <a className={detail.rawLog} href={popTalk.logExamples[1].rawFile} target="_blank" rel="noreferrer">로그 원문 보기 ↗</a>
           </details>
         </section>
         <section id="architecture" className={styles.caseSection}>

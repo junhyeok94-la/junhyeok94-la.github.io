@@ -127,12 +127,14 @@ logExamples:
   - title: 근거 부족 → 재검색 → 검수 통과
     description: 근거 부족 판정 후 추천 검색을 재실행하고 검수를 통과한 로그.
     image: /projects/pop-talk/log-retrieval-retry.webp
-    width: 1720
-    height: 800
-    alt: 실제 챗봇 로그의 근거 부족 판정, 추천 재검색, 검수 통과 및 응답 확정 단계 발췌
+    width: 1840
+    height: 852
+    alt: 근거 부족 판정과 재검색 및 검수 통과를 기록한 원문 JSONL 로그 발췌
+    rawFile: /projects/pop-talk/log-retrieval-retry.jsonl
   - title: 의도 불일치 → 재시도 제한 → 안전 응답
     description: 의도 불일치가 반복되어 추가 재시도를 차단하고 안전 응답으로 종료한 로그.
     image: /projects/pop-talk/log-safe-response.webp
-    width: 1720
-    height: 980
-    alt: 실제 챗봇 로그의 의도 불일치 반복, 재시도 제한과 안전 응답 종료 단계 발췌
+    width: 1840
+    height: 1080
+    alt: 의도 불일치에 따른 재시도와 안전 종료를 기록한 원문 JSONL 로그 발췌
+    rawFile: /projects/pop-talk/log-safe-response.jsonl

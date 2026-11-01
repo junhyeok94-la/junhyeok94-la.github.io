@@ -106,6 +106,7 @@ export type PopTalk = {
   roadmap: Array<{ title: string; description: string }>;
   sourcesNote: string;
   logExamples: Array<{
+    rawFile: string;
     title: string;
     description: string;
     image: string;
