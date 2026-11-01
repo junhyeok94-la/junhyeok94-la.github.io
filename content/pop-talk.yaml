@@ -5,6 +5,19 @@ period: 2026.07.27 - 2026.08.14
 team: 4인 팀
 award: 우수상
 role: 데이터·AI Agent·NCP 인프라 구현 참여
+databaseExamples:
+  - title: 추천 응답과 영화 근거 연결
+    description: 저장된 응답의 sources에 연결된 영화 레코드를 대조한 예시.
+    image: /projects/pop-talk/db-recommendation-evidence.webp
+    width: 1600
+    height: 940
+    alt: 인터스텔라와 비슷한 영화 추천 요청의 저장 응답과 sources에 연결된 인천스텔라, 인투 더 미러, 에일리언 2020의 영화 데이터를 대조한 재구성 예시
+  - title: 평점 응답과 수집 리뷰 집계 대조
+    description: 헤레틱의 저장 평점 응답과 백업 리뷰 299건의 평균 3.8점을 대조한 예시. 실시간 플랫폼 수치와 구분.
+    image: /projects/pop-talk/db-rating-evidence.webp
+    width: 1600
+    height: 940
+    alt: 헤레틱 평점 요청의 저장 응답과 백업의 네이버 수집 리뷰 299건 및 평균 3.8점이 일치함을 보여주는 재구성 예시
 runtimeExamples:
   - title: 근거 부족 판정 후 재검색·재생성
     observation: 추천 초안의 근거 부족(insufficient_evidence) 판정. 재검색(retrieve) 경로와 재시도 허용 상태 기록.
@@ -35,7 +48,7 @@ contributions:
     description: KOBIS·KMDB 데이터를 스케줄 수집하고 정제·병합해 PostgreSQL에 적재하는 흐름을 구현했습니다.
   - area: RAG CONTEXT
     title: 메타데이터와 리뷰를 답변 근거로
-    description: 영화와 리뷰 임베딩을 pgvector에 저장하고, 검색 결과와 근거 ID가 응답 생성까지 이어지도록 구성했습니다.
+    description: 영화 프로필 임베딩을 pgvector에 저장하고 리뷰는 SQL로 별도 조회. 검색 결과와 근거 ID를 응답 생성에 전달.
   - area: AGENT QUALITY
     title: 실패를 원인별로 되돌리는 검수 루프
     description: 의도 분류·QueryPlan·검색·생성·검수를 분리하고 실패 원인에 따라 필요한 단계부터 재실행하도록 설계했습니다.
@@ -75,7 +88,7 @@ dataFlow:
   - KOBIS 영화 목록·상세 수집
   - KMDB 포스터·등급·줄거리·키워드 결합
   - 데이터 정제·병합 후 PostgreSQL UPSERT
-  - 영화·리뷰 임베딩을 pgvector에 저장
+  - 영화 프로필 임베딩을 pgvector에 저장하고 리뷰는 SQL로 별도 조회
   - RAG 검색 결과를 HyperCLOVA X 응답 근거로 사용
 agentFlow:
   - stage: 입력 및 라우팅

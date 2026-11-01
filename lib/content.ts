@@ -107,6 +107,14 @@ export type PopTalk = {
   sourcesNote: string;
   runtimeExamples: Array<{ title: string; observation: string; action: string; result: string }>;
   runtimeNote: string;
+  databaseExamples: Array<{
+    title: string;
+    description: string;
+    image: string;
+    width: number;
+    height: number;
+    alt: string;
+  }>;
 };
 function loadYaml<T>(filename: string): T {
   return parse(

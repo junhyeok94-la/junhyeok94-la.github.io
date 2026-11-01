@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 const decisions = [
   { title: '영화 데이터 수집·통합', problem: '영화 정보와 포스터·줄거리·키워드가 서로 다른 API에 분산.', action: 'KOBIS·KMDB 데이터를 수집·정제·병합하고 PostgreSQL에 UPSERT.', result: '영화 메타데이터와 리뷰를 검색·추천의 공통 데이터로 활용.' },
-  { title: '추천 근거 검색', problem: 'LLM 자체 지식만으로는 영화 정보와 추천 이유의 근거 확인이 어려움.', action: '영화·리뷰 임베딩을 pgvector에 저장하고 검색 결과와 근거 ID를 생성 컨텍스트에 전달.', result: '검색한 영화 데이터와 리뷰를 바탕으로 추천 이유 생성.' },
+  { title: '추천 근거 검색', problem: 'LLM 자체 지식만으로는 영화 정보와 추천 이유의 근거 확인이 어려움.', action: '영화 프로필 임베딩을 pgvector에 저장하고 리뷰는 SQL로 별도 조회. 검색 결과와 근거 ID를 생성 컨텍스트에 전달.', result: '검색한 영화 데이터와 리뷰를 바탕으로 추천 이유 생성.' },
   { title: '응답 검수·재시도', problem: '추천 결과가 요청 조건과 어긋나거나 근거가 부족한 경우 발생.', action: 'LangGraph에서 분류·검색·생성·검수를 분리. 실패 원인에 따라 재분류·재검색·재생성.', result: '검수 결과에 따라 재시도·응답 확정·폴백으로 분기. 실행 로그에서 재검색 후 검수 통과와 재시도 소진 후 안전 종료 확인.' },
 ];
 
@@ -48,14 +48,14 @@ export default function PopTalkPage() {
         <a className={detail.repository} href="https://github.com/junhyeok94-la/pop-talk" target="_blank" rel="noreferrer">GitHub 저장소 <ArrowUpRight size={15} /></a>
       </header>
       <nav className={styles.caseNav} aria-label="프로젝트 목차">
-        <a href="#scope">담당 업무</a><a href="#product">팀 구현 결과</a><a href="#architecture">아키텍처</a><a href="#decisions">문제와 해결</a><a href="#stack">사용 기술</a>
+        <a href="#scope">담당 업무</a><a href="#product">팀 구현 결과</a><a href="#evidence">DB 예시</a><a href="#architecture">아키텍처</a><a href="#decisions">문제와 해결</a><a href="#stack">사용 기술</a>
       </nav>
       <div className={styles.caseBody}>
         <section id="scope" className={styles.caseSection}>
           <div className={styles.sectionLabel}><span>01</span><h2>담당 업무</h2></div>
           <ul className={detail.scope}>
             <li><strong>데이터 수집</strong><span>KOBIS·KMDB 수집·정제·병합, PostgreSQL 적재.</span></li>
-            <li><strong>RAG 검색</strong><span>영화·리뷰 임베딩 저장과 검색 근거 전달.</span></li>
+            <li><strong>RAG 검색</strong><span>영화 프로필 벡터 검색, 리뷰 SQL 조회와 검색 근거 전달.</span></li>
             <li><strong>AI Agent</strong><span>LangGraph 기반 응답 검수·재시도 흐름 구현.</span></li>
             <li><strong>NCP 인프라</strong><span>웹 애플리케이션 아키텍처 설계와 Terraform 구성 참여.</span></li>
           </ul>
@@ -68,6 +68,15 @@ export default function PopTalkPage() {
             <summary>관리자 대시보드·검수 화면 보기</summary>
             <div className={detail.gallery}>{popTalk.productViews.slice(2).map(item => <ProductView key={item.image} item={item} />)}</div>
             <p className={detail.note}>발표 시점 데이터: {popTalk.demoSnapshot.map(item => `${item.label} ${item.value}`).join(' · ')}. 서비스 이용 성과가 아닌 구현 데이터 기준.</p>
+          </details>
+        </section>
+        <section id="evidence" className={styles.caseSection}>
+          <div className={styles.sectionLabel}><span>DATA</span><h2>백업 데이터로 확인한 예시</h2></div>
+          <p>2026.08.17 논리 백업의 저장 대화와 영화·리뷰 데이터를 대조. 개인정보를 제외한 데이터를 재구성한 예시이며, 원본 서비스 캡처와 구분.</p>
+          <div className={detail.evidence}><ProductView item={popTalk.databaseExamples[0]} /></div>
+          <details className={detail.disclosure}>
+            <summary>평점 응답과 수집 리뷰 집계 비교 보기</summary>
+            <ProductView item={popTalk.databaseExamples[1]} />
           </details>
         </section>
         <section id="architecture" className={styles.caseSection}>
