@@ -8,7 +8,7 @@
     basis: 배치 최적화 담당 영역 전반 주도
   company: 누리꿈소프트(주)
   featured: true
-  summary: Oracle·SAS 기반 홈쇼핑 데이터의 Airflow·dbt·Redshift 전환에서 1,000개 이상 dbt 모델의 배치 최적화와 복구·검증·모니터링을 담당했습니다.
+  summary: Oracle·SAS 기반 홈쇼핑 데이터의 Airflow·dbt·Redshift 전환에서 1,000개 이상 dbt 모델의 배치 최적화와 복구·검증·모니터링을 담당
   stack:
     - Apache Airflow 2.10
     - dbt
@@ -19,26 +19,26 @@
     - Bamboo
     - Confluence
   achievements:
-    - title: 워크로드 격리와 비용 최적화
-      problem: 특정 시간대에 Provisioned 클러스터의 쿼리 큐잉과 자원 경합이 발생했지만, 전체 Serverless 전환은 비용 부담이 있었습니다.
-      action: manifest.json의 의존성과 태그를 파싱해 고부하 모델만 Serverless로 분리했습니다. CTE 중간 결과는 CTAS로 물리화하고 Sort Key를 적용하도록 개선했습니다.
-      result: 상시 클러스터 증설 없이 피크 시간대 자원 경합을 완화했습니다.
-    - title: 시간 단위 배치 누락 구간 자동 복구
-      problem: 시간 단위 배치의 소급 범위가 4시간으로 고정되어 장시간 장애 시 누락 구간을 복구하는 데 제약이 있었습니다.
-      action: 마지막 성공 구간의 종료 시각(data_interval_end)을 Airflow Variable에 저장했습니다. 다음 배치는 저장된 시점과 업무일 경계·대기 조건을 확인해 누락 구간을 처리하도록 구현했습니다.
-      result: 과거 누락 구간의 자동 복구 범위를 고정 4시간에서 최대 24시간으로 확장해, 일별 배치가 참조하는 해당 일자 00시 배치도 복구할 수 있게 했습니다.
-    - title: 대규모 오케스트레이션 표준화
-      problem: 단일 DAG에서 대규모 모델을 파싱할 때 렌더링 지연과 워커 슬롯 낭비가 발생했습니다.
-      action: BI 모델·주요 최종 테이블 기준으로 공통 사용 테이블을 묶고 고객사 운영팀과 도메인별 실행 DAG를 확정했습니다. Control DAG로 실행을 제어하고 dbt 모델·Airflow TaskGroup의 tag 기반 호출, 공통 모듈·품질 규칙·deferrable 실행을 표준화했습니다.
-      result: DAG 파싱 부하와 워커 점유를 완화하고 여러 수행사가 같은 기준으로 개발·운영할 수 있게 했습니다.
-    - title: 데이터 품질 가드레일
-      problem: 중복 키 검증 외에도 AS-IS·TO-BE의 건수와 주요 컬럼 값을 함께 확인할 공통 기준이 필요했습니다.
-      action: dbt test·후행 중복 검증에 더해, 주요 컬럼을 Group By한 건수·값을 비교하는 Diff Check DAG를 개발하고 결과를 Redshift에 매일 적재했습니다.
-      result: 수행사와 고객사가 같은 검증 결과를 확인하도록 해 수작업 검증과 반복 협의를 줄였습니다.
-    - title: 메타 DB 부하 개선
-      problem: Grafana 대시보드의 Airflow 메타 DB 조회에서 슬로우 쿼리가 발생해 스케줄러 지연으로 이어졌습니다.
-      action: 문제가 된 조회 쿼리를 인덱스를 고려해 경량화하고, 프로젝트 운영에 맞춰 도메인별 실행 추이·실패 태스크·Pool Slot·배치 지연율을 보여주도록 대시보드 내용을 수정했습니다.
-      result: 스케줄러 응답을 정상화하고 태스크·Pool Slot·지연율 모니터링을 안정화했습니다.
+    - title: 고부하 모델의 실행 환경 분리
+      problem: 특정 시간대 Provisioned 클러스터에 쿼리 대기와 자원 경합 발생. 전체 Serverless 전환에는 비용 부담.
+      action: manifest.json의 의존성·태그를 분석해 선정한 고부하 모델만 Serverless로 분리. CTE 중간 결과를 CTAS로 물리화하고 Sort Key를 적용하도록 쿼리 구조 개선.
+      result: 상시 클러스터 증설 없이 피크 시간대 자원 경합 완화.
+    - title: 시간별 배치 누락 구간 자동 복구
+      problem: 자동 소급 범위가 4시간으로 고정돼 장시간 장애 시 누락 구간 복구에 제약.
+      action: 마지막 성공 구간의 종료 시각(data_interval_end)을 Airflow Variable에 저장. 다음 실행에서 업무일 경계·선행 완료·대기 조건을 확인해 처리 구간 계산.
+      result: 자동 복구 대상 범위를 4시간에서 최대 24시간으로 확장. 일별 배치가 참조하는 해당 일자 00시 시간별 배치의 누락 구간 복구 지원.
+    - title: 도메인별 배치 실행 표준화
+      problem: 대규모 모델을 단일 DAG에서 파싱할 때 렌더링 지연과 워커 슬롯 점유 발생.
+      action: BI 모델·주요 최종 테이블 기준으로 공통 사용 테이블을 묶고 고객사 운영팀과 도메인별 실행 DAG 확정. Control DAG, 태그 기반 TaskGroup 호출과 비동기 대기(deferrable) 등 공통 규칙 적용.
+      result: DAG 파싱 부하·워커 점유 완화. 여러 수행사가 같은 기준으로 개발·운영할 수 있는 실행 규칙 정리.
+    - title: 전환 전후 데이터 비교 검증
+      problem: 중복 키 검증과 함께 AS-IS·TO-BE의 건수·주요 컬럼 값을 확인할 공통 기준 필요.
+      action: dbt test와 후행 중복 검증에 더해 주요 컬럼을 그룹화한 건수·값을 비교하는 Diff Check DAG 개발. 비교 결과를 Redshift에 매일 적재.
+      result: 수행사·고객사가 동일한 검증 결과를 확인하도록 구성. 수작업 검증과 반복 협의 감소.
+    - title: Airflow 메타 DB 조회 부하 개선
+      problem: Grafana의 Airflow 메타 DB 조회에서 슬로 쿼리가 발생해 스케줄러 지연으로 연결.
+      action: 인덱스를 고려한 조회 쿼리 경량화. 도메인별 실행 추이·실패 태스크·Pool Slot·배치 지연율을 확인하도록 대시보드 수정.
+      result: 스케줄러 응답 정상화와 배치 운영 지표 모니터링 안정화.
 - id: pop-talk-ai-agent
   title: Pop Talk · Personal Movie AI Agent
   category: AI PBL · Awarded Project
@@ -83,21 +83,28 @@
     basis: 공통 표준·자동 수집 핵심 담당
   company: 누리꿈소프트(주)
   featured: true
-  summary: 차세대 KICS 데이터플랫폼의 수집·적재 파이프라인과 공통 표준을 구축하고, 법무부를 제외한 3개 기관 대시보드 화면 설계 문서를 작성해 MSTR 개발 담당자에게 인계했습니다.
-  stack: [LG CNS SBP, TeraStream, Hadoop, Hive, Python, Shell, MSTR 화면 설계]
+  summary: 차세대 KICS 데이터플랫폼의 수집·적재 파이프라인과 공통 표준을 구축하고, 법무부를 제외한 3개 기관 대시보드 화면 설계 문서를 작성해 MSTR 개발 담당자에게 인계
+  stack:
+    - LG CNS SBP
+    - TeraStream
+    - Hadoop
+    - Hive
+    - Python
+    - Shell
+    - MSTR 화면 설계
   achievements:
-    - title: 이기종 데이터 표준화
-      problem: 4개 기관별 데이터 형식 차이로 BLOB 적재 오류가 반복됐습니다.
-      action: ETL 공통 개발 가이드와 데이터 표준을 수립했습니다.
-      result: 적재 실패를 줄이고 파이프라인 안정성을 높였습니다.
+    - title: 이기종 데이터의 공통 적재 기준 수립
+      problem: 4개 기관의 데이터 형식 차이로 BLOB 적재 오류 반복.
+      action: 기관별 형식 차이를 반영한 ETL 공통 개발 가이드와 데이터 표준 수립.
+      result: 적재 오류 대응과 데이터 파이프라인 안정성 개선.
     - title: 법령정보 API 신규 연계
-      problem: 차세대 KICS의 분석 데이터 범위를 확대하려면 기존에 없던 법령정보를 API로 신규 수집하고 분석 가능한 형태로 가공할 필요가 있었습니다.
-      action: 법령정보 API를 연계하고, 메타데이터를 기준으로 수집 대상을 판별해 전처리·적재하는 Python 프로그램을 개발했습니다.
-      result: 법령정보를 신규 분석 데이터로 확보해 차세대 KICS에서 활용할 수 있는 기반을 마련했습니다.
+      problem: KICS의 분석 데이터 범위 확대를 위해 기존에 없던 법령정보 수집·가공 필요.
+      action: 법령정보 API를 연계하고 메타데이터로 수집 대상을 판별하는 Python 전처리·적재 프로그램 개발.
+      result: 법령정보를 신규 분석 데이터로 확보할 수 있는 수집·가공 흐름 구현.
     - title: 3개 기관 대시보드 화면 설계·인계
-      problem: 기관별 대시보드 화면을 설계하고, 별도 MSTR 개발 담당자가 구현할 수 있는 문서가 필요했습니다.
-      action: 검찰청·경찰청·해양경찰청 대시보드 화면을 설계하고 문서화했습니다. 1차 화면 설계가 완료된 뒤 설계 문서를 MSTR 개발 담당자에게 인계했습니다.
-      result: 기관별 시각화 요구를 화면 설계 문서로 정리해 구현 단계로 전달했습니다. 실제 화면 개발은 MSTR 담당자가 수행했습니다.
+      problem: 기관별 대시보드 요구를 화면 설계로 구체화하고 MSTR 개발 담당자에게 전달할 문서 필요.
+      action: 검찰청·경찰청·해양경찰청 대시보드 화면 설계 및 문서 작성. 1차 설계 완료 후 MSTR 개발 담당자에게 인계.
+      result: 기관별 화면 설계를 문서로 정리해 구현 단계로 전달. 실제 화면 개발은 인계받은 MSTR 담당자가 수행.
 - id: local-finance
   title: 차세대 지방재정관리 정책지원시스템 구축
   category: Public Sector
@@ -108,23 +115,28 @@
     basis: OLAP·Admin·외부 연계 핵심 담당
   company: 누리꿈소프트(주)
   featured: true
-  summary: 행정안전부와 전국 지자체가 사용하는 정책지원서비스의 통계·BI 화면과 외부 데이터 연계 파이프라인을 구축했습니다.
-  stack: [BI-Matrix, InnoQuartz, SAP HANA, Oracle, Python]
+  summary: 행정안전부와 전국 지자체가 사용하는 정책지원서비스의 통계·BI 화면과 외부 데이터 연계 파이프라인을 구축
+  stack:
+    - BI-Matrix
+    - InnoQuartz
+    - SAP HANA
+    - Oracle
+    - Python
   achievements:
-    - title: One-Table 모델 도입
-      problem: 화면별 물리 테이블 방식으로는 200여 개 통계 화면의 유지보수 비용이 급증할 가능성이 컸습니다.
-      action: 화면 ID를 조회·구분 기준으로 사용하는 통합 테이블 모델과 공통 규칙을 설계했습니다.
-      result: 공통 모델과 개발 규칙을 200여 개 통계·BI 화면 구축에 적용했습니다.
+    - title: 통계·BI 공통 테이블 모델 설계
+      problem: 200여 개 통계 화면의 데이터를 화면별 물리 테이블로 관리할 경우 유지보수 부담 증가 예상.
+      action: 화면 ID를 조회·구분 기준으로 사용하는 통합 테이블 모델과 공통 개발 규칙 설계.
+      result: 공통 모델·개발 규칙을 200여 개 통계·BI 화면 구축에 적용.
     - title: 유형분류 산출·확정·비교 업무 구현
-      problem: 연도별 행정단위·지표·가중치와 산출 차수를 관리하고, 확정·비교 규칙을 화면에 반영해야 했습니다.
-      action: 담당 공무원과 요구사항을 조율해 유형분류 11개 화면을 개발했습니다. 가중치 합계 검증, 차수별 산출·저장, 연도별 확정 관리 및 전문기관 업로드 자료 비교 기능을 구현하고 사용자지침서를 작성했습니다.
-      result: 기준 설정부터 산출·확정·비교까지의 업무 흐름을 시스템화했습니다. 유형분류·재정위기관리 심화 화면은 합계 30여 본을 구축했습니다.
-    - title: 외부 API 수집 기반 마련
-      problem: 통계청과 한국은행 데이터를 일관되게 연계할 기반이 필요했습니다.
-      action: Python 초기 수집·적재 스크립트와 ETL 연계 POC를 수행하고, 수집 데이터를 활용하는 통계·BI 화면을 개발했습니다.
-      result: 내외부 데이터 통합을 위한 실행 가능한 기반을 마련했습니다.
+      problem: 연도별 행정단위·지표·가중치·산출 차수 관리와 확정·비교 규칙의 화면 반영 필요.
+      action: 담당 공무원과 요구사항을 조율해 유형분류 11개 화면 개발. 가중치 합계 검증, 차수별 산출·저장, 연도별 확정 관리와 전문기관 업로드 자료 비교 구현. 사용자지침서 작성.
+      result: 기준 설정부터 산출·확정·비교까지 업무 흐름 구현. 유형분류·재정위기관리 심화 화면은 합계 30여 개 구축.
+    - title: 통계청·한국은행 API 연계와 통계 화면 개발
+      problem: 외부 통계를 수집·가공해 정책지원 통계 화면에 연결할 처리 흐름 필요.
+      action: Python 초기 수집·적재 스크립트와 ETL 연계 검증(POC) 수행. 수집 데이터를 활용한 통계·BI 화면 개발.
+      result: 외부 통계 수집·적재 스크립트, ETL 연계 POC와 통계·BI 화면 구현.
 - id: lgchem-data-lake
-  title: LG화학 전사 데이터 레이크 구축 1차
+  title: LG화학 전사 데이터 레이크 1차 구축
   category: Private Sector
   period: 2021.07 - 2022.05
   role: 데이터 분석 및 ETL 선임
@@ -133,36 +145,52 @@
     basis: 원천 분석·적재 전략 핵심 담당
   company: 누리꿈소프트(주)
   featured: true
-  summary: 전사 정형 데이터를 AWS 데이터 레이크로 이관하기 위한 원천 분석, ODS Full·Incremental 적재 방식 결정과 Airflow DAG 생성·적용을 담당했습니다.
-  stack: [AWS S3, AWS Glue, Athena, Apache Airflow, Python]
+  summary: 전사 정형 데이터를 AWS 데이터 레이크로 이관하기 위한 원천 분석, ODS Full·Incremental 적재 방식 결정과 Airflow DAG 생성·적용을 담당
+  stack:
+    - AWS S3
+    - AWS Glue
+    - Athena
+    - Apache Airflow
+    - Python
   achievements:
-    - title: 테이블별 적재 전략 최적화
-      problem: 모든 원천 테이블을 Full Load하면 처리 시간과 클라우드 비용이 불필요하게 증가할 수 있었습니다.
-      action: 볼륨·휘발성·예상 증가량·갱신 주기를 프로파일링해 ODS Full·Incremental 적재 방식을 결정하고, 이에 맞는 Airflow DAG 코드를 생성·적용했습니다.
-      result: 테이블 특성에 따라 적재 대상·우선순위와 Full·Incremental 적재 기준을 마련했습니다.
+    - title: 테이블별 전체·증분 적재 기준 수립
+      problem: 모든 원천 테이블을 전체 적재하면 불필요한 처리 시간·클라우드 비용 발생 가능.
+      action: 데이터 규모·변경 특성·예상 증가량·갱신 주기를 분석해 ODS의 전체·증분 적재 방식과 대상·우선순위 결정. 결정한 기준에 맞는 Airflow DAG 코드 생성·적용.
+      result: 테이블 특성에 따른 적재 기준 수립과 Airflow 실행 코드 적용.
 - id: hanwha-esh
-  title: 한화솔루션 ESH Portal
+  title: 한화솔루션 ESH 포털 구축
   category: Web Foundation
   period: 2021.03 - 2021.05
-  role: Backend · Frontend
+  role: 프런트엔드 · 백엔드 개발 · 주임
   contribution:
     rate: 70%
     basis: Backend·Frontend 주요 구현
   company: 루나랩스주식회사
   featured: false
-  summary: 임직원 건강관리와 환경 공정시설을 통합 관리하는 포털을 개발했습니다.
-  stack: [Vue.js, Spring Framework, MSSQL]
+  summary: 임직원 건강관리와 환경 공정시설을 통합 관리하는 포털을 개발
+  stack:
+    - Vue.js
+    - Spring Framework
+    - MSSQL
   achievements: []
 - id: ubase-hr
-  title: UBASE 관리자 인사평가 시스템
+  title: UBASE 관리자 인사평가 시스템 개편
   category: Web Foundation
   period: 2021.02 - 2021.03
-  role: Backend · Frontend
+  role: 프런트엔드 · 백엔드 개발 · 주임
   contribution:
     rate: 70%
     basis: 인사평가 메뉴 전면 재설계
   company: 루나랩스주식회사
   featured: false
-  summary: 평가 히스토리 관리를 도입하고 인사평가 메뉴의 전체 로직을 재설계했습니다.
-  stack: [Java, Spring Framework, JavaScript, Oracle]
-  achievements: []
+  summary: 평가 히스토리 관리를 도입하고 인사평가 메뉴의 전체 로직을 재설계
+  stack:
+    - Java
+    - Spring Framework
+    - JavaScript
+    - Oracle
+  achievements:
+    - title: 인사평가 메뉴 개편과 평가 이력 관리 도입
+      problem: 관리자 인사평가 메뉴 개편과 평가 이력 관리 기능 추가 필요.
+      action: Java·Spring Framework·JavaScript·Oracle 환경에서 인사평가 메뉴 로직 재설계 및 평가 이력 관리 기능 도입.
+      result: 관리자 인사평가 메뉴 개편과 평가 이력 관리 기능 구현.

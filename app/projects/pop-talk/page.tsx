@@ -23,7 +23,7 @@ function ProductView({ item }: { item: (typeof popTalk.productViews)[number] }) 
   return (
     <figure className={detail.product}>
       <a href={item.image} target="_blank" rel="noreferrer" aria-label={`${item.title} 크게 보기`}>
-        <Image src={item.image} alt={item.alt} width={1900} height={930} sizes="(max-width: 760px) 100vw, 50vw" unoptimized />
+        <Image src={item.image} alt={item.alt} width={item.width} height={item.height} sizes="(max-width: 760px) 100vw, 50vw" unoptimized />
       </a>
       <figcaption>{item.title}</figcaption>
     </figure>
@@ -48,7 +48,7 @@ export default function PopTalkPage() {
         <a className={detail.repository} href="https://github.com/junhyeok94-la/pop-talk" target="_blank" rel="noreferrer">GitHub 저장소 <ArrowUpRight size={15} /></a>
       </header>
       <nav className={styles.caseNav} aria-label="프로젝트 목차">
-        <a href="#scope">담당 업무</a><a href="#product">구현 결과</a><a href="#architecture">아키텍처</a><a href="#decisions">문제와 해결</a><a href="#stack">사용 기술</a>
+        <a href="#scope">담당 업무</a><a href="#product">팀 구현 결과</a><a href="#architecture">아키텍처</a><a href="#decisions">문제와 해결</a><a href="#stack">사용 기술</a>
       </nav>
       <div className={styles.caseBody}>
         <section id="scope" className={styles.caseSection}>
@@ -61,8 +61,8 @@ export default function PopTalkPage() {
           </ul>
         </section>
         <section id="product" className={styles.caseSection}>
-          <div className={styles.sectionLabel}><span>02</span><h2>구현 결과</h2></div>
-          <p>자연어 영화 추천, 영화 탐색·리뷰, 취향 입력 및 관리자 검수 화면 구현. 팀 프로젝트 우수상 수상.</p>
+          <div className={styles.sectionLabel}><span>02</span><h2>팀 구현 결과</h2></div>
+          <p>4인 팀이 구현한 자연어 영화 추천, 영화 탐색·리뷰, 취향 입력 및 관리자 검수 화면. 교육 팀 프로젝트 우수상 수상.</p>
           <div className={detail.gallery}>{popTalk.productViews.slice(0, 2).map(item => <ProductView key={item.image} item={item} />)}</div>
           <details className={detail.disclosure}>
             <summary>관리자 대시보드·검수 화면 보기</summary>

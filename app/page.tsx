@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowDown, ArrowUpRight, Award } from 'lucide-react';
 import { PortfolioFooter, PortfolioHeader } from '@/components/portfolio-shell';
+import { ProjectDiagramImage } from '@/components/project-diagram-image';
 import { caseStudies, projects, popTalk } from '@/lib/content';
 import styles from '@/components/portfolio.module.css';
 
@@ -46,12 +47,9 @@ export default function Home() {
                 <h3>{project.title}</h3>
                 <p className={styles.cardQuestion}>{study.question}</p>
                 <div className={styles.cardImage}>
-                  <Image
+                  <ProjectDiagramImage
                     src={study.architecture.image!}
                     alt={study.architecture.alt!}
-                    width={900}
-                    height={320}
-                    unoptimized
                   />
                 </div>
                 <div className={styles.cardBottom}>
@@ -135,8 +133,8 @@ export default function Home() {
             <Image
               src={popTalk.productViews[0].image}
               alt={popTalk.productViews[0].alt}
-              width={1900}
-              height={930}
+              width={popTalk.productViews[0].width}
+              height={popTalk.productViews[0].height}
               unoptimized
             />
           </Link>

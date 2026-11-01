@@ -87,6 +87,8 @@ export type PopTalk = {
     title: string;
     description: string;
     image: string;
+    width: number;
+    height: number;
     alt: string;
   }>;
   demoSnapshot: Array<{ label: string; value: string }>;

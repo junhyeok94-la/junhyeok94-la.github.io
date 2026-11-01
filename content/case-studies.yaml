@@ -10,7 +10,7 @@
     - 전환 전후 데이터를 비교하는 Diff Check DAG 개발 및 Grafana 조회 쿼리·운영 지표 개선
   architecture:
     title: HBU 데이터 플랫폼 전체 시스템 구성
-    description: Airflow가 수집 API·EMR와 dbt 실행을 제어하고, S3와 Redshift에 데이터를 적재·변환하는 구성. Redshift Serverless는 선정한 고부하 모델 실행에 사용하며, Data Sharing으로 데이터를 연계. BI·Athena가 분석 데이터를 활용하고 Aurora·ECR·Lambda가 운영을 지원.
+    description: Airflow가 수집 API·EMR·dbt 실행을 제어. 수집 데이터를 S3에 적재하고 Redshift에서 변환하는 구성. Redshift Serverless는 선정한 고부하 모델 실행에 사용하며, Data Sharing으로 데이터를 연계. BI는 Redshift의 분석 데이터를 활용하고 Athena는 S3 데이터를 조회. Aurora·ECR·Lambda가 운영을 지원.
     image: /projects/gs-retail-hbu/system-architecture.svg
     alt: 원천 DB·로그, Fargate 수집 API, EMR, S3, Redshift·Serverless와 Data Sharing, BI·Athena 및 운영 지원 서비스를 포함한 HBU 전체 시스템 구성
     caption: 시스템 아키텍처 및 역할 정의 문서의 전체 구성을 바탕으로 재작성. 내부 시스템·스키마·접속 정보와 물리 망 구성은 생략. 실선은 데이터 연결, 점선은 배치 실행 제어를 표시하며 세부 수집 경로는 단순화.
@@ -44,23 +44,23 @@
       alt: Airflow 메타 DB 조회 쿼리 경량화와 Grafana 대시보드 지표 개선 관계
       caption: 기존 Grafana의 Airflow 메타 DB 조회 쿼리와 표시 지표 개선. 신규 모니터링 플랫폼 구축이 아닌 기존 운영 체계 개선 범위.
   results:
-    - 1,000+ dbt 모델의 도메인별 실행 및 공통 호출 규칙 적용
+    - 1,000개 이상 dbt 모델의 도메인별 실행 및 공통 호출 규칙 적용
     - 시간별 배치의 누락 구간 자동 복구 범위를 4시간에서 최대 24시간으로 확장
     - 선정한 고부하 모델을 분리해 상시 클러스터 증설 없이 자원 경합 완화
     - 공통 데이터 비교 검증과 배치 운영 지표 제공
-  limits: 내부 식별자와 접속 정보는 제외한 논리 구성도. 전체 인프라·배포 체계 구축은 개인 담당 범위에 포함하지 않으며, 비용·처리 시간의 검증되지 않은 개선율은 표시하지 않음.
+  limits: 공개용으로 재작성한 논리 구성도. 본인 담당 범위는 배치 실행·복구·검증·모니터링.
   takeaway: 업무별 실행 단위, 선행 완료 조건, 처리 구간과 검증 결과를 공통 규칙으로 정리해 여러 수행사와 운영팀이 같은 기준으로 개발·운영하도록 구성.
 
 - id: next-kics
   type: platform
   label: 데이터플랫폼 · ETL · 대시보드 설계
   question: 기관별 데이터 수집·적재와 3개 기관 대시보드 화면 설계
-  overview: 법무부·검찰청·경찰청·해양경찰청이 참여한 차세대 KICS 사업의 데이터플랫폼 구축 참여. LG CNS SBP 기반 Hadoop 환경에서 TeraStream 데이터 파이프라인과 공통 ETL 표준, Python 법령정보 API 연계 프로그램 담당. 검찰청·경찰청·해양경찰청의 대시보드는 화면 설계와 문서 작성 후 MSTR 개발 담당자에게 인계.
+  overview: 법무부·검찰청·경찰청·해양경찰청이 참여한 차세대 KICS 사업의 데이터플랫폼 구축 참여. LG CNS SBP 기반 Hadoop 환경에서 TeraStream 데이터 파이프라인과 공통 ETL 표준, Python 법령정보 API 연계 프로그램 담당. 검찰청·경찰청·해양경찰청의 대시보드는 화면 설계와 문서 작성 후 MSTR(MicroStrategy) 개발 담당자에게 인계.
   scope:
     - TeraStream을 사용한 데이터 파이프라인 개발, 기관별 형식 차이와 BLOB 적재 오류에 대응하는 공통 가이드·표준 수립
     - 메타데이터로 수집 대상을 판별하는 Python 법령정보 API 연계·전처리·적재 프로그램 개발
     - 법무부를 제외한 검찰청·경찰청·해양경찰청 대시보드 화면 설계 및 설계 문서 작성
-    - 1차 설계 완료 후 MSTR 개발 담당자에게 문서를 인계하여 화면 구현으로 연결
+    - 1차 설계 완료 후 설계 문서를 MSTR 개발 담당자에게 인계
   publicMaterialsTitle: 사업 개요와 사용 기술 참고 자료
   publicMaterialsNote: 정부 자료는 KICS 전체 사업을, 제품 자료는 SBP·TeraStream의 역할을 설명합니다. 아래 구성도는 본인 수행 경험을 바탕으로 재구성했습니다.
   publicMaterials:
@@ -73,7 +73,7 @@
       url: https://www.newswire.co.kr/newsRead.php?no=660742
       publisher: LG CNS 제공 보도자료 · 뉴스와이어
       date: '2012.10.31'
-      description: Hadoop 등 오픈소스 기반의 수집·저장·처리·분석 환경과 관리 기능을 설명하는 SBP 출시 자료. 최신 제품 기능을 당시 KICS 구성에 소급하지 않고 제품의 기본 역할 참고.
+      description: Hadoop 기반 수집·저장·처리·분석 플랫폼의 기본 구성과 관리 기능을 소개하는 SBP 출시 자료.
     - title: 데이터 통합 솔루션 TeraStream
       url: https://datastreams.co.kr/products/data-integration-terastream/
       publisher: 데이터스트림즈
@@ -101,9 +101,9 @@
   results:
     - 기관별 이기종 데이터에 적용할 ETL 공통 개발 가이드·표준 수립
     - BLOB 적재 오류 대응을 통한 데이터 파이프라인 안정성 개선
-    - 법령정보 API 신규 연계로 분석용 데이터 확보 기반 마련
+    - 법령정보 API 신규 연계·전처리·적재 프로그램 구현
     - 검찰청·경찰청·해양경찰청 대시보드 화면 설계 문서 작성 및 MSTR 개발 담당자 인계
-  limits: 지능형 사건처리지원 서비스 개발과 3개 기관의 MSTR 화면 개발은 본인 실적에 포함하지 않음. 처리량·성능 개선율·화면 수는 검증된 수치가 없어 표시하지 않음.
+  limits: 본인 담당 범위는 데이터플랫폼 구축과 화면 설계·문서 인계. MSTR 화면 구현은 별도 개발 담당자 수행.
   takeaway: 데이터 적재 기준과 화면 설계를 문서로 남겨 기관별 데이터 차이에 대응하고, 플랫폼 개발과 시각화 개발 담당자 사이의 인계를 지원.
 
 - id: local-finance
@@ -115,7 +115,7 @@
     - 공통 화면 ID 기반 통합 모델과 조회·개발 규칙을 200여 개 통계·BI 화면에 적용
     - 통계청·한국은행 API 데이터의 초기 수집·적재 스크립트, ETL 연계 POC 및 통계·BI 화면 개발
     - 유사자치단체 유형관리 11개 화면 개발 — 기준·지표 설정, 가중치 기반 산출, 차수별 저장, 확정·비교
-    - 담당 공무원과 요구사항 조율, 유형분류·재정위기관리 심화 화면 30여 본 구축 및 유형분류 사용자지침서 작성
+    - 담당 공무원과 요구사항 조율, 유형분류·재정위기관리 심화 화면 30여 개 구축 및 유형분류 사용자지침서 작성
   publicMaterials:
     - title: 종합지역현황 서비스 화면
       url: https://zdnet.co.kr/view/?no=20230918182336
@@ -140,7 +140,7 @@
     description: 외부 통계를 수집·정제하고 지자체·주기·화면 기준으로 매핑. 공통 테이블 모델에서 화면 ID와 주기 조건으로 통계 화면 조회. 유형분류는 별도의 기준·지표·차수 관리와 산출·확정·비교 업무 흐름으로 구현.
     image: /projects/local-finance/data-model.svg
     alt: 통계청·한국은행 등 통계 데이터 수집과 지자체·주기 매핑, 공통 모델 및 화면 ID 기반 BI 조회 흐름
-    caption: 본인 담당 범위를 재구성한 논리 흐름. 통계청·한국은행 API 기반 통계·BI 화면의 원본 이미지는 보안상 생략. 유형분류·재정위기관리의 모든 지표가 외부 API에서 오는 것으로 표현하지 않음.
+    caption: 본인 담당 범위를 재구성한 논리 흐름. 통계청·한국은행 API 연계와 내부 지표를 구분해 표현. 통계·BI 화면 원본은 보안상 생략.
   figures:
     - title: 유형분류 기준 설정·산출·확정·비교
       image: /projects/local-finance/classification-workflow.svg
@@ -149,19 +149,19 @@
   results:
     - 공통 테이블 모델과 개발 규칙을 200여 개 통계·BI 화면 구축에 적용
     - 유형분류 관리 11개 화면과 사용자지침서 작성
-    - 유형분류·재정위기관리 심화 화면 30여 본 구축
-    - 통계청·한국은행 API 연계의 초기 수집·적재 및 통계·BI 개발 기반 마련
-  limits: 공개 보도자료는 정책지원시스템 전체의 서비스 소개 자료. 본인 단독 화면 개발 건수와 전체 사업 규모는 구분하며, 내부 화면과 실제 지자체 데이터는 공개하지 않음.
+    - 유형분류·재정위기관리 심화 화면 30여 개 구축
+    - 통계청·한국은행 API 수집·적재 스크립트, ETL 연계 POC와 통계·BI 화면 구현
+  limits: 공개 이미지는 정책지원시스템 전체의 소개 자료. 유형분류 11개 화면은 심화 화면 30여 개에 포함.
   takeaway: 공무원의 업무 기준을 지표·가중치·차수·확정 상태와 조회 조건으로 구체화하고, 산출 결과를 전문기관 자료와 비교할 수 있도록 업무 흐름 구현.
 
 - id: lgchem-data-lake
   type: platform
   label: 데이터 레이크 · 적재 전략
-  question: 모든 테이블을 Full Load하지 않고 적재 방식을 어떻게 나눌까?
-  overview: 전사 정형 데이터를 AWS 데이터 레이크로 이관하는 프로젝트. 원천 데이터 분석과 ODS 적재 방식 결정, Airflow DAG 코드 생성·적용이 본인 담당 범위.
+  question: 원천 테이블 분석에 따른 전체·증분 적재 기준 수립
+  overview: 전사 정형 데이터를 AWS 데이터 레이크로 이관하는 프로젝트. 원천 데이터를 분석해 운영 데이터 저장소(ODS)의 전체·증분 적재 방식을 결정하고 Airflow DAG 코드 생성·적용 담당.
   scope:
-    - 원천 테이블의 볼륨·휘발성·예상 증가량·갱신 주기 프로파일링
-    - ODS Full·Incremental 적재 방식과 대상·우선순위 결정
+    - 원천 테이블의 데이터 규모·변경 특성·예상 증가량·갱신 주기 분석
+    - ODS 전체·증분(Full·Incremental) 적재 방식과 대상·우선순위 결정
     - 결정한 적재 기준에 맞는 Airflow DAG 코드 생성·적용
   architecture:
     title: 원천 분석 결과를 적재 방식과 실행 코드로 연결
@@ -172,34 +172,34 @@
   figures: []
   results:
     - 테이블 특성에 따른 Full·Incremental 적재 기준 수립
-    - 적재 대상·우선순위와 실제 Airflow 실행 코드의 연결
-  limits: Glue·Lake Formation의 주도 설계·운영 실적으로 확대하지 않음. 처리 시간·비용 절감률의 검증된 전후 수치는 없음.
-  takeaway: 적재 도구를 정하기 전에 테이블의 변화 특성과 갱신 주기를 확인하고, 판단 기준을 실행 코드까지 연결하는 접근을 경험.
+    - 적재 기준·대상·우선순위에 따른 Airflow DAG 코드 생성·적용
+  limits: 공개 범위는 원천 분석·적재 방식 결정·DAG 적용. 상세 운영 구성과 원본 화면은 생략.
+  takeaway: 원천 테이블의 변경 특성과 갱신 주기를 적재 기준으로 정리하고, 결정한 기준을 DAG 실행 코드에 반영.
 
 - id: hanwha-esh
   type: web
   label: 웹 개발 · 업무 포털
-  question: 임직원 건강관리와 환경 공정시설 업무를 포털에 어떻게 담을까?
+  question: 임직원 건강관리·환경 공정시설 관리 포털 개발
   overview: 임직원 건강관리 및 환경 공정시설을 통합 관리하는 ESH 포털 구축. 루나랩스 주임으로 프런트엔드·백엔드 개발 참여.
   scope:
     - Vue.js 프런트엔드 개발
-    - Spring Framework 백엔드 및 MSSQL 사용 환경에서 포털 기능 개발
+    - Spring Framework·MSSQL 환경의 백엔드 기능 개발
   architecture:
     title: 화면·백엔드·데이터베이스의 개발 범위
-    description: Vue.js 화면, Spring Framework 백엔드, MSSQL을 사용하는 웹 업무 포털. 공개 자료가 없는 네트워크 구성이나 상세 API·스키마는 추가하지 않음.
+    description: Vue.js로 업무 화면을 구성하고 Spring Framework·MSSQL 환경에서 백엔드 기능 개발.
     steps: [Vue.js 업무 화면, Spring Framework 백엔드, MSSQL]
     caption: 확인된 기술 구성의 역할 관계만 정리한 개념도. 실제 운영 배포 구조와 상세 호출 방향을 나타내지 않음.
   figures: []
   results:
     - 임직원 건강관리·환경 공정시설 관리 기능을 제공하는 포털 구축 참여
-  limits: 공개 가능한 실제 화면·상세 설계 자료가 없어 개요와 확인된 담당 범위만 제시. 성능·사용자 수·업무 개선율을 추정하지 않음.
-  takeaway: 업무 화면과 백엔드, 데이터베이스를 함께 다루며 웹 개발의 기본 흐름을 경험.
+  limits: 확인된 개발 기술과 담당 범위를 기준으로 정리. 내부 화면·상세 설계는 생략.
+  takeaway: Vue.js 화면과 Spring Framework·MSSQL 환경의 백엔드 개발 참여.
 
 - id: ubase-hr
   type: web
   label: 웹 개발 · 인사평가
-  question: 평가 이력을 남기고 인사평가 메뉴의 로직을 어떻게 정리할까?
-  overview: 관리자 인사평가 메뉴 개편 및 평가 히스토리 관리 도입. 루나랩스 주임으로 Java·Spring Framework·JavaScript·Oracle 환경의 개발 참여.
+  question: 관리자 인사평가 메뉴 개편과 평가 이력 관리 도입
+  overview: 관리자 인사평가 메뉴 개편 및 평가 이력 관리 도입. 루나랩스 주임으로 Java·Spring Framework·JavaScript·Oracle 환경의 개발 참여.
   scope:
     - 인사평가 메뉴 전체 로직 재설계
     - Oracle 기반 평가 이력 관리 기능 도입
@@ -211,6 +211,6 @@
   figures: []
   results:
     - 인사평가 메뉴의 전체 로직 재설계
-    - 평가 히스토리 관리 도입
-  limits: 원본 코드·화면이 공개되지 않아 구체적인 스키마·API와 성능 지표를 추정하지 않음.
-  takeaway: 현재 평가 처리뿐 아니라 이후의 이력 관리까지 업무 로직에 포함하는 개발 경험.
+    - 평가 이력 관리 도입
+  limits: 확인된 메뉴 개편·평가 이력 관리 범위를 기준으로 정리. 내부 화면·상세 스키마는 생략.
+  takeaway: 평가 처리와 이력 관리를 함께 반영한 인사평가 메뉴 로직 개편.

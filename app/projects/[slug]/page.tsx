@@ -73,11 +73,11 @@ export default async function ProjectPage({
       <nav className={styles.caseNav} aria-label="프로젝트 목차">
         <a href="#overview">프로젝트 개요</a>
         {study.publicMaterials && <a href="#public-materials">공개 자료</a>}
-        <a href="#architecture">아키텍처</a>
+        <a href="#architecture">{study.type === 'web' ? '기술 구성' : '아키텍처'}</a>
         {project.achievements.length > 0 && (
           <a href="#decisions">문제와 해결 과정</a>
         )}
-        <a href="#results">결과와 회고</a>
+        <a href="#results">{study.type === 'web' ? '구현 결과' : '결과와 회고'}</a>
       </nav>
       <div className={styles.caseBody}>
         <section id="overview" className={styles.caseSection}>
@@ -122,7 +122,7 @@ export default async function ProjectPage({
         <section id="architecture" className={styles.caseSection}>
           <div className={styles.sectionLabel}>
             <span>02</span>
-            <h2>아키텍처와 데이터 흐름</h2>
+            <h2>{study.type === 'web' ? '기술 구성' : '아키텍처와 데이터 흐름'}</h2>
           </div>
           <h3 className={styles.subheading}>{study.architecture.title}</h3>
           <p>{study.architecture.description}</p>
@@ -221,17 +221,17 @@ export default async function ProjectPage({
         <section id="results" className={styles.caseSection}>
           <div className={styles.sectionLabel}>
             <span>RESULT</span>
-            <h2>결과와 회고</h2>
+            <h2>{study.type === 'web' ? '구현 결과' : '결과와 회고'}</h2>
           </div>
           <ul className={styles.resultList}>
             {study.results.map((item) => (
               <li key={item}>{item}</li>
             ))}
           </ul>
-          <div className={styles.retrospective}>
+          {study.type === 'platform' && <div className={styles.retrospective}>
             <h3>이 프로젝트에서 남은 것</h3>
             <p>{study.takeaway}</p>
-          </div>
+          </div>}
           <p className={styles.scopeNote}>{study.limits}</p>
         </section>
         <Link className={styles.nextProject} href={`/projects/${next.id}/`}>
