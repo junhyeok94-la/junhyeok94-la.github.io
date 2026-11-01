@@ -35,6 +35,7 @@ export type Project = {
 export type CaseFigure = {
   title: string;
   image: string;
+  maxWidth?: number;
   alt: string;
   caption: string;
 };

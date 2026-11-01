@@ -37,10 +37,12 @@
       caption: 시간별 배치의 마지막 성공 종료 구간을 Variable에 저장하고 다음 시작 구간으로 사용. 선행 배치 완료 범위와 최대 소급 범위를 함께 확인. 24시간은 처리 소요 시간이 아닌 자동 복구 대상 범위.
     - title: 전환 전후 데이터 비교 검증
       image: /projects/gs-retail-hbu/quality-check.svg
+      maxWidth: 520
       alt: AS-IS와 TO-BE의 주요 컬럼 집계를 Diff Check DAG로 비교하는 흐름
       caption: 주요 컬럼별 건수·값을 같은 기준으로 비교하고 결과를 Redshift에 적재. 수행사와 고객사가 동일한 결과로 전환 정합성 확인.
     - title: Grafana 조회 부하와 운영 지표 개선
       image: /projects/gs-retail-hbu/monitoring.svg
+      maxWidth: 520
       alt: Airflow 메타 DB 조회 쿼리 경량화와 Grafana 대시보드 지표 개선 관계
       caption: 기존 Grafana의 Airflow 메타 DB 조회 쿼리와 표시 지표 개선. 신규 모니터링 플랫폼 구축이 아닌 기존 운영 체계 개선 범위.
   results:

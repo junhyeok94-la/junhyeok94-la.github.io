@@ -221,6 +221,7 @@ export default async function ProjectPage({
                   <ProjectDiagramImage
                     src={item.image}
                     alt={item.alt}
+                    maxWidth={item.maxWidth}
                   />
                 </a>
                 <figcaption>{item.caption}</figcaption>
