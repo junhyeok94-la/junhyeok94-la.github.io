@@ -124,17 +124,27 @@ roadmap:
     description: 최초 선호 장르 선택에 그치지 않고, 시청 영화의 평점과 리뷰를 누적해 사용자 취향 선호도를 지속적으로 고도화합니다.
 sourcesNote: 팀원 개인정보가 포함된 원본 문서는 게시하지 않고, 비식별화한 구현 화면과 프로젝트 설명·시스템 아키텍처만 선별해 제공합니다.
 logExamples:
-  - title: 근거 부족 → 재검색 → 검수 통과
-    description: 근거 부족 판정 후 추천 검색을 재실행하고 검수를 통과한 로그.
-    image: /projects/pop-talk/log-retrieval-retry.webp
+  - id: log-query-plan
+    title: 요청 조건 구조화와 벡터 검색
+    description: 국가·최대 상영시간·제외 키워드를 QueryPlan으로 변환하고, 벡터 검색으로 후보 5편 조회.
+    image: /projects/pop-talk/log-query-plan.webp
+    rawFile: /projects/pop-talk/log-query-plan.jsonl
     width: 1840
-    height: 852
-    alt: 근거 부족 판정과 재검색 및 검수 통과를 기록한 원문 JSONL 로그 발췌
-    rawFile: /projects/pop-talk/log-retrieval-retry.jsonl
-  - title: 의도 불일치 → 재시도 제한 → 안전 응답
-    description: 의도 불일치가 반복되어 추가 재시도를 차단하고 안전 응답으로 종료한 로그.
-    image: /projects/pop-talk/log-safe-response.webp
+    height: 522
+    alt: 국가·최대 상영시간·제외 키워드를 QueryPlan으로 변환하고, 벡터 검색으로 후보 5편 조회. 원문 JSONL 로그 발췌.
+  - id: log-review-sql
+    title: 리뷰 요약은 SQL 조회로 분기
+    description: 리뷰 요약 요청은 벡터 검색 없이 SQL로 조회. 스포일러를 제외한 대표 리뷰 6건을 응답 근거로 전달.
+    image: /projects/pop-talk/log-review-sql.webp
+    rawFile: /projects/pop-talk/log-review-sql.jsonl
     width: 1840
-    height: 1080
-    alt: 의도 불일치에 따른 재시도와 안전 종료를 기록한 원문 JSONL 로그 발췌
-    rawFile: /projects/pop-talk/log-safe-response.jsonl
+    height: 522
+    alt: 리뷰 요약 요청은 벡터 검색 없이 SQL로 조회. 스포일러를 제외한 대표 리뷰 6건을 응답 근거로 전달. 원문 JSONL 로그 발췌.
+  - id: log-evidence-guard
+    title: 근거 없는 URL 검출과 제한 응답
+    description: 검색 근거에 없는 URL을 검출해 검수 실패 처리. 재시도 후에도 통과하지 못해 DB에서 조회한 영화만 사용하는 제한 응답으로 종료.
+    image: /projects/pop-talk/log-evidence-guard.webp
+    rawFile: /projects/pop-talk/log-evidence-guard.jsonl
+    width: 1840
+    height: 556
+    alt: 검색 근거에 없는 URL을 검출해 검수 실패 처리. 재시도 후에도 통과하지 못해 DB에서 조회한 영화만 사용하는 제한 응답으로 종료. 원문 JSONL 로그 발췌.

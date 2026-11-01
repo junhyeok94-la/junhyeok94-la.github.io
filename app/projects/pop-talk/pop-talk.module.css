@@ -8,6 +8,12 @@
 .product { margin: 0; min-width: 0; }
 .evidence { margin-top: 24px; }
 .rawLog { display: inline-block; margin-top: 12px; font-size: 12px; color: #38648a; text-decoration: underline; text-underline-offset: 3px; }
+.logCase { margin-top: 28px; padding: 24px; border: 1px solid #d0d8df; background: white; scroll-margin-top: 84px; }
+.logCase > h3 { margin: 0 0 14px; font-size: 17px; font-weight: 650; }
+.logCase > p { margin: 0; }
+.logCase .disclosure { margin-bottom: 0; border-bottom: 0; padding-bottom: 0; }
+.logLinks { display: flex; flex-wrap: wrap; gap: 12px 24px; margin-top: 18px; }
+.logLinks a { color: #38648a; font-size: 12px; text-decoration: underline; text-underline-offset: 3px; }
 .database { margin-top: 36px; scroll-margin-top: 84px; }
 .database > h3 { margin: 0 0 14px; font-size: 19px; font-weight: 650; }
 .product a { display: block; border: 1px solid #d0d8df; background: white; }

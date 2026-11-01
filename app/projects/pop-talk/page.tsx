@@ -15,18 +15,18 @@ export const metadata: Metadata = {
 };
 
 const decisions = [
-  { title: '영화 데이터 수집·통합', problem: '영화 정보와 포스터·줄거리·키워드가 서로 다른 API에 분산.', action: 'KOBIS·KMDB 데이터를 수집·정제·병합하고 PostgreSQL에 UPSERT.', result: '영화 메타데이터와 리뷰를 검색·추천의 공통 데이터로 활용.' },
-  { title: '추천 근거 검색', problem: 'LLM 자체 지식만으로는 영화 정보와 추천 이유의 근거 확인이 어려움.', action: '영화 프로필 임베딩을 pgvector에 저장하고 리뷰는 SQL로 별도 조회. 검색 결과와 근거 ID를 생성 컨텍스트에 전달.', result: '검색한 영화 데이터와 리뷰를 바탕으로 추천 이유 생성.' },
-  { title: '응답 검수·재시도', problem: '추천 결과가 요청 조건과 어긋나거나 근거가 부족한 경우 발생.', action: 'LangGraph에서 분류·검색·생성·검수를 분리. 실패 원인에 따라 재분류·재검색·재생성.', result: '검수 결과에 따라 재시도·응답 확정·폴백으로 분기. 실행 로그에서 재검색 후 검수 통과와 재시도 소진 후 안전 종료 확인.' },
+  { title: '영화 데이터 수집·통합', problem: '영화 정보와 포스터·줄거리·키워드가 서로 다른 API에 분산.', action: 'KOBIS·KMDB 데이터를 수집·정제·병합하고 PostgreSQL에 UPSERT.', result: '영화 메타데이터와 리뷰를 검색·추천의 공통 데이터로 활용.', logIds: [] },
+  { title: '요청 의도별 검색 방식 분리', problem: '영화 추천과 리뷰 요약은 필요한 데이터와 조회 조건이 다름.', action: '국가·상영시간·제외 키워드를 QueryPlan으로 구조화하고 추천은 영화 프로필 벡터 검색으로 처리. 리뷰 요약은 스포일러 제외 조건을 적용한 SQL 조회로 분기.', result: '추천 후보와 대표 리뷰를 의도에 맞게 조회하고 근거 ID를 생성 컨텍스트에 전달.', logIds: ['log-query-plan', 'log-review-sql'] },
+  { title: '근거 검증과 재시도 제한', problem: '생성 답변에 검색 근거에 없는 URL이나 사실이 포함되는 경우 발생.', action: '답변의 인용·URL을 검색 근거와 대조하고 LangGraph에서 실패 원인에 따라 재분류·재검색·재생성. 재시도 횟수 제한 적용.', result: '근거 없는 URL을 검출해 검수 실패 처리. 검수 실패가 지속되면 DB 조회 결과만 사용하는 제한 응답으로 종료.', logIds: ['log-evidence-guard'] },
 ];
 
-function ProductView({ item }: { item: (typeof popTalk.productViews)[number] }) {
+function ProductView({ item, showCaption = true }: { item: (typeof popTalk.productViews)[number]; showCaption?: boolean }) {
   return (
     <figure className={detail.product}>
       <a href={item.image} target="_blank" rel="noreferrer" aria-label={`${item.title} 크게 보기`}>
         <Image src={item.image} alt={item.alt} width={item.width} height={item.height} sizes="(max-width: 760px) 100vw, 50vw" unoptimized />
       </a>
-      <figcaption>{item.title}</figcaption>
+      {showCaption && <figcaption>{item.title}</figcaption>}
     </figure>
   );
 }
@@ -73,14 +73,18 @@ export default function PopTalkPage() {
         </section>
         <section id="evidence" className={styles.caseSection}>
           <div className={styles.sectionLabel}><span>LOG</span><h2>데이터 로그</h2></div>
-          <p>검수 결과에 따른 재검색과 재시도 종료 흐름.</p>
-          <div className={detail.evidence}><ProductView item={popTalk.logExamples[0]} /></div>
-          <a className={detail.rawLog} href={popTalk.logExamples[0].rawFile} target="_blank" rel="noreferrer">로그 원문 보기 ↗</a>
-          <details className={detail.disclosure}>
-            <summary>재시도 제한과 안전 응답 로그 보기</summary>
-            <ProductView item={popTalk.logExamples[1]} />
-            <a className={detail.rawLog} href={popTalk.logExamples[1].rawFile} target="_blank" rel="noreferrer">로그 원문 보기 ↗</a>
-          </details>
+          <p>요청 해석·데이터 조회·응답 검증의 세 가지 실행 사례.</p>
+          {popTalk.logExamples.map((item, index) => (
+            <article id={item.id} key={item.id} className={detail.logCase}>
+              <h3>{item.title}</h3>
+              <p>{item.description}</p>
+              <details className={detail.disclosure} open={index === 0}>
+                <summary>원문 로그 보기</summary>
+                <ProductView item={item} showCaption={false} />
+                <a className={detail.rawLog} href={item.rawFile} target="_blank" rel="noreferrer">JSONL 원문 보기 ↗</a>
+              </details>
+            </article>
+          ))}
         </section>
         <section id="architecture" className={styles.caseSection}>
           <div className={styles.sectionLabel}><span>03</span><h2>시스템 아키텍처</h2></div>
@@ -107,6 +111,7 @@ export default function PopTalkPage() {
               <article key={item.title}>
                 <div className={styles.decisionHeading}><span>0{index + 1}</span><h3>{item.title}</h3></div>
                 <dl><div><dt>문제</dt><dd>{item.problem}</dd></div><div><dt>구현</dt><dd>{item.action}</dd></div><div className={styles.resultRow}><dt>결과</dt><dd>{item.result}</dd></div></dl>
+                {item.logIds.length > 0 && <div className={detail.logLinks}>{item.logIds.map(id => <a key={id} href={`#${id}`}>{popTalk.logExamples.find(log => log.id === id)?.title} 로그 ↗</a>)}</div>}
               </article>
             ))}
           </div>
